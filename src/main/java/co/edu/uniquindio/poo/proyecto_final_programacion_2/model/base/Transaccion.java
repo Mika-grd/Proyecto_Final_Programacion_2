@@ -4,25 +4,29 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class Transaccion {
-    private String idTransaccion;
+    private String id;
     private LocalDate fechaTransaccion;
     private double monto;
     private String descripcion;
     private LinkedList<Cuenta> listaCuentas = new LinkedList<>();
 
-    public Transaccion(String idTransaccion, LocalDate fechaTransaccion, double monto, String descripcion) {
-        this.idTransaccion = idTransaccion;
+    ////Constructor
+    public Transaccion(String id, LocalDate fechaTransaccion, double monto, String descripcion) {
+        this.id = id;
         this.fechaTransaccion = fechaTransaccion;
         this.monto = monto;
         this.descripcion = descripcion;
     }
 
-    public String getIdTransaccion() {
-        return idTransaccion;
+
+
+    ///////Setters & getters
+    public String getId() {
+        return id;
     }
 
-    public void setIdTransaccion(String idTransaccion) {
-        this.idTransaccion = idTransaccion;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public LocalDate getFechaTransaccion() {
