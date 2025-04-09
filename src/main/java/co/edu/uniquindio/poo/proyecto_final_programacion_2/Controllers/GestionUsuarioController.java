@@ -11,44 +11,62 @@ import javafx.scene.control.TextField;
 
 public class GestionUsuarioController {
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
+    @FXML
     private ResourceBundle resources;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    @FXML
     private URL location;
 
-    @FXML // fx:id="atrasBoton"
-    private Button atrasBoton; // Value injected by FXMLLoader
+    @FXML
+    private Button atrasBoton;
 
-    @FXML // fx:id="añadirUsuarioBoton"
-    private Button añadirUsuarioBoton; // Value injected by FXMLLoader
+    @FXML
+    private Button añadirUsuarioBoton;
 
-    @FXML // fx:id="cedulaCampo"
-    private TextField cedulaCampo; // Value injected by FXMLLoader
+    @FXML
+    private Button buscarBoton;
 
-    @FXML // fx:id="cedulaColumna"
-    private TableColumn<?, ?> cedulaColumna; // Value injected by FXMLLoader
+    @FXML
+    private TextField busquedaCampo;
 
-    @FXML // fx:id="editarUsuarioBoton"
-    private Button editarUsuarioBoton; // Value injected by FXMLLoader
+    @FXML
+    private TextField cedulaCampo;
 
-    @FXML // fx:id="eliminarUsuarioBoton"
-    private Button eliminarUsuarioBoton; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<?, ?> cedulaColumna;
 
-    @FXML // fx:id="nombreCampo"
-    private TextField nombreCampo; // Value injected by FXMLLoader
+    @FXML
+    private TextField contraseñaCampo;
 
-    @FXML // fx:id="nombreColumna"
-    private TableColumn<?, ?> nombreColumna; // Value injected by FXMLLoader
+    @FXML
+    private TextField correoCampo;
 
-    @FXML // fx:id="telefonoCampo"
-    private TextField telefonoCampo; // Value injected by FXMLLoader
+    @FXML
+    private Button editarUsuarioBoton;
 
-    @FXML // fx:id="telefonoColumna"
-    private TableColumn<?, ?> telefonoColumna; // Value injected by FXMLLoader
+    @FXML
+    private Button eliminarUsuarioBoton;
 
-    @FXML // fx:id="usuariosTabla"
-    private TableView<?> usuariosTabla; // Value injected by FXMLLoader
+    @FXML
+    private TextField nombreCampo;
+
+    @FXML
+    private TableColumn<?, ?> nombreColumna;
+
+    @FXML
+    private TableColumn<?, ?> nombreColumna1;
+
+    @FXML
+    private Button recargarBoton;
+
+    @FXML
+    private TextField telefonoCampo;
+
+    @FXML
+    private TableColumn<?, ?> telefonoColumna;
+
+    @FXML
+    private TableView<?> usuariosTabla;
 
     @FXML
     void atrasAccion(ActionEvent event) {
@@ -57,6 +75,11 @@ public class GestionUsuarioController {
 
     @FXML
     void añadirUsuarioAccion(ActionEvent event) {
+
+    }
+
+    @FXML
+    void buscarAccion(ActionEvent event) {
 
     }
 
@@ -70,16 +93,27 @@ public class GestionUsuarioController {
 
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+    void recargarAccion(ActionEvent event) {
+
+    }
+
+    @FXML
     void initialize() {
         assert atrasBoton != null : "fx:id=\"atrasBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert añadirUsuarioBoton != null : "fx:id=\"añadirUsuarioBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert buscarBoton != null : "fx:id=\"buscarBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert busquedaCampo != null : "fx:id=\"busquedaCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert cedulaCampo != null : "fx:id=\"cedulaCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert cedulaColumna != null : "fx:id=\"cedulaColumna\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert contraseñaCampo != null : "fx:id=\"contraseñaCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert correoCampo != null : "fx:id=\"correoCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert editarUsuarioBoton != null : "fx:id=\"editarUsuarioBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert eliminarUsuarioBoton != null : "fx:id=\"eliminarUsuarioBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert nombreCampo != null : "fx:id=\"nombreCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert nombreColumna != null : "fx:id=\"nombreColumna\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert nombreColumna1 != null : "fx:id=\"nombreColumna1\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert recargarBoton != null : "fx:id=\"recargarBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert telefonoCampo != null : "fx:id=\"telefonoCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert telefonoColumna != null : "fx:id=\"telefonoColumna\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert usuariosTabla != null : "fx:id=\"usuariosTabla\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
@@ -87,4 +121,3 @@ public class GestionUsuarioController {
     }
 
 }
-
