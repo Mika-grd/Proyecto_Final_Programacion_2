@@ -4,12 +4,14 @@ import java.util.LinkedList;
 
 public class Usuario extends Persona implements IUsuario{
 
-    private double saldo;
+    private String contraseña;
+    private LinkedList<Cuenta> listaCuentas;
 
     ///////Constructor
-    public Usuario(String nombre, String id, String correo, String telefono, double saldo) {
+    public Usuario(String nombre, String id, String correo, String telefono, String contraseña) {
         super(nombre, id, correo, telefono);
-        this.saldo = saldo;
+        this.contraseña = contraseña;
+        this.listaCuentas = new LinkedList<>();
     }
 
 
@@ -36,18 +38,19 @@ public class Usuario extends Persona implements IUsuario{
     }
 
 
-
-
-
-
-
-
-    ////Setters & getters
-    public double getSaldo() {
-        return saldo;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+    public LinkedList<Cuenta> getListaCuentas() {
+        return listaCuentas;
+    }
+
+    public void setListaCuentas(LinkedList<Cuenta> listaCuentas) {
+        this.listaCuentas = listaCuentas;
     }
 }
