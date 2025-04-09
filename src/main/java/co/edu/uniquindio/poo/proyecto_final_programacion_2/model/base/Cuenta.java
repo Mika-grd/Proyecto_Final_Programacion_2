@@ -3,24 +3,30 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base;
 import java.util.LinkedList;
 
 public class Cuenta {
-    private String idCuenta;
+    private String id;
     private String nombreBanco;
     private int numCuenta;
     private LinkedList<Transaccion> listaTransaccion = new LinkedList<>();
     private LinkedList<Categoria> listaCategorias = new LinkedList<>();
 
-    public Cuenta(String idCuenta, String nombreBanco, int numCuenta) {
-        this.idCuenta = idCuenta;
+    /////Constructor
+    public Cuenta(String id, String nombreBanco, int numCuenta) {
+        this.id = id;
         this.nombreBanco = nombreBanco;
         this.numCuenta = numCuenta;
     }
 
-    public String getIdCuenta() {
-        return idCuenta;
+
+
+
+
+    ////SETTERS & GETTERS
+    public String getId() {
+        return id;
     }
 
-    public void setIdCuenta(String idCuenta) {
-        this.idCuenta = idCuenta;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNombreBanco() {
