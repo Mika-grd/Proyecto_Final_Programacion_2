@@ -13,11 +13,14 @@ public class Categoria {
     }
 
 
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "id='" + id + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                '}';
+    }
 
     ////SETTERS & GETTERS
     public String getId() {

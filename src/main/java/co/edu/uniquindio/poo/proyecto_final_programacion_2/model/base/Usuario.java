@@ -53,4 +53,13 @@ public class Usuario extends Persona implements IUsuario{
     public void setListaCuentas(LinkedList<Cuenta> listaCuentas) {
         this.listaCuentas = listaCuentas;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "contraseña='" + contraseña + '\'' +
+                '}';
+    }
 }
+
+

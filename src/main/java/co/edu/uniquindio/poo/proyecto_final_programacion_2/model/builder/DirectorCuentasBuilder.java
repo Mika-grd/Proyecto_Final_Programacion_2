@@ -2,12 +2,13 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder;
 
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Categoria;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Cuenta;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.CuentaDebito;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Usuario;
 
 public class DirectorCuentasBuilder {
 
     /// Construye una cuenta de credito Simple
-    private Cuenta cuentaCreditoSimple(ICuentaCreditoBuilder builder, String id, int numCuenta, Usuario usuario) {
+    public Cuenta cuentaCreditoSimple(ICuentaCreditoBuilder builder, String id, int numCuenta, Usuario usuario) {
         builder.setNombreBanco("Banco Principal");
         builder.setCupoEnUso(0);
         builder.setCupoDisponible(1000000);
@@ -24,7 +25,7 @@ public class DirectorCuentasBuilder {
     }
 
     /// Construye una cuenta de debito Simple
-    private Cuenta cuentaDebitoSimple(ICuentaDebitoBuilder builder, String id, int numCuenta, Usuario usuario) {
+    public Cuenta cuentaDebitoSimple(ICuentaDebitoBuilder builder, String id, int numCuenta, Usuario usuario) {
         builder.setNombreBanco("Banco Principal");
         builder.serSaldo(0);
         return construirCuentaDebito(builder, id, numCuenta, usuario);
@@ -40,11 +41,12 @@ public class DirectorCuentasBuilder {
 
 
     /// Construye una cuenta de debito con una categoria dada por el cliente
-    private Cuenta cuentaDebitoConUnaCategoria(ICuentaDebitoConCategoriasBuilder builder, String id, int numCuenta, Usuario usuario, Categoria categoria) {
+    public Cuenta cuentaDebitoConUnaCategoria(ICuentaDebitoConCategoriasBuilder builder, String id, int numCuenta, Usuario usuario, Categoria categoria) {
         builder.setNombreBanco("Banco Principal");
         builder.serSaldo(0);
+        Cuenta cuenta = construirCuentaDebito(builder, id, numCuenta, usuario);
         builder.añadirCategoria(categoria);
-        return construirCuentaDebito(builder, id, numCuenta, usuario);
+        return cuenta;
 
     }
 
