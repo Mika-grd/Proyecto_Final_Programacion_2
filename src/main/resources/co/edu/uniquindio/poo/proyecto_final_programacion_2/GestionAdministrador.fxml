@@ -24,7 +24,7 @@
                 <TextField fx:id="nombreCampo" prefHeight="17.0" prefWidth="288.0" promptText="Nombre" />
                 <TextField fx:id="cedulaCampo" promptText="Cédula" />
                 <TextField fx:id="correoCampo" promptText="Correo" />
-            <TextField fx:id="correoCampo1" promptText="Telefono" />
+            <TextField fx:id="telefonoCampo" promptText="Telefono" />
                 <HBox spacing="10">
                     <children>
                         <Button fx:id="agregarAdministradorBoton" onAction="#agregarAdministrador" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Agregar" />
@@ -41,7 +41,7 @@
                 <TableColumn fx:id="nombreColumna" prefWidth="144.79998779296875" text="Nombre" />
                 <TableColumn fx:id="cedulaColumna" prefWidth="131.199951171875" text="Cédula" />
                 <TableColumn fx:id="correoColumna" minWidth="0.0" prefWidth="115.2000732421875" text="Correo" />
-            <TableColumn fx:id="nombreColumna1" prefWidth="100.800048828125" text="Telefono" />
+            <TableColumn fx:id="telefonoColumna" prefWidth="100.800048828125" text="Telefono" />
             </columns>
         </TableView>
       <HBox layoutX="429.0" layoutY="32.0" prefHeight="46.0" prefWidth="491.0" spacing="10.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
