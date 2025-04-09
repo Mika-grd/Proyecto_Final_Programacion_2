@@ -6,21 +6,20 @@ public class Cuenta {
     private String id;
     private String nombreBanco;
     private int numCuenta;
-    private LinkedList<Transaccion> listaTransaccion = new LinkedList<>();
-    private LinkedList<Categoria> listaCategorias = new LinkedList<>();
+    private Usuario usuario;
+    private LinkedList<Transaccion> listaTransaccion;
+    private LinkedList<Categoria> listaCategorias;
 
     /////Constructor
-    public Cuenta(String id, String nombreBanco, int numCuenta) {
+    public Cuenta(String id, String nombreBanco, int numCuenta, Usuario usuario) {
         this.id = id;
         this.nombreBanco = nombreBanco;
         this.numCuenta = numCuenta;
+        this.usuario = usuario;
+        this.listaTransaccion = new LinkedList<Transaccion>();
+        this.listaCategorias = new LinkedList<Categoria>();
     }
 
-
-
-
-
-    ////SETTERS & GETTERS
     public String getId() {
         return id;
     }
@@ -43,6 +42,14 @@ public class Cuenta {
 
     public void setNumCuenta(int numCuenta) {
         this.numCuenta = numCuenta;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public LinkedList<Transaccion> getListaTransaccion() {
