@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.PantallaPrincipalController">
+    <children>
+        <Label layoutX="31.0" layoutY="27.0" prefHeight="31.0" prefWidth="350.0" text="Billetera Virtual" textAlignment="CENTER" textFill="#fafafa">
+            <font>
+                <Font name="Cooper Black" size="28.0" />
+            </font>
+        </Label>
+
+        <Button fx:id="usuariosBoton" layoutX="31.0" layoutY="91.0" mnemonicParsing="false" onAction="#abrirUsuarios" prefHeight="42.0" prefWidth="180.0" text="Gestionar Usuarios">
+            <font>
+                <Font name="Algerian" size="12.0" />
+            </font>
+        </Button>
+
+        <Button fx:id="cuentasBoton" layoutX="31.0" layoutY="168.0" mnemonicParsing="false" onAction="#abrirCuentas" prefHeight="42.0" prefWidth="180.0" text="Gestionar Cuentas">
+            <font>
+                <Font name="Algerian" size="12.0" />
+            </font>
+        </Button>
+
+        <Button fx:id="administradoresBoton" layoutX="31.0" layoutY="243.0" mnemonicParsing="false" onAction="#abrirAdministradores" prefHeight="42.0" prefWidth="180.0" text="Gestionar Admins">
+            <font>
+                <Font name="Algerian" size="12.0" />
+            </font>
+        </Button>
+
+        <ImageView fitHeight="335.0" fitWidth="342.0" layoutX="238.0" layoutY="36.0" pickOnBounds="true">
+            <image>
+                <Image url="" />
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>
