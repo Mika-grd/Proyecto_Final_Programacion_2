@@ -27,7 +27,6 @@ public class Administrador extends Persona implements IAdmin {
 
     @Override
     public <T> Object buscarObjeto(T id, LinkedList<T> listaObjetos) {
-
         return BilleteraVirtual.getInstance().buscarObjeto(id, listaObjetos);
     }
 }

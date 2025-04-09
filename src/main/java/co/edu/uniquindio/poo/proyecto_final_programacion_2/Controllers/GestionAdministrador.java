@@ -1,60 +1,83 @@
 package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class GestionAdministrador {
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
+    @FXML
     private ResourceBundle resources;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    @FXML
     private URL location;
 
-    @FXML // fx:id="administradoresTabla"
-    private TableView<?> administradoresTabla; // Value injected by FXMLLoader
+    @FXML
+    private TableView<?> administradoresTabla;
 
-    @FXML // fx:id="agregarAdministradorBoton"
-    private Button agregarAdministradorBoton; // Value injected by FXMLLoader
+    @FXML
+    private Button agregarAdministradorBoton;
 
-    @FXML // fx:id="cedulaCampo"
-    private TextField cedulaCampo; // Value injected by FXMLLoader
+    @FXML
+    private Button buscarBoton;
 
-    @FXML // fx:id="cedulaColumna"
-    private TableColumn<?, ?> cedulaColumna; // Value injected by FXMLLoader
+    @FXML
+    private TextField busquedaCampo;
 
-    @FXML // fx:id="correoCampo"
-    private TextField correoCampo; // Value injected by FXMLLoader
+    @FXML
+    private TextField cedulaCampo;
 
-    @FXML // fx:id="correoColumna"
-    private TableColumn<?, ?> correoColumna; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<?, ?> cedulaColumna;
 
-    @FXML // fx:id="editarAdministradorBoton"
-    private Button editarAdministradorBoton; // Value injected by FXMLLoader
+    @FXML
+    private TextField correoCampo;
 
-    @FXML // fx:id="eliminarAdministradorBoton"
-    private Button eliminarAdministradorBoton; // Value injected by FXMLLoader
+    @FXML
+    private TextField correoCampo1;
 
-    @FXML // fx:id="nombreCampo"
-    private TextField nombreCampo; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<?, ?> correoColumna;
 
-    @FXML // fx:id="nombreColumna"
-    private TableColumn<?, ?> nombreColumna; // Value injected by FXMLLoader
+    @FXML
+    private Button editarAdministradorBoton;
 
-    @FXML // fx:id="volverBoton"
-    private Button volverBoton; // Value injected by FXMLLoader
+    @FXML
+    private Button eliminarAdministradorBoton;
+
+    @FXML
+    private TextField nombreCampo;
+
+    @FXML
+    private TableColumn<?, ?> nombreColumna;
+
+    @FXML
+    private TableColumn<?, ?> nombreColumna1;
+
+    @FXML
+    private Button recargarBoton;
+
+    @FXML
+    private AnchorPane telefonoCampo;
+
+    @FXML
+    private Button volverBoton;
 
     @FXML
     void agregarAdministrador(ActionEvent event) {
 
     }
+
+    @FXML
+    void buscarAccion(ActionEvent event) {
+
+    }
+
 
     @FXML
     void editarAdministrador(ActionEvent event) {
@@ -67,23 +90,38 @@ public class GestionAdministrador {
     }
 
     @FXML
-    void volverAccion(ActionEvent event) {
+    void recargarAccion(ActionEvent event) {
 
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+    void volverAccion(ActionEvent event) {
+        // Obtener la ventana actual y cerrarla
+            Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stageActual.close();
+        }
+
+
+    @FXML
     void initialize() {
         assert administradoresTabla != null : "fx:id=\"administradoresTabla\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
         assert agregarAdministradorBoton != null : "fx:id=\"agregarAdministradorBoton\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
+        assert buscarBoton != null : "fx:id=\"buscarBoton\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
+        assert busquedaCampo != null : "fx:id=\"busquedaCampo\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
         assert cedulaCampo != null : "fx:id=\"cedulaCampo\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
         assert cedulaColumna != null : "fx:id=\"cedulaColumna\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
         assert correoCampo != null : "fx:id=\"correoCampo\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
+        assert correoCampo1 != null : "fx:id=\"correoCampo1\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
         assert correoColumna != null : "fx:id=\"correoColumna\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
         assert editarAdministradorBoton != null : "fx:id=\"editarAdministradorBoton\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
         assert eliminarAdministradorBoton != null : "fx:id=\"eliminarAdministradorBoton\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
         assert nombreCampo != null : "fx:id=\"nombreCampo\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
         assert nombreColumna != null : "fx:id=\"nombreColumna\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
+        assert nombreColumna1 != null : "fx:id=\"nombreColumna1\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
+        assert recargarBoton != null : "fx:id=\"recargarBoton\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
+        assert telefonoCampo != null : "fx:id=\"telefonoCampo\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
         assert volverBoton != null : "fx:id=\"volverBoton\" was not injected: check your FXML file 'GestionAdministrador.fxml'.";
 
     }
+
 }
