@@ -11,7 +11,9 @@ public class Cuenta {
     private LinkedList<Categoria> listaCategorias;
 
     /////Constructor
+
     public Cuenta(String id, String nombreBanco, int numCuenta, Usuario usuario) {
+
         this.id = id;
         this.nombreBanco = nombreBanco;
         this.numCuenta = numCuenta;
