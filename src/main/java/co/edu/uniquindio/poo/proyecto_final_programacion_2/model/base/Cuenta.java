@@ -11,7 +11,9 @@ public class Cuenta {
     private LinkedList<Categoria> listaCategorias;
 
     /////Constructor
+
     public Cuenta(String id, String nombreBanco, int numCuenta, Usuario usuario) {
+
         this.id = id;
         this.nombreBanco = nombreBanco;
         this.numCuenta = numCuenta;
@@ -58,17 +60,6 @@ public class Cuenta {
 
     public void setListaTransaccion(LinkedList<Transaccion> listaTransaccion) {
         this.listaTransaccion = listaTransaccion;
-    }
-
-    @Override
-    public String toString() {
-        return "Cuenta{" +
-                "id='" + id + '\'' +
-                ", nombreBanco='" + nombreBanco + '\'' +
-                ", numCuenta=" + numCuenta +
-                ", listaTransaccion=" + listaTransaccion +
-                ", listaCategorias=" + listaCategorias +
-                '}';
     }
 
     public LinkedList<Categoria> getListaCategorias() {
