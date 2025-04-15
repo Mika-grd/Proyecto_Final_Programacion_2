@@ -35,7 +35,7 @@
 
         <ImageView fitHeight="335.0" fitWidth="342.0" layoutX="238.0" layoutY="36.0" pickOnBounds="true">
             <image>
-                <Image url="" />
+                <Image url="@bob_esponja_billetera.jpg" />
             </image>
         </ImageView>
     </children>
