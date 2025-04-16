@@ -20,46 +20,6 @@ public class Usuario extends Persona implements IUsuario{
     /// Crud generico
     @Override
     public <T> String agregarObjeto(T objeto, LinkedList<T> listaObjetos) {
-        return agregarObjeto(objeto, listaObjetos);
-    }
-
-    @Override
-    public <T> String editarObjeto(T objeto, T objetoNuevo, LinkedList<T> listaObjetos) {
-        return editarObjeto(objeto, objetoNuevo, listaObjetos);
-    }
-
-    @Override
-    public <T> String eliminarObjeto(T objeto, LinkedList<T> listaObjetos) {
-        return eliminarObjeto(objeto, listaObjetos);
-    }
-
-    @Override
-    public <T> Object buscarObjeto(T id, LinkedList<T> listaObjetos) {
-        return buscarObjeto(id, listaObjetos);
-    }
-
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
-    public LinkedList<Cuenta> getListaCuentas() {
-        return listaCuentas;
-    }
-
-    public void setListaCuentas(LinkedList<Cuenta> listaCuentas) {
-        this.listaCuentas = listaCuentas;
-    }
-
-
-
-    /// Crud generico
-    @Override
-    public <T> String agregarObjeto(T objeto, LinkedList<T> listaObjetos) {
         return BilleteraVirtual.getInstance().agregarObjeto(objeto, listaObjetos);
     }
 
@@ -79,18 +39,19 @@ public class Usuario extends Persona implements IUsuario{
     }
 
 
-
-
-
-
-
-
-    ////Setters & getters
-    public double getSaldo() {
-        return saldo;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+    public LinkedList<Cuenta> getListaCuentas() {
+        return listaCuentas;
+    }
+
+    public void setListaCuentas(LinkedList<Cuenta> listaCuentas) {
+        this.listaCuentas = listaCuentas;
     }
 }
