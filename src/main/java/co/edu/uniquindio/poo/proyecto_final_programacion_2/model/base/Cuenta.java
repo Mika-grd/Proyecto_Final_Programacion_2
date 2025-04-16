@@ -56,17 +56,6 @@ public class Cuenta {
         this.listaTransaccion = listaTransaccion;
     }
 
-    @Override
-    public String toString() {
-        return "Cuenta{" +
-                "id='" + id + '\'' +
-                ", nombreBanco='" + nombreBanco + '\'' +
-                ", numCuenta=" + numCuenta +
-                ", listaTransaccion=" + listaTransaccion +
-                ", listaCategorias=" + listaCategorias +
-                '}';
-    }
-
     public LinkedList<Categoria> getListaCategorias() {
         return listaCategorias;
     }
