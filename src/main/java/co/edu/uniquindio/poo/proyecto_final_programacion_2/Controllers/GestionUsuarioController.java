@@ -21,34 +21,25 @@ public class GestionUsuarioController {
     private Button atrasBoton;
 
     @FXML
-    private Button añadirUsuarioBoton;
-
-    @FXML
-    private Button buscarBoton;
-
-    @FXML
-    private TextField busquedaCampo;
-
-    @FXML
-    private TextField cedulaCampo;
-
-    @FXML
     private TableColumn<?, ?> cedulaColumna;
 
     @FXML
-    private TextField contraseñaCampo;
+    private TextField clienteContactoCampo;
 
     @FXML
-    private TextField correoCampo;
+    private TextField clienteCorreoCampo;
+
+    @FXML
+    private TextField clienteNombreCampo;
+
+    @FXML
+    private Button consultarSaldoBoton;
 
     @FXML
     private Button editarUsuarioBoton;
 
     @FXML
-    private Button eliminarUsuarioBoton;
-
-    @FXML
-    private TextField nombreCampo;
+    private Button gestionarCategoriaBoton;
 
     @FXML
     private TableColumn<?, ?> nombreColumna;
@@ -57,10 +48,10 @@ public class GestionUsuarioController {
     private TableColumn<?, ?> nombreColumna1;
 
     @FXML
-    private Button recargarBoton;
+    private Button realizarTransaccionesBoton;
 
     @FXML
-    private TextField telefonoCampo;
+    private Button recargarBoton;
 
     @FXML
     private TableColumn<?, ?> telefonoColumna;
@@ -74,12 +65,7 @@ public class GestionUsuarioController {
     }
 
     @FXML
-    void añadirUsuarioAccion(ActionEvent event) {
-
-    }
-
-    @FXML
-    void buscarAccion(ActionEvent event) {
+    void consultarSaldoAccion(ActionEvent event) {
 
     }
 
@@ -89,7 +75,12 @@ public class GestionUsuarioController {
     }
 
     @FXML
-    void eliminarUsuarioAccion(ActionEvent event) {
+    void gestionarCategoriaAccion(ActionEvent event) {
+
+    }
+
+    @FXML
+    void realizarTransaccionesAccion(ActionEvent event) {
 
     }
 
@@ -101,20 +92,17 @@ public class GestionUsuarioController {
     @FXML
     void initialize() {
         assert atrasBoton != null : "fx:id=\"atrasBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
-        assert añadirUsuarioBoton != null : "fx:id=\"añadirUsuarioBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
-        assert buscarBoton != null : "fx:id=\"buscarBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
-        assert busquedaCampo != null : "fx:id=\"busquedaCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
-        assert cedulaCampo != null : "fx:id=\"cedulaCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert cedulaColumna != null : "fx:id=\"cedulaColumna\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
-        assert contraseñaCampo != null : "fx:id=\"contraseñaCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
-        assert correoCampo != null : "fx:id=\"correoCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert clienteContactoCampo != null : "fx:id=\"clienteContactoCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert clienteCorreoCampo != null : "fx:id=\"clienteCorreoCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert clienteNombreCampo != null : "fx:id=\"clienteNombreCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert consultarSaldoBoton != null : "fx:id=\"consultarSaldoBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert editarUsuarioBoton != null : "fx:id=\"editarUsuarioBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
-        assert eliminarUsuarioBoton != null : "fx:id=\"eliminarUsuarioBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
-        assert nombreCampo != null : "fx:id=\"nombreCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert gestionarCategoriaBoton != null : "fx:id=\"gestionarCategoriaBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert nombreColumna != null : "fx:id=\"nombreColumna\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert nombreColumna1 != null : "fx:id=\"nombreColumna1\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
+        assert realizarTransaccionesBoton != null : "fx:id=\"realizarTransaccionesBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert recargarBoton != null : "fx:id=\"recargarBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
-        assert telefonoCampo != null : "fx:id=\"telefonoCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert telefonoColumna != null : "fx:id=\"telefonoColumna\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert usuariosTabla != null : "fx:id=\"usuariosTabla\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
 
