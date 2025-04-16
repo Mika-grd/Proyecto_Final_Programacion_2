@@ -17,11 +17,13 @@ public class Cuenta {
         this.id = id;
         this.nombreBanco = nombreBanco;
         this.numCuenta = numCuenta;
-        this.usuario = usuario;
-        this.listaTransaccion = new LinkedList<Transaccion>();
-        this.listaCategorias = new LinkedList<Categoria>();
     }
 
+
+
+
+
+    ////SETTERS & GETTERS
     public String getId() {
         return id;
     }
@@ -44,14 +46,6 @@ public class Cuenta {
 
     public void setNumCuenta(int numCuenta) {
         this.numCuenta = numCuenta;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public LinkedList<Transaccion> getListaTransaccion() {
