@@ -103,11 +103,29 @@ public class GestionUsuarioController {
     }
 
     /**
-     * abra la pantalla
+     * abre la pantalla ConsultarSaldoTransacciones en la misma ventana
      * */
     @FXML
     void consultarSaldoAccion(ActionEvent event) {
+        try {
+            // Carga el archivo FXML de la pantalla anterior
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsultarSaldoTransacciones.fxml"));
 
+            // Crea el árbol de nodos desde el archivo FXML
+            Parent root = loader.load();
+
+            // Obtiene la ventana actual desde el botón
+            Stage stage = (Stage) atrasBoton.getScene().getWindow();
+
+            // Crea una nueva escena con el contenido de Pantalla1
+            Scene scene = new Scene(root);
+
+            // Establece la nueva escena en la ventana actual
+            stage.setScene(scene);
+        } catch (IOException e) {
+            // Muestra el error si hay un problema al cargar el FXML
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -132,14 +150,56 @@ public class GestionUsuarioController {
         alerta.showAndWait();
     }
 
+    /**
+     * abre la pantalla GestionarCategorias en la misma ventana
+     * */
     @FXML
     void gestionarCategoriaAccion(ActionEvent event) {
+        try {
+            // Carga el archivo FXML de la pantalla anterior
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GestionarCategorias.fxml"));
 
+            // Crea el árbol de nodos desde el archivo FXML
+            Parent root = loader.load();
+
+            // Obtiene la ventana actual desde el botón
+            Stage stage = (Stage) atrasBoton.getScene().getWindow();
+
+            // Crea una nueva escena con el contenido de Pantalla1
+            Scene scene = new Scene(root);
+
+            // Establece la nueva escena en la ventana actual
+            stage.setScene(scene);
+        } catch (IOException e) {
+            // Muestra el error si hay un problema al cargar el FXML
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * abre la pantalla RealizarTransferencia en la misma ventana
+     * */
     @FXML
     void realizarTransaccionesAccion(ActionEvent event) {
+        try {
+            // Carga el archivo FXML de la pantalla anterior
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("RealizarTransferencia.fxml"));
 
+            // Crea el árbol de nodos desde el archivo FXML
+            Parent root = loader.load();
+
+            // Obtiene la ventana actual desde el botón
+            Stage stage = (Stage) atrasBoton.getScene().getWindow();
+
+            // Crea una nueva escena con el contenido de Pantalla1
+            Scene scene = new Scene(root);
+
+            // Establece la nueva escena en la ventana actual
+            stage.setScene(scene);
+        } catch (IOException e) {
+            // Muestra el error si hay un problema al cargar el FXML
+            e.printStackTrace();
+        }
     }
 
     /**
