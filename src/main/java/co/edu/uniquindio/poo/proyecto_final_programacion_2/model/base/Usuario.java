@@ -37,13 +37,18 @@ public class Usuario extends Persona implements IUsuario{
         return BilleteraVirtual.getInstance().buscarObjeto(id, listaObjetos);
     }
 
+<<<<<<< Updated upstream
 
+=======
+    ////Setters & getters
+>>>>>>> Stashed changes
     public String getContraseña() {
         return contraseña;
     }
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
+<<<<<<< Updated upstream
     }
 
     public LinkedList<Cuenta> getListaCuentas() {
@@ -59,7 +64,19 @@ public class Usuario extends Persona implements IUsuario{
         return "Usuario{" +
                 "contraseña='" + contraseña + '\'' +
                 '}';
+=======
+>>>>>>> Stashed changes
     }
+
+    public LinkedList<Cuenta> getListaCuentas() {
+        return listaCuentas;
+    }
+
+    public void setListaCuentas(LinkedList<Cuenta> listaCuentas) {
+        this.listaCuentas = listaCuentas;
+    }
+
+
 }
 
 

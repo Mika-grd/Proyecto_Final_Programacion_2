@@ -5,6 +5,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -12,49 +14,74 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="618.0" prefWidth="905.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.GestionUsuarioController">
+<AnchorPane prefHeight="711.0" prefWidth="1129.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.GestionUsuarioController">
     <children>
-        <VBox layoutX="14.0" layoutY="51.0" prefHeight="429.0" prefWidth="287.0" spacing="20.0">
-            <children>
-                <Text fill="WHITE" text="Gestión de Usuario">
-                    <font>
-                        <Font name="Algerian" size="24.0" />
-                    </font>
-                </Text>
-                <TextField fx:id="nombreCampo" prefHeight="30.0" prefWidth="287.0" promptText="Nombre" />
-                <TextField fx:id="cedulaCampo" prefHeight="30.0" prefWidth="287.0" promptText="Cédula" />
-                <TextField fx:id="telefonoCampo" prefHeight="30.0" prefWidth="287.0" promptText="Teléfono" />
-            <TextField fx:id="correoCampo" prefHeight="30.0" prefWidth="287.0" promptText="Correo" />
-            <TextField fx:id="contraseñaCampo" prefHeight="30.0" prefWidth="287.0" promptText="Contraseña" />
-                <HBox spacing="10" />
-                  <Button fx:id="añadirUsuarioBoton" onAction="#añadirUsuarioAccion" prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Agregar" />
-                <Button fx:id="eliminarUsuarioBoton" onAction="#eliminarUsuarioAccion" prefHeight="26.0" prefWidth="130.0" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Eliminar" />
-                  <Button fx:id="editarUsuarioBoton" onAction="#editarUsuarioAccion" prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Editar" />
-                <Button fx:id="atrasBoton" onAction="#atrasAccion" prefHeight="26.0" prefWidth="131.0" text="Volver" textFill="RED" />
-            </children>
-        </VBox>
-
-        <TableView fx:id="usuariosTabla" layoutX="315.0" layoutY="70.0" prefHeight="440.0" prefWidth="570.0" style="-fx-background-color: rgba(240, 240, 240, 0.9);">
-            <columns>
-                <TableColumn fx:id="nombreColumna" prefWidth="160.0" text="Nombre" />
-                <TableColumn fx:id="cedulaColumna" prefWidth="129.5999755859375" text="Cédula" />
-                <TableColumn fx:id="telefonoColumna" prefWidth="142.4000244140625" text="Teléfono" />
-            <TableColumn fx:id="nombreColumna1" prefWidth="131.199951171875" text="Correo" />
-            </columns>
-        </TableView>
-      <HBox layoutX="315.0" layoutY="28.0" prefHeight="46.0" prefWidth="570.0" spacing="10.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
+      <ImageView fitHeight="609.0" fitWidth="590.0" layoutX="513.0" layoutY="31.0" pickOnBounds="true">
+         <image>
+            <Image url="@../fondo.jpg" />
+         </image>
+      </ImageView>
+          <Button fx:id="atrasBoton" layoutX="959.0" layoutY="657.0" onAction="#atrasAccion" prefHeight="26.0" prefWidth="131.0" text="Volver" textFill="RED" />
+      <HBox layoutX="533.0" layoutY="53.0" prefHeight="60.0" prefWidth="557.0">
          <children>
-            <TextField fx:id="busquedaCampo" prefHeight="20.0" prefWidth="271.0" />
-            <Button fx:id="buscarBoton" onAction="#buscarAccion" prefHeight="31.0" prefWidth="78.0" text="Buscar" />
-            <Pane prefHeight="36.0" prefWidth="126.0">
+            <HBox prefHeight="60.0" prefWidth="542.0" spacing="10.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
                <children>
-                  <Button fx:id="recargarBoton" mnemonicParsing="false" onAction="#recargarAccion" prefHeight="30.0" prefWidth="68.0" text="Recargar" />
+                  <TextField fx:id="busquedaCampo" prefHeight="20.0" prefWidth="271.0" />
+                  <Button fx:id="buscarBoton" onAction="#buscarAccion" prefHeight="31.0" prefWidth="78.0" text="Buscar" />
+                  <Pane prefHeight="36.0" prefWidth="126.0">
+                     <children>
+                        <Button fx:id="recargarBoton" mnemonicParsing="false" onAction="#recargarAccion" prefHeight="30.0" prefWidth="68.0" text="Recargar" />
+                     </children>
+                  </Pane>
                </children>
-            </Pane>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </HBox>
          </children>
-         <padding>
-            <Insets top="10.0" />
-         </padding>
       </HBox>
+      <HBox layoutX="533.0" layoutY="114.0" prefHeight="420.0" prefWidth="570.0">
+         <children>
+      
+                                      <TableView fx:id="usuariosTabla" prefHeight="430.0" prefWidth="568.0" style="-fx-background-color: rgba(240, 240, 240, 0.9);">
+                  <columns>
+                      <TableColumn fx:id="nombreColumna" prefWidth="160.0" text="Nombre" />
+                      <TableColumn fx:id="cedulaColumna" prefWidth="129.5999755859375" text="Cédula" />
+                      <TableColumn fx:id="telefonoColumna" prefWidth="142.4000244140625" text="Teléfono" />
+                  <TableColumn fx:id="nombreColumna1" prefWidth="131.199951171875" text="Correo" />
+                  </columns>
+              </TableView>
+         </children>
+      </HBox>
+      <Pane layoutX="29.0" layoutY="441.0" prefHeight="243.0" prefWidth="271.0" style="-fx-background-color: rgba(208, 208, 208, 0.9); border-radius: 10px;">
+         <children>
+            <VBox layoutX="21.0" layoutY="26.0" spacing="20.0">
+               <children>
+                  <Text text="Actualizar info">
+                     <font>
+                        <Font name="Candara" size="36.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="clienteNombreCampo" promptText="Nombre del Cliente" />
+                  <TextField fx:id="clienteContactoCampo" promptText="Contacto del Cliente" />
+                  <TextField fx:id="clienteCorreo" promptText="Correo del Cliente" />
+               </children>
+            </VBox>
+                  <Button fx:id="editarUsuarioBoton" layoutX="64.0" layoutY="203.0" onAction="#editarUsuarioAccion" prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Editar" />
+         </children>
+      </Pane>
+          <Text fill="WHITE" layoutX="96.0" layoutY="40.0" text="Gestión de Usuario">
+              <font>
+                  <Font name="Algerian" size="24.0" />
+              </font>
+          </Text>
+      <Button layoutX="33.0" layoutY="177.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="315.0" text="Button" />
+      <Button layoutX="33.0" layoutY="218.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="315.0" text="Button" />
+      <Button layoutX="33.0" layoutY="260.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="315.0" text="Button" />
+      <Text fill="WHITE" layoutX="47.0" layoutY="147.0" text="Menu" wrappingWidth="97.46484375">
+         <font>
+            <Font name="Algerian" size="32.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>
