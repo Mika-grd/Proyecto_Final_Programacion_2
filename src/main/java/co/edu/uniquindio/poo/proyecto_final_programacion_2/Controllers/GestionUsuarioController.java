@@ -1,15 +1,28 @@
 package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.BilleteraVirtual;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Persona;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Usuario;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class GestionUsuarioController {
+
+    private Sesion sesion = Sesion.getInstancia();
+
 
     @FXML
     private ResourceBundle resources;
@@ -21,7 +34,7 @@ public class GestionUsuarioController {
     private Button atrasBoton;
 
     @FXML
-    private TableColumn<?, ?> cedulaColumna;
+    private TableColumn<Usuario, String> cedulaColumna;
 
     @FXML
     private TextField clienteContactoCampo;
@@ -42,10 +55,11 @@ public class GestionUsuarioController {
     private Button gestionarCategoriaBoton;
 
     @FXML
-    private TableColumn<?, ?> nombreColumna;
+    private TableColumn<Usuario, String> nombreColumna;
 
+    //Correo
     @FXML
-    private TableColumn<?, ?> nombreColumna1;
+    private TableColumn<Usuario, String> nombreColumna1;
 
     @FXML
     private Button realizarTransaccionesBoton;
@@ -54,24 +68,68 @@ public class GestionUsuarioController {
     private Button recargarBoton;
 
     @FXML
-    private TableColumn<?, ?> telefonoColumna;
+    private TableColumn<Usuario, String> telefonoColumna;
 
     @FXML
-    private TableView<?> usuariosTabla;
+    private TableView<Usuario> usuariosTabla;
 
+    /**
+     *
+     * Carga la pantalla anterior  y la muestra en la misma ventana actual.
+     *
+     * @param event El evento de acción generado al hacer clic en el botón.
+     */
     @FXML
     void atrasAccion(ActionEvent event) {
+        try {
+            // Carga el archivo FXML de la pantalla anterior
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GestionCuenta.fxml"));
 
+            // Crea el árbol de nodos desde el archivo FXML
+            Parent root = loader.load();
+
+            // Obtiene la ventana actual desde el botón
+            Stage stage = (Stage) atrasBoton.getScene().getWindow();
+
+            // Crea una nueva escena con el contenido de Pantalla1
+            Scene scene = new Scene(root);
+
+            // Establece la nueva escena en la ventana actual
+            stage.setScene(scene);
+        } catch (IOException e) {
+            // Muestra el error si hay un problema al cargar el FXML
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * abra la pantalla
+     * */
     @FXML
     void consultarSaldoAccion(ActionEvent event) {
 
     }
 
+    /**
+     * Edita el usuario seleccionado en la tabla y cambia los valores por los que se pongan abajo a la izquierda
+     * */
     @FXML
     void editarUsuarioAccion(ActionEvent event) {
+        String mensaje = "Debe Seleccionar un usuario";
+        BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
+        Usuario usuario = usuariosTabla.getSelectionModel().getSelectedItem();
+        Usuario usuarioNuevo = new Usuario(clienteNombreCampo.getText(), usuario.getId(), clienteCorreoCampo.getText(), clienteContactoCampo.getText(), usuario.getContraseña());
+        if (usuario != null) {
+            billeteraVirtual.editarObjeto(usuario, usuarioNuevo, billeteraVirtual.getListaPersonas());
+            mensaje = "Usuario" + usuario.toString() +"actualizado con exito a " + usuarioNuevo.toString();
+        }
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION); // Tipo de alerta: Información
+        alerta.setTitle("Mensaje de Información"); // Título del popup
+        alerta.setHeaderText("Información Operación"); // Texto principal en la parte superior
+        alerta.setContentText(mensaje); // Texto del mensaje
 
+        // Mostrar el popup y esperar la respuesta del usuario (por ejemplo, clic en "OK")
+        alerta.showAndWait();
     }
 
     @FXML
@@ -84,13 +142,29 @@ public class GestionUsuarioController {
 
     }
 
+    /**
+     * Recarga la tabla donde se puede ver el usuario
+     * */
     @FXML
     void recargarAccion(ActionEvent event) {
-
+        usuariosTabla.refresh();
     }
+
 
     @FXML
     void initialize() {
+        // Configurar valores de la tabla
+        nombreColumna.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        cedulaColumna.setCellValueFactory(new PropertyValueFactory<>("id"));
+        telefonoColumna.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        nombreColumna1.setCellValueFactory(new PropertyValueFactory<>("correo"));
+
+        Usuario usuario = sesion.getUsuario();
+
+        ObservableList<Usuario> usuarios = FXCollections.observableArrayList(usuario);
+
+        usuariosTabla.setItems(usuarios);
+
         assert atrasBoton != null : "fx:id=\"atrasBoton\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert cedulaColumna != null : "fx:id=\"cedulaColumna\" was not injected: check your FXML file 'GestionUsuario.fxml'.";
         assert clienteContactoCampo != null : "fx:id=\"clienteContactoCampo\" was not injected: check your FXML file 'GestionUsuario.fxml'.";

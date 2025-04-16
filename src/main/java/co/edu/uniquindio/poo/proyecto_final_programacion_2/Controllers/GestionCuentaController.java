@@ -167,7 +167,7 @@ public class GestionCuentaController {
         colId.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getId()));
         colBanco.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNombreBanco()));
         colNumero.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNumeroCuenta()));
-        colUsuario.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getUsuario()));
+        colUsuario.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getClass()));
         colTipo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTipoCuenta()));
 
         tablaCuentas.setItems(listaCuentas);
