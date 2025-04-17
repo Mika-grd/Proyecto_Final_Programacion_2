@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600" prefWidth="800" style="-fx-background-color: black;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.GestionCuentaController">
+<AnchorPane prefHeight="600" prefWidth="800" style="-fx-background-color: black;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.GestionCuentaController">
 
     <VBox alignment="CENTER" spacing="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
 
@@ -35,10 +35,7 @@
             <TextField fx:id="txtUsuario" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
             <Label style="-fx-text-fill: white;" text="Tipo de Cuenta:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-            <ComboBox fx:id="comboTipoCuenta" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-
-            <Label style="-fx-text-fill: white;" text="Categoría:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-            <ComboBox fx:id="comboCategoria" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="comboTipoCuenta" prefHeight="26.0" prefWidth="205.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
             <!-- CAMPOS DÉBITO -->
             <HBox fx:id="boxDebito" spacing="10" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6">
@@ -77,18 +74,16 @@
             <Button fx:id="btnAgregar" style="-fx-font-family: Algerian;" text="Agregar" />
             <Button fx:id="btnEliminar" style="-fx-font-family: Algerian;" text="Eliminar" />
             <Button fx:id="btnActualizar" style="-fx-font-family: Algerian;" text="Actualizar" />
-         <Button fx:id="SeleccionarBoton" layoutX="356.0" layoutY="10.0" onAction="#seleccionarAccion" style="-fx-font-family: Algerian;" text="Seleccionar" textFill="RED" />
         </HBox>
 
         <!-- TABLA DE CUENTAS -->
         <TableView fx:id="tablaCuentas" prefHeight="250">
             <columns>
-                <TableColumn fx:id="colId" prefWidth="80" text="ID" />
-                <TableColumn fx:id="colBanco" prefWidth="120" text="Banco" />
-                <TableColumn fx:id="colNumero" prefWidth="120" text="Número" />
-                <TableColumn fx:id="colUsuario" prefWidth="150" text="Usuario" />
-                <TableColumn fx:id="colTipo" prefWidth="120" text="Tipo" />
-                <TableColumn fx:id="colCategoria" prefWidth="120" text="Categoría" />
+                <TableColumn fx:id="colId" prefWidth="156.79999387264252" text="ID" />
+                <TableColumn fx:id="colBanco" prefWidth="145.5999755859375" text="Banco" />
+                <TableColumn fx:id="colNumero" prefWidth="157.60003662109375" text="Número" />
+                <TableColumn fx:id="colUsuario" prefWidth="175.99996948242188" text="Usuario" />
+                <TableColumn fx:id="colTipo" prefWidth="145.5999755859375" text="Tipo" />
             </columns>
         </TableView>
 
