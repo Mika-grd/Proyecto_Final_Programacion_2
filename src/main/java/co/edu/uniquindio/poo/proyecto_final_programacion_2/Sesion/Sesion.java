@@ -17,6 +17,7 @@ public class Sesion {
     private Usuario usuario;
     private Administrador administrador;
     private Cuenta cuentaSeleccionada;
+    private CuentaDebito cuentaDebito;
 
     private Sesion() {
         // Constructor privado para singleton
@@ -45,6 +46,17 @@ public class Sesion {
         this.cuentaSeleccionada = cuentaSeleccionada;
     }
 
+    public static void setInstancia(Sesion instancia) {
+        Sesion.instancia = instancia;
+    }
+
+    public CuentaDebito getCuentaDebito() {
+        return cuentaDebito;
+    }
+
+    public void setCuentaDebito(CuentaDebito cuentaDebito) {
+        this.cuentaDebito = cuentaDebito;
+    }
 
     public Administrador getAdministrador() {
         return administrador;
@@ -58,6 +70,7 @@ public class Sesion {
         usuario = null;
         cuentaSeleccionada = null;
         instancia = null;
+        cuentaDebito = null;
     }
 }
 

@@ -9,9 +9,9 @@ public class Usuario extends Persona implements IUsuario{
     private LinkedList<Cuenta> listaCuentas;
 
     ///////Constructor
-    public Usuario(String nombre, String id, String correo, String telefono, String contraseña, LinkedList<Cuenta> listaCuentas) {
+    public Usuario(String nombre, String id, String correo, String telefono, String contraseña) {
         super(nombre, id, correo, telefono, contraseña);
-        this.listaCuentas = listaCuentas;
+        this.listaCuentas = new LinkedList<>();
     }
 
     /// Crud generico

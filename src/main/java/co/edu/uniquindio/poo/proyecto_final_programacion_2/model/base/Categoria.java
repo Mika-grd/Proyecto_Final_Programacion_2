@@ -4,13 +4,16 @@ public class Categoria {
     private String id;
     private String nombre;
     private String descripcion;
+    private Presupuesto presupuesto;
 
     /// Constructor
-    public Categoria(String id, String nombre, String descripcion) {
+    public Categoria(String id, String nombre, String descripcion, Presupuesto presupuesto) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.presupuesto = presupuesto;
     }
+
 
 
     @Override
@@ -45,5 +48,13 @@ public class Categoria {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Presupuesto getPresupuesto() {
+        return presupuesto;
+    }
+
+    public void setPresupuesto(Presupuesto presupuesto) {
+        this.presupuesto = presupuesto;
     }
 }
