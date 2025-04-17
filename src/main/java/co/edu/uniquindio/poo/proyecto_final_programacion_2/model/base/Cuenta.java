@@ -21,8 +21,6 @@ public class Cuenta {
 
 
 
-
-
     ////SETTERS & GETTERS
     public String getId() {
         return id;
