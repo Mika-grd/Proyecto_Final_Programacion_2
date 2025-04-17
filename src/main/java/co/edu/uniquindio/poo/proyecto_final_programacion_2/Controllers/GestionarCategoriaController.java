@@ -50,6 +50,7 @@ public class GestionarCategoriaController {
 
     private final CuentaCategoriasBuilder builder = new CuentaCategoriasBuilder();
 
+    //Inicializa el controlador
     @FXML
     public void initialize() {
         // Configurar columnas
