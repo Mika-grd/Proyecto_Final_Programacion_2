@@ -109,11 +109,14 @@ public class GestionarCategoriaController {
         listaCategorias.setAll(cuentaDebito.getListaCategorias());
     }
 
+    // Metodo para limpiar los campos de texto
     private void limpiarCampos() {
         txtIdCategoria.clear();
         txtNombreCategoria.clear();
         txtDescripcionCategoria.clear();
     }
+
+
 }
 
 
