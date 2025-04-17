@@ -33,8 +33,8 @@
                   <Font size="37.0" />
                </font>
             </Text>
-            <TextField layoutX="24.0" layoutY="130.0" prefHeight="25.0" prefWidth="237.0" promptText="Usuario" />
-            <TextField layoutX="24.0" layoutY="200.0" prefHeight="25.0" prefWidth="237.0" promptText="Contraseña" />
+            <TextField fx:id="UsuarioCampo" layoutX="24.0" layoutY="130.0" prefHeight="25.0" prefWidth="237.0" promptText="Usuario" />
+            <TextField fx:id="ContraseñaCampo" layoutX="24.0" layoutY="200.0" prefHeight="25.0" prefWidth="237.0" promptText="Contraseña" />
             <Button fx:id="iniciarSesionBoton" layoutX="24.0" layoutY="275.0" mnemonicParsing="false" onAction="#iniciarSesionAccion" prefHeight="44.0" prefWidth="237.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px;" text="Iniciar">
                <font>
                   <Font size="22.0" />

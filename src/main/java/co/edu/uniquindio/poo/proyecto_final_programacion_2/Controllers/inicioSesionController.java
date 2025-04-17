@@ -106,7 +106,7 @@ public class inicioSesionController {
     private void cargarVistaAdministrador() {
         try {
             // Cargar el archivo FXML de la nueva pantalla
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GestionAdministrador.fxml")); // Asegúrate de usar la ruta absoluta
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionAdministrador.fxml"));
 
             // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
@@ -135,7 +135,7 @@ public class inicioSesionController {
     private void cargarVistaUsuario() {
         try {
             // Cargar el archivo FXML de la nueva pantalla
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GestionCuenta.fxml")); // Asegúrate de usar la ruta absoluta
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionCuenta.fxml"));
 
             // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();

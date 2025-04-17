@@ -67,11 +67,17 @@ public class GestionUsuarioController {
     @FXML
     private Button recargarBoton;
 
+
+
     @FXML
     private TableColumn<Usuario, String> telefonoColumna;
 
     @FXML
     private TableView<Usuario> usuariosTabla;
+
+
+
+
 
     /**
      *

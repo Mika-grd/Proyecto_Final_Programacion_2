@@ -1,15 +1,21 @@
 package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 
 
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -82,6 +88,54 @@ public class GestionCuentaController {
 
     @FXML
     private TextField txtUsuario;
+
+    @FXML
+    private Button SeleccionarBoton;
+
+
+
+    @FXML
+    void seleccionarAccion(ActionEvent event) {
+        Sesion sesion = Sesion.getInstancia();
+        Cuenta cuentaSeleccionada = tablaCuentas.getSelectionModel().getSelectedItem();
+
+        if (cuentaSeleccionada != null) {
+            if (cuentaSeleccionada instanceof CuentaDebito) {
+                sesion.setCuentaDebito((CuentaDebito) cuentaSeleccionada);
+            }
+            if (cuentaSeleccionada instanceof CuentaCredito) {
+                sesion.setCuentaSeleccionada( (CuentaCredito) cuentaSeleccionada );
+            }
+        }
+
+        String mensaje = "Cuenta seleccionada :" + cuentaSeleccionada.toString();
+
+        mostrarAlerta(mensaje);
+
+        try {
+            // Cargar el archivo FXML de la nueva pantalla
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionUsuario.fxml"));
+
+            // Crea el árbol de nodos desde el archivo FXML
+            Parent root = loader.load();
+
+            // Obtener el stage desde cualquier nodo (como un botón)
+            Stage stage = (Stage) SeleccionarBoton.getScene().getWindow();
+
+            // Crear una nueva escena con el contenido cargado
+            Scene scene = new Scene(root);
+
+            // Establecer la nueva escena en la ventana actual
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            // Mostrar el error si ocurre al cargar el archivo FXML
+            e.printStackTrace();
+            mensaje = "No se pudo cargar la vista";
+        mostrarAlerta(mensaje);
+        }
+    }
 
 
     public BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
@@ -230,12 +284,30 @@ public class GestionCuentaController {
         colUsuario.setCellValueFactory(new PropertyValueFactory<>("usuario"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipoCuenta"));
 
+        colTipo.setCellFactory(column -> new TableCell<Cuenta, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    // Verificar si el objeto es de tipo CuentaDebito
+                    if (getTableRow().getItem() instanceof CuentaDebito) {
+                        setText("Débito");
+                    } else {
+                        setText("Crédito");
+                    }
+                }
+            }
+        });
+
 
         tablaCuentas.setItems(listaCuentas);
 
         // Manejador para mostrar campos dinámicamente
         comboTipoCuenta.setOnAction(event -> mostrarCamposPorTipo(comboTipoCuenta.getValue()));
 
+        assert SeleccionarBoton != null : "fx:id=\"SeleccionarBoton\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert boxCredito != null : "fx:id=\"boxCredito\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert boxDebito != null : "fx:id=\"boxDebito\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert btnActualizar != null : "fx:id=\"btnActualizar\" was not injected: check your FXML file 'GestionCuenta.fxml'.";

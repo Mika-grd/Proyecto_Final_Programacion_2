@@ -71,8 +71,8 @@ public class GestionAdministrador {
     @FXML
     private Button volverBoton;
 
-    @FXML
-    void agregarAdministrador(ActionEvent event) {
+    ///@FXML
+    /**void agregarAdministrador(ActionEvent event) {
             if (nombreCampo.getText().isEmpty() ||
                     cedulaCampo.getText().isEmpty()) {
 
@@ -99,7 +99,7 @@ public class GestionAdministrador {
                 confirmacion.setContentText("El Administrador ha sido añadido con éxito.");
                 confirmacion.showAndWait();
             }
-    }
+    }**/
 
     @FXML
     void buscarAccion(ActionEvent event) {
