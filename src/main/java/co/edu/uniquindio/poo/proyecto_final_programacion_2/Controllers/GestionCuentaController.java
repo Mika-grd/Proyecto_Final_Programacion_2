@@ -1,15 +1,17 @@
 package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Cuenta;
-import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.TipoCuenta;
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.CuentaDebito;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaCreditoBuilder;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class GestionCuentaController {
 
@@ -32,37 +34,34 @@ public class GestionCuentaController {
     private Button btnAgregar;
 
     @FXML
-    private Button btnEditar;
-
-    @FXML
     private Button btnEliminar;
 
     @FXML
-    private TableColumn<?, ?> colBanco;
+    private TableColumn<Cuenta,String > colBanco;
 
     @FXML
-    private TableColumn<?, ?> colId;
+    private TableColumn<Cuenta, String> colCategoria;
 
     @FXML
-    private TableColumn<?, ?> colNumero;
+    private TableColumn<Cuenta, String> colId;
 
     @FXML
-    private TableColumn<?, ?> colTipo;
+    private TableColumn<Cuenta, String> colNumero;
 
     @FXML
-    private TableColumn<?, ?> colUsuario;
+    private TableColumn<Cuenta, String> colTipo;
 
     @FXML
-    private ComboBox<?> comboTipoCuenta;
+    private TableColumn<Cuenta, String> colUsuario;
 
     @FXML
-    private TableView<?> tablaCuentas;
+    private ComboBox<String> comboCategoria;
 
     @FXML
-    private TextField txtCupoDisponible;
+    private ComboBox<String> comboTipoCuenta;
 
     @FXML
-    private TextField txtCupoEnUso;
+    private TableView<Cuenta> tablaCuentas;
 
     @FXML
     private TextField txtId;
@@ -73,11 +72,9 @@ public class GestionCuentaController {
     @FXML
     private TextField txtNumCuenta;
 
-    @FXML
-    private TextField txtSaldo;
 
     @FXML
-    private TextField txtTasaInteres;
+    private ComboBox<Double> txtTasaInteres;
 
     @FXML
     private TextField txtUsuario;
@@ -85,44 +82,74 @@ public class GestionCuentaController {
     private final ObservableList<Cuenta> listaCuentas = FXCollections.observableArrayList();
 
 
+    private void mostrarCamposPorTipo(String tipo) {
+        if ("Débito".equals(tipo)) {
+            boxDebito.setVisible(true);
+            boxCredito.setVisible(false);
+        } else if ("Crédito".equals(tipo)) {
+            boxDebito.setVisible(false);
+            boxCredito.setVisible(true);
+        } else {
+            boxDebito.setVisible(false);
+            boxCredito.setVisible(false);
+        }
+    }
+
+    @FXML
     private void agregarCuenta() {
         String id = txtId.getText();
         String banco = txtNombreBanco.getText();
         String numero = txtNumCuenta.getText();
         String usuario = txtUsuario.getText();
         String tipo = comboTipoCuenta.getValue();
+        String categoria = comboCategoria.getValue();
 
-        if (tipo == null) {
-            mostrarAlerta("Debe seleccionar un tipo de cuenta.");
+        if (id.isEmpty() || banco.isEmpty() || numero.isEmpty() || usuario.isEmpty() || tipo == null || categoria == null) {
+            mostrarAlerta("Debe completar todos los campos.");
             return;
         }
 
-        if (tipo.equals("Crédito")) {
-            double tasa = Double.parseDouble(txtTasaInteres.getText());
-            double disponible = Double.parseDouble(txtCupoDisponible.getText());
-            double enUso = Double.parseDouble(txtCupoEnUso.getText());
+        Cuenta cuenta;
 
-            CuentaCredito cuenta = new CuentaCredito.Builder()
-                    .id(id)
-                    .nombreBanco(banco)
-                    .numeroCuenta(numero)
-                    .usuario(usuario)
-                    .tasaInteres(tasa)
-                    .cupoDisponible(disponible)
-                    .cupoEnUso(enUso)
-                    .build();
+        if ("Débito".equals(tipo)) {
+            try {
+                double saldo = Double.parseDouble(txtSaldo.getText());
+                cuenta = new CuentaDebito(id, banco, numero, usuario, saldo, categoria);
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Saldo inválido.");
+                return;
+            }
+        } else if ("Crédito".equals(tipo)) {
+            try {
+                double tasaInteres = Double.parseDouble(txtTasaInteres.getText());
+                double cupoDisponible = Double.parseDouble(txtCupoDisponible.getText());
+                double cupoEnUso = Double.parseDouble(txtCupoEnUso.getText());
 
-            listaCuentas.add(cuenta);
+                cuenta = new CuentaCreditoBuilder()
+                        .setId(id)
+                        .setNombreBanco(banco)
+                        .setNumeroCuenta(numero)
+                        .setUsuario(usuario)
+                        .setTasaInteres(tasaInteres)
+                        .setCupoDisponible(cupoDisponible)
+                        .setCupoEnUso(cupoEnUso)
+                        .setCategoria(categoria)
+                        .build();
+
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Datos numéricos inválidos en crédito.");
+                return;
+            }
         } else {
-            double saldo = Double.parseDouble(txtSaldo.getText());
-
-            CuentaAhorro cuenta = new CuentaAhorro(id, banco, numero, usuario, saldo);
-            listaCuentas.add(cuenta);
+            mostrarAlerta("Seleccione un tipo de cuenta válido.");
+            return;
         }
 
+        listaCuentas.add(cuenta);
         limpiarCampos();
     }
 
+    @FXML
     private void eliminarCuenta() {
         Cuenta seleccionada = tablaCuentas.getSelectionModel().getSelectedItem();
         if (seleccionada != null) {
@@ -132,7 +159,8 @@ public class GestionCuentaController {
         }
     }
 
-    private void actualizarTabla() {
+    @FXML
+    private void actualizarCuenta() {
         tablaCuentas.refresh();
     }
 
@@ -146,12 +174,13 @@ public class GestionCuentaController {
         txtCupoDisponible.clear();
         txtCupoEnUso.clear();
         comboTipoCuenta.setValue(null);
-        actualizarCamposPorTipo();
+        comboCategoria.setValue(null);
+        boxDebito.setVisible(false);
+        boxCredito.setVisible(false);
     }
 
     private void mostrarAlerta(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Advertencia");
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
@@ -160,41 +189,35 @@ public class GestionCuentaController {
     @FXML
     void initialize() {
 
-        comboTipoCuenta.setItems(FXCollections.observableArrayList("Crédito", "Ahorro"));
+        // Configurar ComboBoxes
+        comboTipoCuenta.setItems(FXCollections.observableArrayList("Débito", "Crédito"));
+        comboCategoria.setItems(FXCollections.observableArrayList("Ahorro", "Corriente", "Inversiones", "Fondo"));
 
-        comboTipoCuenta.setOnAction(e -> actualizarCamposPorTipo());
-
-        colId.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getId()));
-        colBanco.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNombreBanco()));
-        colNumero.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNumeroCuenta()));
-        colUsuario.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getUsuario()));
-        colTipo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTipoCuenta()));
+        // Configurar columnas de la tabla
+        colId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+        colBanco.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombreBanco()));
+        colNumero.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumCuenta()));
+        colUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsuario()));
+        colTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoCuenta()));
+        colCategoria.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getListaCategorias()));
 
         tablaCuentas.setItems(listaCuentas);
 
-        btnAgregar.setOnAction(e -> agregarCuenta());
-        btnEliminar.setOnAction(e -> eliminarCuenta());
-        btnActualizar.setOnAction(e -> actualizarTabla());
-    }
-
-    private void actualizarCamposPorTipo() {
-        String tipo = comboTipoCuenta.getValue();
-        boolean esCredito = "Crédito".equals(tipo);
-
-        boxCredito.setVisible(esCredito);
-        boxDebito.setVisible(!esCredito);
+        // Manejador para mostrar campos dinámicamente
+        comboTipoCuenta.setOnAction(event -> mostrarCamposPorTipo(comboTipoCuenta.getValue()));
 
         assert boxCredito != null : "fx:id=\"boxCredito\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert boxDebito != null : "fx:id=\"boxDebito\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert btnActualizar != null : "fx:id=\"btnActualizar\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert btnAgregar != null : "fx:id=\"btnAgregar\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
-        assert btnEditar != null : "fx:id=\"btnEditar\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert btnEliminar != null : "fx:id=\"btnEliminar\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert colBanco != null : "fx:id=\"colBanco\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
+        assert colCategoria != null : "fx:id=\"colCategoria\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert colId != null : "fx:id=\"colId\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert colNumero != null : "fx:id=\"colNumero\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert colTipo != null : "fx:id=\"colTipo\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert colUsuario != null : "fx:id=\"colUsuario\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
+        assert comboCategoria != null : "fx:id=\"comboCategoria\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert comboTipoCuenta != null : "fx:id=\"comboTipoCuenta\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert tablaCuentas != null : "fx:id=\"tablaCuentas\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert txtCupoDisponible != null : "fx:id=\"txtCupoDisponible\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
@@ -207,4 +230,6 @@ public class GestionCuentaController {
         assert txtUsuario != null : "fx:id=\"txtUsuario\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
 
     }
+
+
 }

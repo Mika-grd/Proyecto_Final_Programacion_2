@@ -1,58 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
-<AnchorPane style="-fx-background-color: black;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.GestionCuentaController">
-    <VBox spacing="10">
-        <padding>
-            <Insets bottom="20" left="20" right="20" top="20" />
-        </padding>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.GestionCuentaController" prefWidth="800" prefHeight="600" style="-fx-background-color: black;">
 
-        <!-- Selección tipo de cuenta y botones -->
-        <HBox spacing="10">
-            <ComboBox fx:id="comboTipoCuenta" promptText="Seleccionar tipo de cuenta" />
-            <Button fx:id="btnAgregar" style="-fx-font-family: Algerian;" text="Agregar" />
-            <Button fx:id="btnEditar" style="-fx-font-family: Algerian;" text="Editar" />
-            <Button fx:id="btnEliminar" style="-fx-font-family: Algerian;" text="Eliminar" />
-            <Button fx:id="btnActualizar" style="-fx-font-family: Algerian;" text="Actualizar" />
+    <VBox spacing="10" alignment="CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+
+        <!-- TÍTULO -->
+        <Label text="Gestión de Cuentas" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-family: Algerian;" />
+
+        <!-- FORMULARIO -->
+        <GridPane hgap="10" vgap="10" style="-fx-padding: 10;">
+            <Label text="ID:" style="-fx-text-fill: white;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtId" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Banco:" style="-fx-text-fill: white;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtNombreBanco" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Número Cuenta:" style="-fx-text-fill: white;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtNumCuenta" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Usuario:" style="-fx-text-fill: white;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtUsuario" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Tipo de Cuenta:" style="-fx-text-fill: white;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="comboTipoCuenta" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Label text="Categoría:" style="-fx-text-fill: white;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="comboCategoria" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+            <!-- CAMPOS DÉBITO -->
+            <HBox fx:id="boxDebito" spacing="10" visible="false" GridPane.rowIndex="6" GridPane.columnIndex="1">
+                <Label text="Saldo:" style="-fx-text-fill: white;"/>
+                <TextField fx:id="txtSaldo" prefWidth="100"/>
+            </HBox>
+
+            <!-- CAMPOS CRÉDITO -->
+            <HBox fx:id="boxCredito" spacing="10" visible="false" GridPane.rowIndex="7" GridPane.columnIndex="1">
+                <Label text="Tasa de Interés:" style="-fx-text-fill: white;"/>
+                <TextField fx:id="txtTasaInteres" prefWidth="100"/>
+                <Label text="Cupo Disponible:" style="-fx-text-fill: white;"/>
+                <TextField fx:id="txtCupoDisponible" prefWidth="100"/>
+                <Label text="Cupo En Uso:" style="-fx-text-fill: white;"/>
+                <TextField fx:id="txtCupoEnUso" prefWidth="100"/>
+            </HBox>
+
+        </GridPane>
+
+        <!-- BOTONES -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button fx:id="btnAgregar" text="Agregar" style="-fx-font-family: Algerian;"/>
+            <Button fx:id="btnEliminar" text="Eliminar" style="-fx-font-family: Algerian;"/>
+            <Button fx:id="btnActualizar" text="Actualizar" style="-fx-font-family: Algerian;"/>
         </HBox>
 
-        <!-- Campos comunes -->
-        <HBox spacing="10">
-            <TextField fx:id="txtId" promptText="ID de la cuenta" />
-            <TextField fx:id="txtNombreBanco" promptText="Nombre del Banco" />
-            <TextField fx:id="txtNumCuenta" promptText="Número de Cuenta" />
-            <TextField fx:id="txtUsuario" promptText="Usuario" />
-        </HBox>
-
-        <!-- Campos tipo débito -->
-        <HBox fx:id="boxDebito" spacing="10">
-            <TextField fx:id="txtSaldo" promptText="Saldo" />
-        </HBox>
-
-        <!-- Campos tipo crédito -->
-        <HBox fx:id="boxCredito" spacing="10">
-            <TextField fx:id="txtTasaInteres" promptText="Tasa de Interés" />
-            <TextField fx:id="txtCupoDisponible" promptText="Cupo Disponible" />
-            <TextField fx:id="txtCupoEnUso" promptText="Cupo en Uso" />
-        </HBox>
-
-        <!-- Tabla de cuentas -->
-        <TableView fx:id="tablaCuentas" prefHeight="200">
+        <!-- TABLA DE CUENTAS -->
+        <TableView fx:id="tablaCuentas" prefHeight="250">
             <columns>
-                <TableColumn fx:id="colId" prefWidth="100.79998779296875" text="ID" />
-                <TableColumn fx:id="colBanco" prefWidth="125.60004425048828" text="Banco" />
-                <TableColumn fx:id="colNumero" prefWidth="136.79998779296875" text="Nro Cuenta" />
-                <TableColumn fx:id="colTipo" prefWidth="124.79998779296875" text="Tipo" />
-                <TableColumn fx:id="colUsuario" prefWidth="145.60003662109375" text="Usuario" />
+                <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+                <TableColumn fx:id="colBanco" text="Banco" prefWidth="120"/>
+                <TableColumn fx:id="colNumero" text="Número" prefWidth="120"/>
+                <TableColumn fx:id="colUsuario" text="Usuario" prefWidth="150"/>
+                <TableColumn fx:id="colTipo" text="Tipo" prefWidth="120"/>
+                <TableColumn fx:id="colCategoria" text="Categoría" prefWidth="120"/>
             </columns>
         </TableView>
 
