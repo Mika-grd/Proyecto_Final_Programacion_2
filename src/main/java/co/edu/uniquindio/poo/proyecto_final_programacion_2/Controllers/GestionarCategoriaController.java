@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Categoria;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.CuentaDebito;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Presupuesto;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaCategoriasBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -83,9 +84,10 @@ public class GestionarCategoriaController {
         String id = txtIdCategoria.getText().trim();
         String nombre = txtNombreCategoria.getText().trim();
         String descripcion = txtDescripcionCategoria.getText().trim();
+        Presupuesto presupuesto = new Presupuesto(id, nombre,0);
 
         if (!id.isEmpty() && !nombre.isEmpty() && !descripcion.isEmpty()) {
-            Categoria categoria = new Categoria(id, nombre, descripcion);
+            Categoria categoria = new Categoria(id, nombre, descripcion,new Presupuesto(id,nombre, presupuesto.getMontoActual()));
             builder.añadirCategoria(categoria);
             actualizarTabla();
             limpiarCampos();

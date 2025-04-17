@@ -67,11 +67,17 @@ public class GestionUsuarioController {
     @FXML
     private Button recargarBoton;
 
+
+
     @FXML
     private TableColumn<Usuario, String> telefonoColumna;
 
     @FXML
     private TableView<Usuario> usuariosTabla;
+
+
+
+
 
     /**
      *
@@ -136,7 +142,8 @@ public class GestionUsuarioController {
         String mensaje = "Debe Seleccionar un usuario";
         BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
         Usuario usuario = usuariosTabla.getSelectionModel().getSelectedItem();
-        Usuario usuarioNuevo = new Usuario(clienteNombreCampo.getText(), usuario.getId(), clienteCorreoCampo.getText(), clienteContactoCampo.getText(), usuario.getContraseña(), usuario.getListaCuentas());
+        Usuario usuarioNuevo = new Usuario(clienteNombreCampo.getText(), usuario.getId(), clienteCorreoCampo.getText(), clienteContactoCampo.getText(), usuario.getContraseña());
+        usuarioNuevo.setListaCuentas(usuario.getListaCuentas());
         if (usuario != null) {
             billeteraVirtual.editarObjeto(usuario, usuarioNuevo, billeteraVirtual.getListaPersonas());
             mensaje = "Usuario" + usuario.toString() +"actualizado con exito a " + usuarioNuevo.toString();

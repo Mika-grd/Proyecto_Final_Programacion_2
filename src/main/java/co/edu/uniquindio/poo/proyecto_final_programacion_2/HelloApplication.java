@@ -1,8 +1,6 @@
 package co.edu.uniquindio.poo.proyecto_final_programacion_2;
 
-import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Categoria;
-import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Cuenta;
-import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Usuario;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaCategoriasBuilder;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaDebitoBuilder;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.DirectorCuentasBuilder;
@@ -16,7 +14,7 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("InicioSesion.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
@@ -25,6 +23,7 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
 
+        BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
 
         Usuario user = new Usuario("juan", "1234", "juan@.com", "3015694075", "123");
 
@@ -37,12 +36,21 @@ public class HelloApplication extends Application {
 
         Cuenta cuenta1 = director.cuentaDebitoSimple(debito, "123", 107890654, user);
 
-        Categoria Ahorro = new Categoria("12", "Ahorros", "Para ahorrar");
+        Presupuesto presupuesto = new Presupuesto("", "", 0);
+
+        Categoria Ahorro = new Categoria("12", "Ahorros", "Para ahorrar", presupuesto);
         Cuenta cuenta2 = director.cuentaDebitoConUnaCategoria(builderCategorias, "123", 1234, user, Ahorro);
+
+        billeteraVirtual.agregarObjeto(user, billeteraVirtual.getListaPersonas());
+
+        billeteraVirtual.agregarObjeto(cuenta1, billeteraVirtual.getListaCuentas());
+        billeteraVirtual.agregarObjeto(cuenta2, billeteraVirtual.getListaCuentas());
 
         System.out.println(cuenta1.toString());
 
         System.out.println(cuenta2.toString());
+
+        System.out.println(billeteraVirtual.getListaCuentas());
 
         launch();
     }
