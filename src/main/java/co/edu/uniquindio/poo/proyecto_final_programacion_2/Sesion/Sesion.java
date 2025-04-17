@@ -15,6 +15,7 @@ public class Sesion {
     private static Sesion instancia;
 
     private Usuario usuario;
+    private Administrador administrador;
     private Cuenta cuentaSeleccionada;
 
     private Sesion() {
@@ -42,6 +43,15 @@ public class Sesion {
 
     public void setCuentaSeleccionada(Cuenta cuentaSeleccionada) {
         this.cuentaSeleccionada = cuentaSeleccionada;
+    }
+
+
+    public Administrador getAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
     }
 
     public void cerrarSesion() {

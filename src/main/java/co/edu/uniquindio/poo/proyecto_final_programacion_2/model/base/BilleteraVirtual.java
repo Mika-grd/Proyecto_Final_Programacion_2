@@ -57,7 +57,7 @@ public class BilleteraVirtual implements ICrud {
     }
 
     @Override
-    public <T> T buscarObjeto(T id, LinkedList<T> listaObjetos) {
+    public <T> T buscarObjeto(String id, LinkedList<T> listaObjetos) {
         for (T objeto : listaObjetos) {
             try {
                 Method getIdMethod = objeto.getClass().getMethod("getId");

@@ -5,13 +5,16 @@ public abstract class Persona {
     private String id;
     private String correo;
     private String telefono;
+    private String contraseña;
 
-    public Persona(String nombre, String id, String correo, String telefono) {
+    public Persona(String nombre, String id, String correo, String telefono, String contraseña) {
         this.nombre = nombre;
         this.id = id;
         this.correo = correo;
         this.telefono = telefono;
+        this.contraseña = contraseña;
     }
+
 
     public String getNombre() {
         return nombre;
@@ -43,5 +46,13 @@ public abstract class Persona {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 }

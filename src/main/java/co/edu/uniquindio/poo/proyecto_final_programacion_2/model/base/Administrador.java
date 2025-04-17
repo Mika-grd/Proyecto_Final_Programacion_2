@@ -4,11 +4,9 @@ import java.util.LinkedList;
 
 public class Administrador extends Persona implements IAdmin {
 
-    public Administrador(String nombre, String id, String correo, String telefono) {
-        super(nombre, id, correo, telefono);
-
+    public Administrador(String nombre, String id, String correo, String telefono, String contraseña) {
+        super(nombre, id, correo, telefono, contraseña);
     }
-
 
     @Override
     public <T> String agregarObjeto(T objeto, LinkedList<T> listaObjetos) {
@@ -26,7 +24,7 @@ public class Administrador extends Persona implements IAdmin {
     }
 
     @Override
-    public <T> Object buscarObjeto(T id, LinkedList<T> listaObjetos) {
+    public <T> Object buscarObjeto(String id, LinkedList<T> listaObjetos) {
 
         return BilleteraVirtual.getInstance().buscarObjeto(id, listaObjetos);
     }

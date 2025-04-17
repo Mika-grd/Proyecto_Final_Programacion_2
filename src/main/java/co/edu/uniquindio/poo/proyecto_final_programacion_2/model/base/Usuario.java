@@ -5,17 +5,14 @@ import java.util.LinkedList;
 
 public class Usuario extends Persona implements IUsuario{
 
-    private String contraseña;
+
     private LinkedList<Cuenta> listaCuentas;
 
     ///////Constructor
-    public Usuario(String nombre, String id, String correo, String telefono, String contraseña) {
-        super(nombre, id, correo, telefono);
-        this.contraseña = contraseña;
-        this.listaCuentas = new LinkedList<>();
+    public Usuario(String nombre, String id, String correo, String telefono, String contraseña, LinkedList<Cuenta> listaCuentas) {
+        super(nombre, id, correo, telefono, contraseña);
+        this.listaCuentas = listaCuentas;
     }
-
-
 
     /// Crud generico
     @Override
@@ -34,18 +31,11 @@ public class Usuario extends Persona implements IUsuario{
     }
 
     @Override
-    public <T> Object buscarObjeto(T id, LinkedList<T> listaObjetos) {
+    public <T> Object buscarObjeto(String id, LinkedList<T> listaObjetos) {
         return BilleteraVirtual.getInstance().buscarObjeto(id, listaObjetos);
     }
 
 
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
 
     public LinkedList<Cuenta> getListaCuentas() {
         return listaCuentas;

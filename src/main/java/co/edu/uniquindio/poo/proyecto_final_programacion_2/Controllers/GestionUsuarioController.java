@@ -115,7 +115,7 @@ public class GestionUsuarioController {
             Parent root = loader.load();
 
             // Obtiene la ventana actual desde el botón
-            Stage stage = (Stage) atrasBoton.getScene().getWindow();
+            Stage stage = (Stage) consultarSaldoBoton.getScene().getWindow();
 
             // Crea una nueva escena con el contenido de Pantalla1
             Scene scene = new Scene(root);
@@ -136,7 +136,7 @@ public class GestionUsuarioController {
         String mensaje = "Debe Seleccionar un usuario";
         BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
         Usuario usuario = usuariosTabla.getSelectionModel().getSelectedItem();
-        Usuario usuarioNuevo = new Usuario(clienteNombreCampo.getText(), usuario.getId(), clienteCorreoCampo.getText(), clienteContactoCampo.getText(), usuario.getContraseña());
+        Usuario usuarioNuevo = new Usuario(clienteNombreCampo.getText(), usuario.getId(), clienteCorreoCampo.getText(), clienteContactoCampo.getText(), usuario.getContraseña(), usuario.getListaCuentas());
         if (usuario != null) {
             billeteraVirtual.editarObjeto(usuario, usuarioNuevo, billeteraVirtual.getListaPersonas());
             mensaje = "Usuario" + usuario.toString() +"actualizado con exito a " + usuarioNuevo.toString();
@@ -163,7 +163,7 @@ public class GestionUsuarioController {
             Parent root = loader.load();
 
             // Obtiene la ventana actual desde el botón
-            Stage stage = (Stage) atrasBoton.getScene().getWindow();
+            Stage stage = (Stage) gestionarCategoriaBoton.getScene().getWindow();
 
             // Crea una nueva escena con el contenido de Pantalla1
             Scene scene = new Scene(root);
@@ -189,7 +189,7 @@ public class GestionUsuarioController {
             Parent root = loader.load();
 
             // Obtiene la ventana actual desde el botón
-            Stage stage = (Stage) atrasBoton.getScene().getWindow();
+            Stage stage = (Stage) realizarTransaccionesBoton.getScene().getWindow();
 
             // Crea una nueva escena con el contenido de Pantalla1
             Scene scene = new Scene(root);
