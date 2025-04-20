@@ -71,9 +71,9 @@
 
         <!-- BOTONES -->
         <HBox alignment="CENTER" spacing="10">
-            <Button fx:id="btnAgregar" style="-fx-font-family: Algerian;" text="Agregar" />
-            <Button fx:id="btnEliminar" style="-fx-font-family: Algerian;" text="Eliminar" />
-            <Button fx:id="btnActualizar" style="-fx-font-family: Algerian;" text="Actualizar" />
+            <Button fx:id="btnAgregar" onAction="#agregarCuentaAccion" style="-fx-font-family: Algerian;" text="Agregar" />
+            <Button fx:id="btnEliminar" onAction="#eliminarCuentaAccion" style="-fx-font-family: Algerian;" text="Eliminar" />
+            <Button fx:id="btnActualizar" onAction="#actualizarTablaAccion" style="-fx-font-family: Algerian;" text="Actualizar" />
         </HBox>
 
         <!-- TABLA DE CUENTAS -->

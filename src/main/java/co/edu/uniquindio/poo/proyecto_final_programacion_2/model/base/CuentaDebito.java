@@ -19,4 +19,8 @@ public class CuentaDebito extends Cuenta {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
+
+    public String getTipoCuenta() {
+        return "Débito";
+    }
 }
