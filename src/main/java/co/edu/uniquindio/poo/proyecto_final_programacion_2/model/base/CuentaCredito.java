@@ -40,4 +40,9 @@ public class CuentaCredito extends Cuenta{
     public void setCupoEnUso(double cupoEnUso) {
         this.cupoEnUso = cupoEnUso;
     }
+
+    public String getTipoCuenta() {
+        return "Crédito";
+    }
+
 }

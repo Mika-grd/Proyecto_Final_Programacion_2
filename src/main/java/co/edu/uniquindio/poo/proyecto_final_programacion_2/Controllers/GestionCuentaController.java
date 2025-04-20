@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaCategoriasBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -170,11 +171,18 @@ public class GestionCuentaController {
     private void agregarCuentaAccion(ActionEvent event) {
         String id = txtId.getText();
         String banco = txtNombreBanco.getText();
-        int numCuenta = Integer.parseInt(txtNumCuenta.getText());
+        int numCuenta;
+        try {
+            numCuenta = Integer.parseInt(txtNumCuenta.getText());
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Número de cuenta inválido.");
+            return;
+        }
+
         Usuario usuario = (Usuario) billeteraVirtual.buscarObjeto(txtUsuario.getText(), billeteraVirtual.getListaPersonas());
         String tipo = comboTipoCuenta.getValue();
 
-        if (id.isEmpty() || banco.isEmpty() || numCuenta == 0 || usuario == null || tipo == null ) {
+        if (id.isEmpty() || banco.isEmpty() || usuario == null || tipo == null) {
             mostrarAlerta("Debe completar todos los campos.");
             return;
         }
@@ -185,6 +193,7 @@ public class GestionCuentaController {
             try {
                 double saldo = Double.parseDouble(txtSaldo.getText());
                 cuenta = new CuentaDebito(id, banco, numCuenta, usuario, saldo);
+                // Las categorías se asignarán después en otra parte
             } catch (NumberFormatException e) {
                 mostrarAlerta("Saldo inválido.");
                 return;
@@ -194,9 +203,7 @@ public class GestionCuentaController {
                 double tasaInteres = Double.parseDouble(txtTasaInteres.getText());
                 double cupoDisponible = Double.parseDouble(txtCupoDisponible.getText());
                 double cupoEnUso = Double.parseDouble(txtCupoEnUso.getText());
-
                 cuenta = new CuentaCredito(id, banco, numCuenta, usuario, tasaInteres, cupoDisponible, cupoEnUso);
-
             } catch (NumberFormatException e) {
                 mostrarAlerta("Datos numéricos inválidos en crédito.");
                 return;
@@ -206,9 +213,11 @@ public class GestionCuentaController {
             return;
         }
 
-        listaCuentas.add(cuenta);
-        limpiarCampos();
+        billeteraVirtual.getListaCuentas().add(cuenta);  // Añadir a la lista de negocio
+        actualizarLista();  // Refrescar la lista observable que la tabla usa
+        limpiarCampos();    // Limpiar los campos de entrada
     }
+
 
     /**
      * Elimina la cuenta actualmente seleccionada en la tabla.
@@ -218,7 +227,8 @@ public class GestionCuentaController {
     private void eliminarCuentaAccion(ActionEvent event) {
         Cuenta seleccionada = tablaCuentas.getSelectionModel().getSelectedItem();
         if (seleccionada != null) {
-            listaCuentas.remove(seleccionada);
+            billeteraVirtual.getListaCuentas().remove(seleccionada);  // Eliminar de la lista de negocio
+            actualizarLista();  // Refrescar la lista observable
         } else {
             mostrarAlerta("Debe seleccionar una cuenta para eliminar.");
         }
@@ -231,6 +241,11 @@ public class GestionCuentaController {
     @FXML
     private void actualizarTablaAccion(ActionEvent event) {
         tablaCuentas.refresh();
+    }
+
+    private void actualizarLista() {
+        listaCuentas.setAll(billeteraVirtual.getListaCuentas());  // Sincroniza con la lista real
+        tablaCuentas.refresh();  // Refresca la tabla visualmente
     }
 
     /**
