@@ -76,6 +76,11 @@ public class GestionUsuarioController {
     private TableView<Usuario> usuariosTabla;
 
 
+    Usuario usuario = sesion.getUsuario();
+
+    ObservableList<Usuario> usuarios = FXCollections.observableArrayList(usuario);
+
+
 
 
 
@@ -89,7 +94,7 @@ public class GestionUsuarioController {
     void atrasAccion(ActionEvent event) {
         try {
             // Carga el archivo FXML de la pantalla anterior
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GestionCuenta.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionCuenta.fxml"));
 
             // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
@@ -115,7 +120,7 @@ public class GestionUsuarioController {
     void consultarSaldoAccion(ActionEvent event) {
         try {
             // Carga el archivo FXML de la pantalla anterior
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsultarSaldoTransacciones.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/ConsultarSaldoTransacciones.fxml"));
 
             // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
@@ -147,6 +152,9 @@ public class GestionUsuarioController {
         if (usuario != null) {
             billeteraVirtual.editarObjeto(usuario, usuarioNuevo, billeteraVirtual.getListaPersonas());
             mensaje = "Usuario" + usuario.toString() +"actualizado con exito a " + usuarioNuevo.toString();
+            usuarios = FXCollections.observableArrayList(usuarioNuevo);
+            usuariosTabla.setItems(usuarios);
+
         }
         Alert alerta = new Alert(Alert.AlertType.INFORMATION); // Tipo de alerta: Información
         alerta.setTitle("Mensaje de Información"); // Título del popup
@@ -164,7 +172,7 @@ public class GestionUsuarioController {
     void gestionarCategoriaAccion(ActionEvent event) {
         try {
             // Carga el archivo FXML de la pantalla anterior
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GestionarCategorias.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionarCategorias.fxml"));
 
             // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
@@ -190,7 +198,7 @@ public class GestionUsuarioController {
     void realizarTransaccionesAccion(ActionEvent event) {
         try {
             // Carga el archivo FXML de la pantalla anterior
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("RealizarTransferencia.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/RealizarTransferencia.fxml"));
 
             // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
@@ -226,9 +234,7 @@ public class GestionUsuarioController {
         telefonoColumna.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         nombreColumna1.setCellValueFactory(new PropertyValueFactory<>("correo"));
 
-        Usuario usuario = sesion.getUsuario();
 
-        ObservableList<Usuario> usuarios = FXCollections.observableArrayList(usuario);
 
         usuariosTabla.setItems(usuarios);
 

@@ -111,6 +111,8 @@ public class GestionCuentaController {
 
         String mensaje = "Cuenta seleccionada :" + cuentaSeleccionada.toString();
 
+        sesion.setCuentaSeleccionada(cuentaSeleccionada);
+
         mostrarAlerta(mensaje);
 
         try {
@@ -322,7 +324,7 @@ public class GestionCuentaController {
         // Manejador para mostrar campos dinámicamente
         comboTipoCuenta.setOnAction(event -> mostrarCamposPorTipo(comboTipoCuenta.getValue()));
 
-        assert SeleccionarBoton != null : "fx:id=\"SeleccionarBoton\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
+        assert SeleccionarBoton != null : "fx:id=\"SeleccionarBoton\" was not injected: check your FXML file 'GestionarCategorias.fxml'.";
         assert boxCredito != null : "fx:id=\"boxCredito\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert boxDebito != null : "fx:id=\"boxDebito\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
         assert btnActualizar != null : "fx:id=\"btnActualizar\" was not injected: check your FXML file 'GestionCuenta.fxml'.";

@@ -1,19 +1,30 @@
 package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Categoria;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.CuentaDebito;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Presupuesto;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaCategoriasBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class GestionarCategoriaController {
+
+    @FXML
+    private Button atrasBoton;
 
     @FXML
     private TextField txtIdCategoria;
@@ -45,11 +56,85 @@ public class GestionarCategoriaController {
     @FXML
     private TableColumn<Categoria, String> colDescripcion;
 
-    private ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList();
+    Sesion sesion = Sesion.getInstancia();
+    private ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList(sesion.getCuentaSeleccionada().getListaCategorias());
+
+
 
     private CuentaDebito cuentaDebito;
 
-    private final CuentaCategoriasBuilder builder = new CuentaCategoriasBuilder();
+
+
+
+    @FXML
+    private void agregarCategoria(ActionEvent event) {
+        String id = txtIdCategoria.getText().trim();
+        String nombre = txtNombreCategoria.getText().trim();
+        String descripcion = txtDescripcionCategoria.getText().trim();
+        Presupuesto presupuesto = new Presupuesto(id, nombre,0);
+
+        if (!id.isEmpty() && !nombre.isEmpty() && !descripcion.isEmpty()) {
+            Categoria categoria = new Categoria(id, nombre, descripcion,new Presupuesto(id,nombre, presupuesto.getMontoActual()));
+            sesion.getCuentaSeleccionada().getListaCategorias().add(categoria);
+            actualizarTabla();
+            limpiarCampos();
+        } else {
+            System.out.println("Por favor completa todos los campos.");
+        }
+    }
+
+    @FXML
+    private void atrasAccion(ActionEvent event) {
+        try {
+            // Carga el archivo FXML de la pantalla anterior
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionUsuario.fxml"));
+
+            // Crea el árbol de nodos desde el archivo FXML
+            Parent root = loader.load();
+
+            // Obtiene la ventana actual desde el botón
+            Stage stage = (Stage) atrasBoton.getScene().getWindow();
+
+            // Crea una nueva escena con el contenido de Pantalla1
+            Scene scene = new Scene(root);
+
+            // Establece la nueva escena en la ventana actual
+            stage.setScene(scene);
+        } catch (IOException e) {
+            // Muestra el error si hay un problema al cargar el FXML
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void eliminarCategoria(ActionEvent event) {
+        Categoria seleccionada = tablaCategorias.getSelectionModel().getSelectedItem();
+        if (seleccionada != null) {
+
+            sesion.getCuentaSeleccionada().getListaCategorias().remove(seleccionada);
+            actualizarTabla();
+        } else {
+            System.out.println("Selecciona una categoría para eliminar.");
+        }
+    }
+
+    @FXML
+    private void actualizarAccion(ActionEvent event) {
+        actualizarTabla();
+    }
+
+    @FXML
+    private void actualizarTabla() {
+        listaCategorias.setAll(sesion.getCuentaSeleccionada().getListaCategorias());
+    }
+
+    // Metodo para limpiar los campos de texto
+    private void limpiarCampos() {
+        txtIdCategoria.clear();
+        txtNombreCategoria.clear();
+        txtDescripcionCategoria.clear();
+    }
+
 
     //Inicializa el controlador
     @FXML
@@ -61,11 +146,10 @@ public class GestionarCategoriaController {
 
         tablaCategorias.setItems(listaCategorias);
 
-        // Cuenta de ejemplo (reemplaza con tu lógica real)
-        cuentaDebito = new CuentaDebito("ID1", "Banco Ejemplo", 123456, null, 1000);
-        builder.setCuentaDebito(cuentaDebito);
 
         actualizarTabla();
+
+        assert atrasBoton != null : "fx:id=\"atrasBoton\" was not injected: check your FXML file 'GestionarCategorias.fxml'.";
 
         assert txtIdCategoria != null : "fx:id=\"txtIdCategoria\" was not injected: check your FXML file.";
         assert txtNombreCategoria != null : "fx:id=\"txtNombreCategoria\" was not injected: check your FXML file.";
@@ -79,45 +163,7 @@ public class GestionarCategoriaController {
         assert colDescripcion != null : "fx:id=\"colDescripcion\" was not injected: check your FXML file.";
     }
 
-    @FXML
-    private void agregarCategoria() {
-        String id = txtIdCategoria.getText().trim();
-        String nombre = txtNombreCategoria.getText().trim();
-        String descripcion = txtDescripcionCategoria.getText().trim();
-        Presupuesto presupuesto = new Presupuesto(id, nombre,0);
 
-        if (!id.isEmpty() && !nombre.isEmpty() && !descripcion.isEmpty()) {
-            Categoria categoria = new Categoria(id, nombre, descripcion,new Presupuesto(id,nombre, presupuesto.getMontoActual()));
-            builder.añadirCategoria(categoria);
-            actualizarTabla();
-            limpiarCampos();
-        } else {
-            System.out.println("Por favor completa todos los campos.");
-        }
-    }
-
-    @FXML
-    private void eliminarCategoria() {
-        Categoria seleccionada = tablaCategorias.getSelectionModel().getSelectedItem();
-        if (seleccionada != null) {
-            cuentaDebito.getListaCategorias().remove(seleccionada);
-            actualizarTabla();
-        } else {
-            System.out.println("Selecciona una categoría para eliminar.");
-        }
-    }
-
-    @FXML
-    private void actualizarTabla() {
-        listaCategorias.setAll(cuentaDebito.getListaCategorias());
-    }
-
-    // Metodo para limpiar los campos de texto
-    private void limpiarCampos() {
-        txtIdCategoria.clear();
-        txtNombreCategoria.clear();
-        txtDescripcionCategoria.clear();
-    }
 
 
 }

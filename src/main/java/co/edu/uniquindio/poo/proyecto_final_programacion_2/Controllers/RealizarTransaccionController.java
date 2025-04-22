@@ -149,7 +149,7 @@ public class RealizarTransaccionController {
     void volverAccion(ActionEvent event) {
         try {
             // Carga el archivo FXML de la pantalla anterior
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GestionUsuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionUsuario.fxml"));
 
             // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
@@ -172,6 +172,7 @@ public class RealizarTransaccionController {
     void initialize() {
 
         ObservableList<Categoria> categorias = FXCollections.observableArrayList(sesion.getCuentaSeleccionada().getListaCategorias());
+
         CategoriaCombo.setItems(categorias);
 
 
