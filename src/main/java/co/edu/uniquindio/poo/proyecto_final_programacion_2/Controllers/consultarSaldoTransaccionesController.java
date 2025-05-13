@@ -69,9 +69,6 @@ public class consultarSaldoTransaccionesController {
         assert saldoDisponible != null : "fx:id=\"saldoDisponible\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
         assert saldoTotal != null : "fx:id=\"saldoTotal\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
         assert volverBoton != null : "fx:id=\"volverBoton\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
-
-        // Enlace automático entre saldo y el texto del Label
-        saldoDisponible.textProperty().bind(billetera.().asString("Saldo: $%,.0f"));
     }
 
 }
