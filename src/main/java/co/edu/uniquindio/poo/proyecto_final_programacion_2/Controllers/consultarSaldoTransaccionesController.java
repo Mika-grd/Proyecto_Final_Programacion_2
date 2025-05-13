@@ -2,13 +2,18 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.BilleteraVirtual;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.AnchorPane;
 
 public class consultarSaldoTransaccionesController {
+
+    private BilleteraVirtual billetera = BilleteraVirtual.getInstance();
 
     @FXML
     private ResourceBundle resources;
@@ -35,7 +40,21 @@ public class consultarSaldoTransaccionesController {
     private Button recargarBoton;
 
     @FXML
+    private Label saldoDisponible;
+
+    @FXML
+    private Label saldoTotal;
+
+    @FXML
+    private Button volverBoton;
+
+    @FXML
     void recargarAccion(ActionEvent event) {
+
+    }
+
+    @FXML
+    void volverAccion(ActionEvent event) {
 
     }
 
@@ -47,7 +66,12 @@ public class consultarSaldoTransaccionesController {
         assert idSaldo != null : "fx:id=\"idSaldo\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
         assert montoColumna != null : "fx:id=\"montoColumna\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
         assert recargarBoton != null : "fx:id=\"recargarBoton\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
+        assert saldoDisponible != null : "fx:id=\"saldoDisponible\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
+        assert saldoTotal != null : "fx:id=\"saldoTotal\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
+        assert volverBoton != null : "fx:id=\"volverBoton\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
 
+        // Enlace automático entre saldo y el texto del Label
+        saldoDisponible.textProperty().bind(billetera.().asString("Saldo: $%,.0f"));
     }
 
 }
