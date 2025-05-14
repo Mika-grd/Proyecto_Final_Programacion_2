@@ -7,7 +7,8 @@ public class UsuarioDTO {
     private final String correoUsuario;
     private final String nombreUsuario;
     private final String idUsuario;
-    
+
+    /// Constructor de la clase UsuarioDTO
     public UsuarioDTO(Usuario usuario) {
         this.telefonoUsuario = usuario.getTelefono();
         this.correoUsuario = usuario.getCorreo();
@@ -15,6 +16,7 @@ public class UsuarioDTO {
         this.idUsuario = usuario.getId();
     }
 
+    /// SETTERS & GETTERS
     public String getTelefonoUsuario() {
         return telefonoUsuario;
     }

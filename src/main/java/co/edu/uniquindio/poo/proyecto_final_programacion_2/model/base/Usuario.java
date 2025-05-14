@@ -30,11 +30,11 @@ public class Usuario extends Persona implements IUsuario{
 
 
     /**
-     * Edita un objeto ya existente por uno nuevo en una lista  usando la logica centralizada de billetera virtual
+     * Edita un objeto ya existente por uno nuevo en una lista usando la logica centralizada de billetera virtual
      * @param objeto
      * @param objetoNuevo
      * @param listaObjetos
-     * @return 
+     * @return "Exitoso" si la edicion fue realizada, de lo contrario "No exitoso".
      * @param <T>
      */
     @Override
@@ -42,11 +42,27 @@ public class Usuario extends Persona implements IUsuario{
         return BilleteraVirtual.getInstance().editarObjeto(objeto, objetoNuevo, listaObjetos);
     }
 
+
+    /**
+     * Elimina un objeto de la lista usando la logica centralizada de billetera virtual
+     * @param objeto
+     * @param listaObjetos
+     * @return "Exitoso" si se eliminó correctamente, de lo contrario "No exitoso".
+     * @param <T>
+     */
     @Override
     public <T> String eliminarObjeto(T objeto, LinkedList<T> listaObjetos) {
         return BilleteraVirtual.getInstance().eliminarObjeto(objeto, listaObjetos);
     }
 
+
+    /**
+     * Busca un objeto por el id en la lista  usando la logica centralizada de billetera virtual
+     * @param id
+     * @param listaObjetos
+     * @return el objeto encontrado
+     * @param <T>
+     */
     @Override
     public <T> Object buscarObjeto(String id, LinkedList<T> listaObjetos) {
         return BilleteraVirtual.getInstance().buscarObjeto(id, listaObjetos);
@@ -54,6 +70,7 @@ public class Usuario extends Persona implements IUsuario{
 
 
 
+    /// SETTERS & GETTERS
     public LinkedList<Cuenta> getListaCuentas() {
         return listaCuentas;
     }
