@@ -3,18 +3,21 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Administrador;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.BilleteraVirtual;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Persona;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class GestionarUsuarioAdminController {
+
+    private BilleteraVirtual billetera = BilleteraVirtual.getInstance();
 
     @FXML
     private ResourceBundle resources;
@@ -38,7 +41,7 @@ public class GestionarUsuarioAdminController {
     private TextField cedulaCampo;
 
     @FXML
-    private TableColumn<?, ?> cedulaColumna;
+    private TableColumn<Persona, String > cedulaColumna;
 
     @FXML
     private TextField contraseñaCampo;
@@ -47,7 +50,7 @@ public class GestionarUsuarioAdminController {
     private TextField correoCampo;
 
     @FXML
-    private TableColumn<?, ?> correoColumna;
+    private TableColumn<Persona, String> correoColumna;
 
     @FXML
     private Button editarBoton;
@@ -59,13 +62,13 @@ public class GestionarUsuarioAdminController {
     private TextField nombreCampo;
 
     @FXML
-    private TableColumn<?, ?> nombreColumna;
+    private TableColumn<Persona, String> nombreColumna;
 
     @FXML
     private Button recargarBoton;
 
     @FXML
-    private TableColumn<?, ?> rolColumna;
+    private TableColumn<Persona, String> rolColumna;
 
     @FXML
     private Button seleccionarBoton;
@@ -74,17 +77,49 @@ public class GestionarUsuarioAdminController {
     private TextField telefonoCampo;
 
     @FXML
-    private TableColumn<?, ?> telefonoColumna;
+    private TableColumn<Persona, String> telefonoColumna;
 
     @FXML
-    private TableView<?> usuariosAdminTabla;
+    private TableView<Persona> usuariosAdminTabla;
 
     @FXML
     private Button volverBoton;
 
+
+    private void cargarTabla() {
+        usuariosAdminTabla.getItems().setAll(billetera.getListaPersonas());
+    }
+
     @FXML
     void agregarAdministradorAccion(ActionEvent event) {
+        if (nombreCampo.getText().isEmpty() ||
+                cedulaCampo.getText().isEmpty()) {
 
+            // Mostrar alerta si algún campo está vacío
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Error al añadir Administrador");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Todos los campos son obligatorios. ¡Por favor, complétalos!");
+            alerta.showAndWait();
+
+        } else {
+            // Crear y añadir un administrador
+            Administrador administrador = new Administrador(
+                    nombreCampo.getText(),
+                    cedulaCampo.getText(),
+                    correoCampo.getText(),
+                    telefonoCampo.getText(),
+                    contraseñaCampo.getText());
+            billetera.agregarObjeto(administrador,billetera.getListaPersonas());
+
+            // Mostrar mensaje de éxito (opcional)
+            Alert confirmacion = new Alert(Alert.AlertType.INFORMATION);
+            confirmacion.setTitle("Administrador añadido");
+            confirmacion.setHeaderText(null);
+            confirmacion.setContentText("El Administrador ha sido añadido con éxito.");
+            confirmacion.showAndWait();
+        }
+        cargarTabla();
     }
 
     @FXML
@@ -109,8 +144,9 @@ public class GestionarUsuarioAdminController {
 
     @FXML
     void recargarAccion(ActionEvent event) {
-
+        cargarTabla();
     }
+
 
     @FXML
     void seleccionarAccion(ActionEvent event) {
@@ -142,6 +178,17 @@ public class GestionarUsuarioAdminController {
 
     @FXML
     void initialize() {
+
+        nombreColumna.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNombre()));
+        cedulaColumna.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getId()));
+        correoColumna.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCorreo()));
+        telefonoColumna.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTelefono()));
+        rolColumna.setCellValueFactory(cellData -> {
+            Persona persona = cellData.getValue();
+            String rol = (persona instanceof Administrador) ? "Admin" : "Usuario";
+            return new javafx.beans.property.SimpleStringProperty(rol);
+        });
+
         assert agregarAdministradorBoton != null : "fx:id=\"agregarAdministradorBoton\" was not injected: check your FXML file 'GestionarUsuarioAdmin.fxml'.";
         assert agregarUsuarioBoton != null : "fx:id=\"agregarUsuarioBoton\" was not injected: check your FXML file 'GestionarUsuarioAdmin.fxml'.";
         assert buscarBoton != null : "fx:id=\"buscarBoton\" was not injected: check your FXML file 'GestionarUsuarioAdmin.fxml'.";
