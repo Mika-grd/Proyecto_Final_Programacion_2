@@ -58,4 +58,15 @@ public abstract class Persona {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "nombre='" + nombre + '\'' +
+                ", id='" + id + '\'' +
+                ", correo='" + correo + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", contraseña='" + contraseña + '\'' +
+                '}';
+    }
 }
