@@ -4,6 +4,7 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaCategoriasBuilder;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -57,7 +58,7 @@ public class GestionCuentaController {
     private TableColumn<Cuenta, String> colTipo;
 
     @FXML
-    private TableColumn<Cuenta, String> colUsuario;
+    private TableColumn<Usuario, String> colUsuario;
 
     @FXML
     private TableView<Cuenta> tablaCuentas;
@@ -142,7 +143,7 @@ public class GestionCuentaController {
 
 
     public BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
-    public ObservableList<Cuenta> listaCuentas = FXCollections.observableArrayList(billeteraVirtual.getListaCuentas());
+    public ObservableList<Cuenta> listaCuentas = FXCollections.observableArrayList(Sesion.getInstancia().getUsuario().getListaCuentas());
 
 
     /**
@@ -184,9 +185,12 @@ public class GestionCuentaController {
         Usuario usuario = (Usuario) billeteraVirtual.buscarObjeto(txtUsuario.getText(), billeteraVirtual.getListaPersonas());
         String tipo = comboTipoCuenta.getValue();
 
-        if (id.isEmpty() || banco.isEmpty() || usuario == null || tipo == null) {
+        if (id.isEmpty() || banco.isEmpty() || tipo == null) {
             mostrarAlerta("Debe completar todos los campos.");
             return;
+        }
+        if (usuario == null ){
+            mostrarAlerta("Usuario no encontrado.");
         }
 
         Cuenta cuenta;
@@ -298,9 +302,8 @@ public class GestionCuentaController {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colBanco.setCellValueFactory(new PropertyValueFactory<>("nombreBanco"));
         colNumero.setCellValueFactory(new PropertyValueFactory<>("numCuenta"));
-        colUsuario.setCellValueFactory(new PropertyValueFactory<>("usuario"));
-        colTipo.setCellValueFactory(new PropertyValueFactory<>("tipoCuenta"));
-
+        colUsuario.setCellValueFactory(cellData ->
+                new SimpleStringProperty(Sesion.getInstancia().getUsuario().getNombre()));
         colTipo.setCellFactory(column -> new TableCell<Cuenta, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {

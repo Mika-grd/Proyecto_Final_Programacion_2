@@ -46,6 +46,9 @@ public class HelloApplication extends Application {
         billeteraVirtual.agregarObjeto(cuenta1, billeteraVirtual.getListaCuentas());
         billeteraVirtual.agregarObjeto(cuenta2, billeteraVirtual.getListaCuentas());
 
+        user.agregarObjeto(cuenta1, user.getListaCuentas());
+        user.agregarObjeto(cuenta2, user.getListaCuentas());
+
         System.out.println(cuenta1.toString());
 
         System.out.println(cuenta2.toString());
