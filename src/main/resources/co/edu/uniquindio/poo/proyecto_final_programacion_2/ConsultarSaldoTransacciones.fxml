@@ -20,7 +20,7 @@
             <Image url="@../fondo.jpg" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="idSaldo" layoutX="28.0" layoutY="91.0" prefHeight="182.0" prefWidth="511.0" style="-fx-background-color: rgba(208, 208, 208, 0.9); border-radius: 10px;">
+      <AnchorPane fx:id="idSaldo" layoutX="28.0" layoutY="91.0" prefHeight="182.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9); border-radius: 10px;">
          <children>
             <Text layoutX="32.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo Disponible" wrappingWidth="194.9367218017578">
                <font>
@@ -36,7 +36,7 @@
             <Label fx:id="saldoTotal" layoutX="253.0" layoutY="86.0" prefHeight="20.0" prefWidth="131.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #4CAF50, #81C784); -fx-alignment: center; -fx-background-radius: 10; -fx-padding: 10;" />
          </children>
       </AnchorPane>
-      <Pane layoutX="605.0" layoutY="135.0" prefHeight="480.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
+      <Pane layoutX="634.0" layoutY="93.0" prefHeight="546.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
          <children>
             <Button fx:id="recargarBoton" layoutX="43.0" layoutY="401.0" mnemonicParsing="false" onAction="#recargarAccion" prefHeight="34.0" prefWidth="110.0" text="Recargar" />
             <TableView fx:id="historialTable" layoutX="14.0" layoutY="46.0" prefHeight="334.0" prefWidth="539.0">
@@ -50,11 +50,11 @@
          </children>
       </Pane>
       <Button fx:id="volverBoton1" layoutX="45.0" layoutY="46.0" onAction="#volverAccion" prefHeight="27.0" prefWidth="123.0" style="-fx-background-color: green;" text="Volver" textFill="WHITE" />
-      <Pane layoutX="28.0" layoutY="309.0" prefHeight="334.0" prefWidth="511.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
+      <Pane layoutX="28.0" layoutY="309.0" prefHeight="334.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
          <children>
-            <Button fx:id="bttnAgregarSaldo1" layoutX="14.0" layoutY="234.0" onAction="#agregarSaldoAccion" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: green;" text="Agregar Saldo" textFill="WHITE" />
-            <Button fx:id="bttnRetirarSaldo1" layoutX="190.0" layoutY="234.0" onAction="#retirarSaldoAccion" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: red;" text="Retirar Saldo" textFill="#f7f5f5" />
-            <Button fx:id="bttnDepositarCategoria1" layoutX="355.0" layoutY="234.0" onAction="#depositarCategoria" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: orange;" text="Depositar A Categoria" textFill="#faf9f9" />
+            <Button fx:id="bttnAgregarSaldo1" layoutX="37.0" layoutY="200.0" onAction="#agregarSaldoAccion" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: green;" text="Agregar Saldo" textFill="WHITE" />
+            <Button fx:id="bttnRetirarSaldo1" layoutX="37.0" layoutY="268.0" onAction="#retirarSaldoAccion" prefHeight="34.0" prefWidth="149.0" style="-fx-background-color: red;" text="Retirar Saldo" textFill="#f7f5f5" />
+            <Button fx:id="bttnDepositarCategoria1" layoutX="281.0" layoutY="200.0" onAction="#depositarCategoria" prefHeight="34.0" prefWidth="138.0" style="-fx-background-color: green;" text="Depositar A Categoria" textFill="#faf9f9" />
             <Label fx:id="labelRetirarDepositar" layoutX="37.0" layoutY="56.0" prefHeight="20.0" prefWidth="195.0" text="Monto a Retirar/Depositar :">
                <font>
                   <Font size="14.0" />
@@ -67,6 +67,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
+            <Button fx:id="botonRetirarCategoria" layoutX="281.0" layoutY="268.0" onAction="#retirarCategoria" prefHeight="34.0" prefWidth="138.0" style="-fx-background-color: red;" text="Retirar de Categoria" textFill="#faf9f9" />
          </children>
       </Pane>
    </children>

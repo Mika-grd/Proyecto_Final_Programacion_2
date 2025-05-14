@@ -92,8 +92,20 @@ public class HelloApplication extends Application {
             System.out.println(usuarioDTO.toString());
         }
 
-        Transaccion transaccion = new Transaccion("1", LocalDate.MAX, 50000, cuentaDebito2.getSaldo(), "Para el mercado", cuentaDebito2, cuentaDebito);
+
+        //Prototype
+
+        Transaccion transaccion = new Transaccion("1", LocalDate.now(), 50000, cuentaDebito2.getSaldo(), "Para el mercado", cuentaDebito2, cuentaDebito);
         transaccion.realizarTransaccion();
+
+        Transaccion transaccion2 = transaccion.clone();
+        transaccion2.setMontoATransferir(25000);
+        transaccion2.realizarTransaccion();
+
+        System.out.println(cuentaDebito2.getSaldoTotal() + " " + cuentaDebito2.getSaldo());
+        System.out.println(cuentaDebito.getSaldoTotal() + " " + cuentaDebito.getSaldo());
+
+        System.out.println(cuentaDebito.getListaCategorias());
 
         launch();
     }

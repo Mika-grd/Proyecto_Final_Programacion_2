@@ -3,7 +3,7 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-public class Transaccion {
+public class Transaccion implements Cloneable  {
     private String id;
     private LocalDate fechaTransaccion;
     private double montoATransferir;
@@ -26,6 +26,15 @@ public class Transaccion {
     }
 
 
+    /// Constructor para Deposito y Retiro
+    public Transaccion(String id, LocalDate fecha, double montoATransferir, String descripcion) {
+        this.id = id;
+        this.fechaTransaccion = fecha;
+        this.montoATransferir = montoATransferir;
+        this.descripcion = descripcion;
+    }
+
+
     /**
      * Realiza una transacción de transferencia entre dos cuentas.
      *
@@ -44,11 +53,24 @@ public class Transaccion {
         if (cuentaObjetivo != null && fechaTransaccion != null && montoATransferir > 0 && montoDisponible > 0) {
             if (montoATransferir <= montoDisponible) {
                 cuentaPropia.setSaldo(cuentaPropia.getSaldo() - montoATransferir);
+                cuentaPropia.calcularSaldoTotal();
+                cuentaPropia.getListaTransaccion().add(this);
                 cuentaObjetivo.setSaldo(cuentaObjetivo.getSaldo() + montoATransferir);
+                cuentaObjetivo.calcularSaldoTotal();
+                cuentaObjetivo.getListaTransaccion().add(this);
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public Transaccion clone() {
+        try {
+            return (Transaccion) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 
     /// SETTERS & GETTERS

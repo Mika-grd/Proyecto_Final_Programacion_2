@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -81,6 +82,11 @@ public class consultarSaldoTransaccionesController {
     @FXML
     private Label labelRetirarDepositar;
 
+
+    @FXML
+    private Button botonRetirarCategoria;
+
+
     CuentaDebito cuentaActual = Sesion.getInstancia().getCuentaDebito();
 
 
@@ -105,6 +111,10 @@ public class consultarSaldoTransaccionesController {
                 double monto = Double.parseDouble(RetirarDepositar.getText());
                 cuentaActual.agregarSaldo(monto);
                 mostrarAlerta("Se ha agregado un saldo de " + String.valueOf(monto), Alert.AlertType.INFORMATION);
+                Transaccion deposito = new Transaccion("Deposito", LocalDate.now(), monto, "Deposito de dinero");
+                cuentaActual.getListaTransaccion().add(deposito);
+                historialTable.refresh();
+
             }
             catch (NumberFormatException e) {
                 mostrarAlerta("Debse ser un numero", Alert.AlertType.ERROR);
@@ -115,14 +125,41 @@ public class consultarSaldoTransaccionesController {
             mostrarAlerta("Debe ingresar una saldo", Alert.AlertType.ERROR);
         }
 
+        cargarSaldos();
+
     }
 
     @FXML
     void depositarCategoria(ActionEvent event) {
 
+        if (RetirarDepositar.getText() != null) {
+
+            try {
+                double monto = Double.parseDouble(RetirarDepositar.getText());
+                cuentaActual.agregarSaldo(monto);
+                mostrarAlerta("Se ha agregado un saldo de " + String.valueOf(monto), Alert.AlertType.INFORMATION);
+                Transaccion deposito = new Transaccion("Deposito", LocalDate.now(), monto, "Deposito de dinero");
+                cuentaActual.getListaTransaccion().add(deposito);
+                historialTable.refresh();
+
+            }
+            catch (NumberFormatException e) {
+                mostrarAlerta("Debse ser un numero", Alert.AlertType.ERROR);
+            }
+        }
+        else{
+
+            mostrarAlerta("Debe ingresar una saldo", Alert.AlertType.ERROR);
+        }
+
+        cargarSaldos();
     }
 
 
+    @FXML
+    void retirarCategoria(ActionEvent event) {
+
+    }
 
     @FXML
     void retirarSaldoAccion(ActionEvent event) {
@@ -137,6 +174,9 @@ public class consultarSaldoTransaccionesController {
                 else {
                     cuentaActual.retirarSaldo(monto);
                     mostrarAlerta("Se ha retirado exitosamente saldo de " + String.valueOf(monto), Alert.AlertType.INFORMATION);
+                    Transaccion retiro = new Transaccion("Retiro", LocalDate.now(), monto, "Retiro de dinero");
+                    cuentaActual.getListaTransaccion().add(retiro);
+                    historialTable.refresh();
                 }
             }
             catch (NumberFormatException e) {
@@ -148,12 +188,15 @@ public class consultarSaldoTransaccionesController {
             mostrarAlerta("Debe ingresar una saldo", Alert.AlertType.ERROR);
         }
 
+        cargarSaldos();
+
     }
 
     @FXML
     void recargarAccion(ActionEvent event) {
 
-
+        ObservableList<Transaccion> historial = FXCollections.observableArrayList(cuentaActual.getListaTransaccion());
+        historialTable.setItems(historial);
 
     }
 
@@ -201,15 +244,26 @@ public class consultarSaldoTransaccionesController {
 
         cargarSaldos();
 
-        Cuenta cuentaActual = Sesion.getInstancia().getCuentaDebito();
 
         idColumna.setCellValueFactory(new PropertyValueFactory<>("id"));
         descripcionColumna.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        fechaColumna.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        montoColumna.setCellValueFactory(new PropertyValueFactory<>("monto"));
+        fechaColumna.setCellValueFactory(new PropertyValueFactory<>("fechaTransaccion"));
+        montoColumna.setCellValueFactory(new PropertyValueFactory<>("montoATransferir"));
 
         historialTable.setItems(FXCollections.observableArrayList(cuentaActual.getListaTransaccion()));
 
+        ObservableList<Transaccion> historial = FXCollections.observableArrayList(cuentaActual.getListaTransaccion());
+        ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList(cuentaActual.getListaCategorias());
+
+
+        if (listaCategorias.size() == 0) {
+            comboboxCategoria.setDisable(true);
+        }
+        comboboxCategoria.setItems(listaCategorias);
+        historialTable.setItems(historial);
+
+
+        assert botonRetirarCategoria != null : "fx:id=\"botonRetirarCategoria\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
         assert RetirarDepositar != null : "fx:id=\"RetirarDepositar\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
         assert bttnAgregarSaldo1 != null : "fx:id=\"bttnAgregarSaldo1\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
         assert bttnDepositarCategoria1 != null : "fx:id=\"bttnDepositarCategoria1\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
