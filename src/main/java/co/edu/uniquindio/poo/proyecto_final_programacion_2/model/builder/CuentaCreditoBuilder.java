@@ -90,7 +90,7 @@ public class CuentaCreditoBuilder implements ICuentaCreditoBuilder {
 
     /// hace el builder, osea que construye y retorna la instancia con los atributos
     @Override
-    public Cuenta build() {
+    public CuentaCredito build() {
         // Validación básica
         if (this.id == null || this.nombreBanco == null) {
             throw new IllegalStateException("El ID y el Nombre del Banco son obligatorios para construir la cuenta.");
