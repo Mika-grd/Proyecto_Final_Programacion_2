@@ -2,16 +2,10 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion;
 
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
 
-/**
- * La clase {@code Sesion} gestiona la sesión del usuario en la aplicación.
- *
- * Proporciona acceso al usuario autenticado y a la cuenta seleccionada.
- * Esta clase usa el patrón Singleton, lo que significa que solo existe
- * una instancia de sesión durante la ejecución de la aplicación.
- */
 
 public class Sesion {
 
+    //instancia unica en la clase
     private static Sesion instancia;
 
     private Usuario usuario;
@@ -23,6 +17,7 @@ public class Sesion {
         // Constructor privado para singleton
     }
 
+    /// implementacion del singleton
     public static Sesion getInstancia() {
         if (instancia == null) {
             instancia = new Sesion();
@@ -30,6 +25,8 @@ public class Sesion {
         return instancia;
     }
 
+
+    /// SETTER & GETTERS
     public Usuario getUsuario() {
         return usuario;
     }
@@ -66,6 +63,10 @@ public class Sesion {
         this.administrador = administrador;
     }
 
+
+    /**
+     * Cierra la sesion actual, limpiando todos los datos
+     */
     public void cerrarSesion() {
         usuario = null;
         cuentaSeleccionada = null;

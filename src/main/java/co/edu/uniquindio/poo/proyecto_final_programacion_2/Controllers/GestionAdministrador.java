@@ -111,6 +111,10 @@ public class GestionAdministrador {
 
     }
 
+    /**
+     * metodo que elimina un administrador seleccionado en la tabla
+     * @param event
+     */
     @FXML
     void eliminarAdministrador(ActionEvent event) {
         Administrador administrador = administradoresTabla.getSelectionModel().getSelectedItem();
@@ -141,6 +145,10 @@ public class GestionAdministrador {
 
     }
 
+    /**
+     * metodo que cierra la ventana actual y  vuelve para atras
+     * @param event
+     */
     @FXML
     void volverAccion(ActionEvent event) {
         // Obtener la ventana actual y cerrarla
