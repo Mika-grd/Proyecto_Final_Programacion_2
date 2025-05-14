@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,42 +13,61 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="666.0" prefWidth="1210.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.consultarSaldoTransaccionesController">
+<AnchorPane prefHeight="666.0" prefWidth="1210.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.consultarSaldoTransaccionesController">
    <children>
       <ImageView fitHeight="672.0" fitWidth="1210.0" layoutY="-9.0" pickOnBounds="true">
          <image>
             <Image url="@../fondo.jpg" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="idSaldo" layoutX="42.0" layoutY="47.0" prefHeight="408.0" prefWidth="410.0" style="-fx-background-color: rgba(208, 208, 208, 0.9); border-radius: 10px;">
+      <AnchorPane fx:id="idSaldo" layoutX="28.0" layoutY="91.0" prefHeight="182.0" prefWidth="511.0" style="-fx-background-color: rgba(208, 208, 208, 0.9); border-radius: 10px;">
          <children>
-            <Text layoutX="50.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo Disponible" wrappingWidth="194.9367218017578">
+            <Text layoutX="32.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo Disponible" wrappingWidth="194.9367218017578">
                <font>
                   <Font name="Cambria" size="23.0" />
                </font>
             </Text>
-            <Text layoutX="25.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo Total" wrappingWidth="194.9367218017578">
+            <Text layoutX="253.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo Total" wrappingWidth="194.9367218017578">
                <font>
                   <Font name="Cambria" size="23.0" />
                </font>
             </Text>
             <Label fx:id="saldoDisponible" layoutX="41.0" layoutY="86.0" prefHeight="20.0" prefWidth="131.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #4CAF50, #81C784); -fx-alignment: center; -fx-background-radius: 10; -fx-padding: 10;" />
-            <Label fx:id="saldoTotal" layoutX="41.0" layoutY="290.0" prefHeight="20.0" prefWidth="131.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #4CAF50, #81C784); -fx-alignment: center; -fx-background-radius: 10; -fx-padding: 10;" />
+            <Label fx:id="saldoTotal" layoutX="253.0" layoutY="86.0" prefHeight="20.0" prefWidth="131.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #4CAF50, #81C784); -fx-alignment: center; -fx-background-radius: 10; -fx-padding: 10;" />
          </children>
       </AnchorPane>
-      <Pane layoutX="534.0" layoutY="74.0" prefHeight="521.0" prefWidth="626.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
+      <Pane layoutX="605.0" layoutY="135.0" prefHeight="480.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
          <children>
-            <TableView fx:id="historialTable" layoutX="31.0" layoutY="24.0" prefHeight="444.0" prefWidth="560.0">
+            <Button fx:id="recargarBoton" layoutX="43.0" layoutY="401.0" mnemonicParsing="false" onAction="#recargarAccion" prefHeight="34.0" prefWidth="110.0" text="Recargar" />
+            <TableView fx:id="historialTable" layoutX="14.0" layoutY="46.0" prefHeight="334.0" prefWidth="539.0">
               <columns>
                 <TableColumn fx:id="idColumna" prefWidth="99.20001220703125" text="id" />
                 <TableColumn fx:id="fechaColumna" prefWidth="151.20001220703125" text="Fecha" />
                   <TableColumn fx:id="montoColumna" prefWidth="128.79998779296875" text="monto" />
-                  <TableColumn fx:id="descripcionColumna" prefWidth="179.20001220703125" text="Descripción" />
+                  <TableColumn fx:id="descripcionColumna" prefWidth="160.79998779296875" text="Descripción" />
               </columns>
             </TableView>
-            <Button fx:id="recargarBoton" layoutX="31.0" layoutY="474.0" mnemonicParsing="false" onAction="#recargarAccion" prefHeight="34.0" prefWidth="110.0" text="Recargar" />
          </children>
       </Pane>
-      <Button fx:id="volverBoton" layoutX="51.0" layoutY="583.0" onAction="#volverAccion" prefHeight="34.0" prefWidth="178.0" style="-fx-background-color: red;" text="Volver" />
+      <Button fx:id="volverBoton1" layoutX="45.0" layoutY="46.0" onAction="#volverAccion" prefHeight="27.0" prefWidth="123.0" style="-fx-background-color: green;" text="Volver" textFill="WHITE" />
+      <Pane layoutX="28.0" layoutY="309.0" prefHeight="334.0" prefWidth="511.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
+         <children>
+            <Button fx:id="bttnAgregarSaldo1" layoutX="14.0" layoutY="234.0" onAction="#agregarSaldoAccion" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: green;" text="Agregar Saldo" textFill="WHITE" />
+            <Button fx:id="bttnRetirarSaldo1" layoutX="190.0" layoutY="234.0" onAction="#retirarSaldoAccion" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: red;" text="Retirar Saldo" textFill="#f7f5f5" />
+            <Button fx:id="bttnDepositarCategoria1" layoutX="355.0" layoutY="234.0" onAction="#depositarCategoria" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: orange;" text="Depositar A Categoria" textFill="#faf9f9" />
+            <Label fx:id="labelRetirarDepositar" layoutX="37.0" layoutY="56.0" prefHeight="20.0" prefWidth="195.0" text="Monto a Retirar/Depositar :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="RetirarDepositar" layoutX="261.0" layoutY="54.0" />
+            <ComboBox fx:id="comboboxCategoria" layoutX="260.0" layoutY="125.0" prefWidth="150.0" />
+            <Label fx:id="labelCategoria" layoutX="73.0" layoutY="128.0" prefHeight="17.0" prefWidth="123.0" text="Categoria :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

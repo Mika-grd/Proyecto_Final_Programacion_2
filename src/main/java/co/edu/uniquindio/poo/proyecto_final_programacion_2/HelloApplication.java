@@ -40,10 +40,21 @@ public class HelloApplication extends Application {
 
         Presupuesto presupuesto = new Presupuesto("", "", 0);
 
+
+
         Categoria Ahorro = new Categoria("12", "Ahorros", "Para ahorrar", presupuesto);
+
+
         Cuenta cuenta2 = director.cuentaDebitoConUnaCategoria(builderCategorias, "124", 1234, user, Ahorro);
 
         billeteraVirtual.agregarObjeto(user, billeteraVirtual.getListaPersonas());
+
+        CuentaDebito cuentaDebito = (CuentaDebito) cuenta2;
+
+        cuentaDebito.agregarSaldo(10000);
+        cuentaDebito.depositoACategoria(Ahorro, 5000);
+
+        System.out.println("***********"+ cuentaDebito.getSaldo() + " " + cuentaDebito.getSaldoTotal());
 
         billeteraVirtual.agregarObjeto(cuenta1, billeteraVirtual.getListaCuentas());
         billeteraVirtual.agregarObjeto(cuenta2, billeteraVirtual.getListaCuentas());
