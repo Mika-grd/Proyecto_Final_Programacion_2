@@ -10,12 +10,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("GestionarUsuarioAdmin.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("InicioSesion.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 645, 600);
         stage.setTitle("Billetera Virtual");
         stage.setScene(scene);
@@ -38,6 +39,10 @@ public class HelloApplication extends Application {
 
         Cuenta cuenta1 = director.cuentaDebitoSimple(debito, "123", 107890654, user);
 
+        CuentaDebito cuentaDebito2 = (CuentaDebito) cuenta1;
+
+        cuentaDebito2.agregarSaldo(100000);
+
         Presupuesto presupuesto = new Presupuesto("", "", 0);
 
 
@@ -56,11 +61,14 @@ public class HelloApplication extends Application {
 
         System.out.println("***********"+ cuentaDebito.getSaldo() + " " + cuentaDebito.getSaldoTotal());
 
+
+
         billeteraVirtual.agregarObjeto(cuenta1, billeteraVirtual.getListaCuentas());
         billeteraVirtual.agregarObjeto(cuenta2, billeteraVirtual.getListaCuentas());
 
         user.agregarObjeto(cuenta1, user.getListaCuentas());
         user.agregarObjeto(cuenta2, user.getListaCuentas());
+
 
         LinkedList<CuentaDTO> listaCuentaDTO = new LinkedList<>();
 
@@ -83,6 +91,9 @@ public class HelloApplication extends Application {
         for (UsuarioDTO usuarioDTO : listaUsuarioDTO) {
             System.out.println(usuarioDTO.toString());
         }
+
+        Transaccion transaccion = new Transaccion("1", LocalDate.MAX, 50000, cuentaDebito2.getSaldo(), "Para el mercado", cuentaDebito2, cuentaDebito);
+        transaccion.realizarTransaccion();
 
         launch();
     }
