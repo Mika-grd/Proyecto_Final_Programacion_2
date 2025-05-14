@@ -106,6 +106,10 @@ public class GestionarCategoriaController {
         }
     }
 
+    /**
+     * metodo que elimina una categoria
+     * @param event
+     */
     @FXML
     private void eliminarCategoria(ActionEvent event) {
         Categoria seleccionada = tablaCategorias.getSelectionModel().getSelectedItem();

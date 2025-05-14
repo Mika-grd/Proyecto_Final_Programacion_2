@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class HelloApplication extends Application {
@@ -38,18 +39,36 @@ public class HelloApplication extends Application {
 
         Cuenta cuenta1 = director.cuentaDebitoSimple(debito, "123", 107890654, user);
 
+        CuentaDebito cuentaDebito2 = (CuentaDebito) cuenta1;
+
+        cuentaDebito2.agregarSaldo(100000);
+
         Presupuesto presupuesto = new Presupuesto("", "", 0);
 
+
+
         Categoria Ahorro = new Categoria("12", "Ahorros", "Para ahorrar", presupuesto);
+
+
         Cuenta cuenta2 = director.cuentaDebitoConUnaCategoria(builderCategorias, "124", 1234, user, Ahorro);
 
         billeteraVirtual.agregarObjeto(user, billeteraVirtual.getListaPersonas());
+
+        CuentaDebito cuentaDebito = (CuentaDebito) cuenta2;
+
+        cuentaDebito.agregarSaldo(10000);
+        cuentaDebito.depositoACategoria(Ahorro, 5000);
+
+        System.out.println("***********"+ cuentaDebito.getSaldo() + " " + cuentaDebito.getSaldoTotal());
+
+
 
         billeteraVirtual.agregarObjeto(cuenta1, billeteraVirtual.getListaCuentas());
         billeteraVirtual.agregarObjeto(cuenta2, billeteraVirtual.getListaCuentas());
 
         user.agregarObjeto(cuenta1, user.getListaCuentas());
         user.agregarObjeto(cuenta2, user.getListaCuentas());
+
 
         LinkedList<CuentaDTO> listaCuentaDTO = new LinkedList<>();
 
@@ -72,6 +91,9 @@ public class HelloApplication extends Application {
         for (UsuarioDTO usuarioDTO : listaUsuarioDTO) {
             System.out.println(usuarioDTO.toString());
         }
+
+        Transaccion transaccion = new Transaccion("1", LocalDate.MAX, 50000, cuentaDebito2.getSaldo(), "Para el mercado", cuentaDebito2, cuentaDebito);
+        transaccion.realizarTransaccion();
 
         launch();
     }

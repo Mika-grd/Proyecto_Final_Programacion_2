@@ -45,15 +45,12 @@ public class inicioSesionController {
 
     /**
      * Maneja el evento de inicio de sesión cuando el usuario presiona el botón correspondiente.
-     *
      * Este metodo válida que los campos de usuario e contraseña no estén vacíos,
      * busca al usuario en la lista de personas de la billetera virtual, verifica
      * que la contraseña sea correcta y, dependiendo del tipo de persona encontrada
      * (Usuario o Administrador), establece el objeto correspondiente en la sesión.
-     *
      * En caso de error (campos vacíos, usuario no encontrado o contraseña incorrecta),
      * se muestra un mensaje de alerta informando al usuario.
-     *
      * @param event el evento que desencadena la acción (por ejemplo, clic en el botón de login)
      */
     @FXML

@@ -69,4 +69,6 @@ public class Administrador extends Persona implements IAdmin {
 
         return BilleteraVirtual.getInstance().buscarObjeto(id, listaObjetos);
     }
+
+
 }
