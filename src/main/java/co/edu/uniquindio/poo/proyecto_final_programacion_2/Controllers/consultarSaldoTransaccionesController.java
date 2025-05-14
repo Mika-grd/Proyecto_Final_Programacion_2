@@ -132,15 +132,23 @@ public class consultarSaldoTransaccionesController {
     @FXML
     void depositarCategoria(ActionEvent event) {
 
-        if (RetirarDepositar.getText() != null) {
+        if (RetirarDepositar.getText() != null  && comboboxCategoria.getSelectionModel().getSelectedItem() != null) {
 
             try {
+                Categoria categoria = comboboxCategoria.getSelectionModel().getSelectedItem();
                 double monto = Double.parseDouble(RetirarDepositar.getText());
-                cuentaActual.agregarSaldo(monto);
-                mostrarAlerta("Se ha agregado un saldo de " + String.valueOf(monto), Alert.AlertType.INFORMATION);
-                Transaccion deposito = new Transaccion("Deposito", LocalDate.now(), monto, "Deposito de dinero");
-                cuentaActual.getListaTransaccion().add(deposito);
-                historialTable.refresh();
+                if (cuentaActual.getSaldo() >= monto) {
+                    cuentaActual.setSaldo(cuentaActual.getSaldo() - monto);
+                    categoria.getPresupuesto().setMontoActual(categoria.getPresupuesto().getMontoActual() + monto);
+                    cuentaActual.calcularSaldoTotal();
+                    mostrarAlerta("Se ha agregado un saldo de " + String.valueOf(monto) + " A la categoria" + categoria.getNombre(), Alert.AlertType.INFORMATION);
+                    Transaccion deposito = new Transaccion("Deposito a " + categoria.getNombre(), LocalDate.now(), monto, "Deposito de dinero");
+                    cuentaActual.getListaTransaccion().add(deposito);
+                    historialTable.refresh();
+                }
+                else {
+                    mostrarAlerta("No hay suficiente saldo en Disponible", Alert.AlertType.ERROR);
+                }
 
             }
             catch (NumberFormatException e) {
@@ -149,15 +157,46 @@ public class consultarSaldoTransaccionesController {
         }
         else{
 
-            mostrarAlerta("Debe ingresar una saldo", Alert.AlertType.ERROR);
+            mostrarAlerta("Debe ingresar una saldo  y seleccionar una categoria", Alert.AlertType.ERROR);
         }
 
         cargarSaldos();
+
     }
 
 
     @FXML
     void retirarCategoria(ActionEvent event) {
+
+        if (RetirarDepositar.getText() != null && comboboxCategoria.getSelectionModel().getSelectedItem() != null) {
+
+            try {
+                Categoria categoria = comboboxCategoria.getSelectionModel().getSelectedItem();
+                double monto = Double.parseDouble(RetirarDepositar.getText());
+                if (categoria.getPresupuesto().getMontoActual() >= monto) {
+                    categoria.getPresupuesto().setMontoActual(categoria.getPresupuesto().getMontoActual() - monto);
+                    cuentaActual.setSaldo(cuentaActual.getSaldo() + monto);
+                    cuentaActual.calcularSaldoTotal();
+                    mostrarAlerta("Se ha retirado un saldo de " + String.valueOf(monto) + " de la categoria" + categoria.getNombre(), Alert.AlertType.INFORMATION);
+                    Transaccion deposito = new Transaccion("Retiro de " + categoria.getNombre(), LocalDate.now(), monto, "retiro de dinero");
+                    cuentaActual.getListaTransaccion().add(deposito);
+                    historialTable.refresh();
+                }
+                else {
+                    mostrarAlerta("No hay suficiente saldo en la categoria", Alert.AlertType.ERROR);
+                }
+
+            }
+            catch (NumberFormatException e) {
+                mostrarAlerta("Debse ser un numero", Alert.AlertType.ERROR);
+            }
+        }
+        else{
+
+            mostrarAlerta("Debe ingresar una saldo y seleccionar una categoria", Alert.AlertType.ERROR);
+        }
+
+        cargarSaldos();
 
     }
 
