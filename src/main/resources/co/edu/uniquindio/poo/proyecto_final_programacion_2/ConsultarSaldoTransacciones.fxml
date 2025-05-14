@@ -32,8 +32,8 @@
                   <Font name="Cambria" size="23.0" />
                </font>
             </Text>
-            <Label fx:id="saldoDisponible" layoutX="41.0" layoutY="86.0" prefHeight="20.0" prefWidth="131.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #4CAF50, #81C784); -fx-alignment: center; -fx-background-radius: 10; -fx-padding: 10;" text="NA" />
-            <Label fx:id="saldoTotal" layoutX="253.0" layoutY="86.0" prefHeight="20.0" prefWidth="131.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #4CAF50, #81C784); -fx-alignment: center; -fx-background-radius: 10; -fx-padding: 10;" text="NA" />
+            <Label fx:id="saldoDisponible" layoutX="41.0" layoutY="86.0" prefHeight="20.0" prefWidth="131.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #4CAF50, #81C784); -fx-alignment: center; -fx-background-radius: 10; -fx-padding: 10;" />
+            <Label fx:id="saldoTotal" layoutX="253.0" layoutY="86.0" prefHeight="20.0" prefWidth="131.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #4CAF50, #81C784); -fx-alignment: center; -fx-background-radius: 10; -fx-padding: 10;" />
          </children>
       </AnchorPane>
       <Pane layoutX="605.0" layoutY="135.0" prefHeight="480.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
