@@ -6,7 +6,7 @@ public class Categoria {
     private String descripcion;
     private Presupuesto presupuesto;
 
-    /// Constructor
+    /// Constructor de la clase categoria
     public Categoria(String id, String nombre, String descripcion, Presupuesto presupuesto) {
         this.id = id;
         this.nombre = nombre;

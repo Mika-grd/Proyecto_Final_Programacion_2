@@ -7,6 +7,8 @@ public abstract class Persona {
     private String telefono;
     private String contraseña;
 
+
+    /// Constructor de la clase Persona
     public Persona(String nombre, String id, String correo, String telefono, String contraseña) {
         this.nombre = nombre;
         this.id = id;
@@ -16,6 +18,7 @@ public abstract class Persona {
     }
 
 
+    /// SETTERS & GETTERS
     public String getNombre() {
         return nombre;
     }

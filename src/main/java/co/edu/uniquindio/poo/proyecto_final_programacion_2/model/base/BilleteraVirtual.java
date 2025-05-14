@@ -10,10 +10,11 @@ public class BilleteraVirtual implements ICrud {
     private LinkedList<Cuenta> listaCuentas = new LinkedList<>();
     private static BilleteraVirtual instance;
 
-    /// Constructor
+    /// Constructor privado para mas adelante hacer uso del patron de diseño "Singleton" de billetera virtual
     private BilleteraVirtual(String nombre) {
         this.nombre = nombre;
     }
+
 
     //Implementacion del singleton//
     public static BilleteraVirtual getInstance() {
@@ -26,6 +27,14 @@ public class BilleteraVirtual implements ICrud {
 
     //CRUD generico
 
+
+    /**
+     * Agrega un objeto generico a una lista
+     * @param objeto
+     * @param listaObjetos
+     * @return retorna un mensaje "exitoso" si se agrego correctamente, de lo contrario suelta "No exitoso"
+     * @param <T>
+     */
     @Override
     public <T> String agregarObjeto(T objeto, LinkedList<T> listaObjetos) {
         if (objeto != null) {
@@ -35,6 +44,14 @@ public class BilleteraVirtual implements ICrud {
         return "No exitoso";
     }
 
+    /**
+     * Edita un objeto existente con un nuevo objeto dentro de una lista
+     * @param objeto
+     * @param objetoNuevo
+     * @param listaObjetos
+     * @return un mensaje "exitoso" si se pudo editar correctamente o de lo contrario un mensaje "no exitoso"
+     * @param <T>
+     */
     @Override
     public <T> String editarObjeto(T objeto, T objetoNuevo, LinkedList<T> listaObjetos) {
 
@@ -47,6 +64,14 @@ public class BilleteraVirtual implements ICrud {
         return "No exitoso";
     }
 
+
+    /**
+     * Elimina un objeto de la lista
+     * @param objeto
+     * @param listaObjetos
+     * @return en caso de que se pudo eliminar correctamente "exitoso" pero si no se pudo "no exitoso"
+     * @param <T>
+     */
     @Override
     public <T> String eliminarObjeto(T objeto, LinkedList<T> listaObjetos) {
         if (objeto != null) {
@@ -55,6 +80,14 @@ public class BilleteraVirtual implements ICrud {
         }
         return "No exitoso";
     }
+
+    /**
+     * Busca un objeto por la id dentro de la lista
+     * @param id
+     * @param listaObjetos
+     * @return el objeto encontrado, de lo contrario retorna null si no se encuentra el objeto con el ID dado
+     * @param <T>
+     */
 
     @Override
     public <T> T buscarObjeto(String id, LinkedList<T> listaObjetos) {
@@ -70,7 +103,7 @@ public class BilleteraVirtual implements ICrud {
                 e.printStackTrace();
             }
         }
-        return null; // Retorna null si no se encuentra el objeto con el ID dado
+        return null;
     }
 
 

@@ -10,18 +10,19 @@ public class Cuenta {
     private LinkedList<Transaccion> listaTransaccion;
     private LinkedList<Categoria> listaCategorias;
 
-    /////Constructor
-
+    /////Constructor de la clase Cuenta
     public Cuenta(String id, String nombreBanco, int numCuenta, Usuario usuario) {
-
         this.id = id;
         this.nombreBanco = nombreBanco;
         this.numCuenta = numCuenta;
-
         this.listaTransaccion = new LinkedList<Transaccion>();
         this.listaCategorias = new LinkedList<>();
+        this.usuario = usuario;
     }
 
+
+
+    /// SETTER & GETTERS
     public String getId() {
         return id;
     }

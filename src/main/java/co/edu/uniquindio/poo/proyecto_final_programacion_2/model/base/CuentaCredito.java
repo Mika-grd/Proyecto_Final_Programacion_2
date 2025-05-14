@@ -6,8 +6,7 @@ public class CuentaCredito extends Cuenta{
     private double cupoDisponible;
     private double cupoEnUso;
 
-    ///Constructor
-    ///
+    ///Constructor de la clase CuentaCredito
     public CuentaCredito(String id, String nombreBanco, int numCuenta, Usuario usuario, double tasaInteres, double cupoDisponible, double cupoEnUso) {
         super(id, nombreBanco, numCuenta, usuario);
         this.tasaInteres = tasaInteres;
@@ -16,7 +15,7 @@ public class CuentaCredito extends Cuenta{
     }
 
 
-    /// Getters & Setterss
+    /// Getters & Setters
     public double getTasaInteres() {
         return tasaInteres;
     }

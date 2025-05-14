@@ -36,7 +36,7 @@
       </AnchorPane>
       <Pane layoutX="534.0" layoutY="74.0" prefHeight="521.0" prefWidth="626.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
          <children>
-            <TableView layoutX="31.0" layoutY="24.0" prefHeight="444.0" prefWidth="560.0">
+            <TableView fx:id="historialTable" layoutX="31.0" layoutY="24.0" prefHeight="444.0" prefWidth="560.0">
               <columns>
                 <TableColumn fx:id="idColumna" prefWidth="99.20001220703125" text="id" />
                 <TableColumn fx:id="fechaColumna" prefWidth="151.20001220703125" text="Fecha" />

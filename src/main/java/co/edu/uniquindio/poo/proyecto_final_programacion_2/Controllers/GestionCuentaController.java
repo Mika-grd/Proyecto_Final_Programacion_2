@@ -110,9 +110,11 @@ public class GestionCuentaController {
             }
         }
 
-        String mensaje = "Cuenta seleccionada :" + cuentaSeleccionada.toString();
-
         sesion.setCuentaSeleccionada(cuentaSeleccionada);
+
+        CuentaDTO dto = new CuentaDTO(cuentaSeleccionada);
+        String mensaje = "Cuenta seleccionada :" + dto.getNombreUsuario() + " " + dto.getTipoCuenta() + " " + dto.getNumeroCuenta() + " " + dto.getBanco();
+
 
         mostrarAlerta(mensaje);
 

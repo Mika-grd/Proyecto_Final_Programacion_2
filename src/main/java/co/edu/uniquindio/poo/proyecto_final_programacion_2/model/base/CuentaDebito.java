@@ -4,7 +4,7 @@ public class CuentaDebito extends Cuenta {
 
     private double saldo;
 
-    /// Constructor
+    /// Constructor de la clase CuentaDebito
     public CuentaDebito(String id, String nombreBanco, int numCuenta, Usuario usuario, double saldo) {
         super(id, nombreBanco, numCuenta, usuario);
         this.saldo = saldo;

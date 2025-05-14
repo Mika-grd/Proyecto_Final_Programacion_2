@@ -6,17 +6,13 @@ public class Presupuesto {
     private double montoActual;
 
 
-    ///////Constructor
+    ///////Constructor de la clase Presupuesto
     public Presupuesto(String id, String nombre, double montoActual) {
         this.id = id;
         this.nombre = nombre;
         this.montoActual = montoActual;
 
     }
-
-
-
-
 
 
 

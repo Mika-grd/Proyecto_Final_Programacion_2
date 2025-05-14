@@ -8,6 +8,7 @@ import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.BilleteraVirtual;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Persona;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Usuario;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.UsuarioDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -147,22 +148,34 @@ public class GestionUsuarioController {
         String mensaje = "Debe Seleccionar un usuario";
         BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
         Usuario usuario = usuariosTabla.getSelectionModel().getSelectedItem();
-        Usuario usuarioNuevo = new Usuario(clienteNombreCampo.getText(), usuario.getId(), clienteCorreoCampo.getText(), clienteContactoCampo.getText(), usuario.getContraseña());
-        usuarioNuevo.setListaCuentas(usuario.getListaCuentas());
-        if (usuario != null) {
-            billeteraVirtual.editarObjeto(usuario, usuarioNuevo, billeteraVirtual.getListaPersonas());
-            mensaje = "Usuario" + usuario.toString() +"actualizado con exito a " + usuarioNuevo.toString();
-            usuarios = FXCollections.observableArrayList(usuarioNuevo);
-            usuariosTabla.setItems(usuarios);
-
-        }
         Alert alerta = new Alert(Alert.AlertType.INFORMATION); // Tipo de alerta: Información
         alerta.setTitle("Mensaje de Información"); // Título del popup
         alerta.setHeaderText("Información Operación"); // Texto principal en la parte superior
-        alerta.setContentText(mensaje); // Texto del mensaje
+         // Texto del mensaje
 
-        // Mostrar el popup y esperar la respuesta del usuario (por ejemplo, clic en "OK")
-        alerta.showAndWait();
+
+        if (usuario == null) {
+            alerta.setContentText(mensaje);
+            alerta.showAndWait();
+        }
+
+
+        if (usuario != null) {
+            Usuario usuarioNuevo = new Usuario(clienteNombreCampo.getText(), usuario.getId(), clienteCorreoCampo.getText(), clienteContactoCampo.getText(), usuario.getContraseña());
+            usuarioNuevo.setListaCuentas(usuario.getListaCuentas());
+
+            UsuarioDTO nuevoDto = new UsuarioDTO(usuarioNuevo);
+            UsuarioDTO antiguoDto = new UsuarioDTO(usuarioNuevo);
+            billeteraVirtual.editarObjeto(usuario, usuarioNuevo, billeteraVirtual.getListaPersonas());
+            mensaje = "Usuario:  " + antiguoDto.toString() +"actualizado con exito a " + nuevoDto.toString();
+            usuarios = FXCollections.observableArrayList(usuarioNuevo);
+            usuariosTabla.setItems(usuarios);
+
+            alerta.setContentText(mensaje);
+            alerta.showAndWait();
+
+        }
+
     }
 
     /**

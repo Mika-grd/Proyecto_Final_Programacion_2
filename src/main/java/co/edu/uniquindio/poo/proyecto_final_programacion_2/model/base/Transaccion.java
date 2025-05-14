@@ -13,8 +13,7 @@ public class Transaccion {
     private CuentaDebito cuentaObjetivo;
 
 
-    ////Constructor
-
+    ////Constructor de la clase Transaccion
 
     public Transaccion(String id, LocalDate fechaTransaccion, double montoATransferir, double montoDisponible, String descripcion, CuentaDebito cuentaPropia, CuentaDebito cuentaObjetivo) {
         this.id = id;
@@ -52,7 +51,7 @@ public class Transaccion {
         return false;
     }
 
-    /// Sets & gets
+    /// SETTERS & GETTERS
 
     public String getId() {
         return id;

@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class HelloApplication extends Application {
     @Override
@@ -25,7 +26,8 @@ public class HelloApplication extends Application {
 
         BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
 
-        Usuario user = new Usuario("juan", "1234", "juan@.com", "3015694075", "123");
+
+        Usuario user = new Usuario("juan", "123", "juan@.com", "3015694075", "123");
 
         DirectorCuentasBuilder director = new DirectorCuentasBuilder();
 
@@ -39,7 +41,7 @@ public class HelloApplication extends Application {
         Presupuesto presupuesto = new Presupuesto("", "", 0);
 
         Categoria Ahorro = new Categoria("12", "Ahorros", "Para ahorrar", presupuesto);
-        Cuenta cuenta2 = director.cuentaDebitoConUnaCategoria(builderCategorias, "123", 1234, user, Ahorro);
+        Cuenta cuenta2 = director.cuentaDebitoConUnaCategoria(builderCategorias, "124", 1234, user, Ahorro);
 
         billeteraVirtual.agregarObjeto(user, billeteraVirtual.getListaPersonas());
 
@@ -49,11 +51,27 @@ public class HelloApplication extends Application {
         user.agregarObjeto(cuenta1, user.getListaCuentas());
         user.agregarObjeto(cuenta2, user.getListaCuentas());
 
-        System.out.println(cuenta1.toString());
+        LinkedList<CuentaDTO> listaCuentaDTO = new LinkedList<>();
 
-        System.out.println(cuenta2.toString());
+        for (Cuenta cuenta : billeteraVirtual.getListaCuentas()) {
+            listaCuentaDTO.add(new CuentaDTO(cuenta));
+        }
 
-        System.out.println(billeteraVirtual.getListaCuentas());
+        for (CuentaDTO cuentaDTO : listaCuentaDTO) {
+            System.out.println(cuentaDTO.toString());
+        }
+
+        LinkedList<UsuarioDTO> listaUsuarioDTO = new LinkedList<>();
+
+        for (Persona Persona : billeteraVirtual.getListaPersonas()){
+            if (Persona instanceof Usuario){
+                listaUsuarioDTO.add(new UsuarioDTO((Usuario) Persona));
+            }
+        }
+
+        for (UsuarioDTO usuarioDTO : listaUsuarioDTO) {
+            System.out.println(usuarioDTO.toString());
+        }
 
         launch();
     }
