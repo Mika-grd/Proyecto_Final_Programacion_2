@@ -178,6 +178,12 @@ public class GestionCuentaAdministradorController {
         String id = txtId.getText();
         String banco = txtNombreBanco.getText();
         int numCuenta;
+
+        if (billeteraVirtual.buscarObjeto(id, billeteraVirtual.getListaCuentas()) != null) {
+            mostrarAlerta("La cuenta con este id ya existe");
+            return;
+        }
+        
         try {
             numCuenta = Integer.parseInt(txtNumCuenta.getText());
         } catch (NumberFormatException e) {
