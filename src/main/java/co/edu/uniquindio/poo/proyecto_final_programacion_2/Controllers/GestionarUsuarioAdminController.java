@@ -2,11 +2,13 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Administrador;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.BilleteraVirtual;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Persona;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -124,29 +126,162 @@ public class GestionarUsuarioAdminController {
 
     @FXML
     void agregarUsuarioAccion(ActionEvent event) {
+        if (nombreCampo.getText().isEmpty() ||
+                cedulaCampo.getText().isEmpty()) {
 
+            // Mostrar alerta si algún campo está vacío
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Error al añadir el Usuario");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Todos los campos son obligatorios. ¡Por favor, complétalos!");
+            alerta.showAndWait();
+
+        } else {
+            // Crear y añadir un usuario
+            Usuario usuario = new Usuario(
+                    nombreCampo.getText(),
+                    cedulaCampo.getText(),
+                    correoCampo.getText(),
+                    telefonoCampo.getText(),
+                    contraseñaCampo.getText());
+            billetera.agregarObjeto(usuario,billetera.getListaPersonas());
+
+            // Mostrar mensaje de éxito (opcional)
+            Alert confirmacion = new Alert(Alert.AlertType.INFORMATION);
+            confirmacion.setTitle("Usuario añadido");
+            confirmacion.setHeaderText(null);
+            confirmacion.setContentText("El Usuario ha sido añadido con éxito.");
+            confirmacion.showAndWait();
+        }
+        cargarTabla();
     }
 
     @FXML
     void buscarAccion(ActionEvent event) {
+        String id = busquedaCampo.getText();
 
+        if (id == null || id.trim().isEmpty()) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Campo vacío");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Por favor ingrese un ID para buscar.");
+            alerta.showAndWait();
+            return;
+        }
+
+        Persona personaEncontrada = billetera.buscarObjeto(id, billetera.getListaPersonas());
+
+        if (personaEncontrada != null) {
+            usuariosAdminTabla.getSelectionModel().clearSelection();
+            usuariosAdminTabla.getSelectionModel().select(personaEncontrada);
+            usuariosAdminTabla.scrollTo(personaEncontrada);
+        } else {
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("No encontrado");
+            alerta.setHeaderText(null);
+            alerta.setContentText("No se encontró ninguna persona con el ID proporcionado.");
+            alerta.showAndWait();
+        }
     }
 
     @FXML
     void editarAccion(ActionEvent event) {
+        Persona personaSeleccionada = usuariosAdminTabla.getSelectionModel().getSelectedItem();
 
+        if (personaSeleccionada == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Selección requerida");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Debes seleccionar una persona en la tabla para editar.");
+            alerta.showAndWait();
+            return;
+        }
+
+        // Validar que los campos no estén vacíos
+        if (nombreCampo.getText().isEmpty() || cedulaCampo.getText().isEmpty()) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Campos incompletos");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Nombre y cédula son obligatorios.");
+            alerta.showAndWait();
+            return;
+        }
+
+        // Crear un nuevo objeto del mismo tipo que el seleccionado
+        Persona personaEditada;
+
+        if (personaSeleccionada instanceof Administrador) {
+            personaEditada = new Administrador(
+                    nombreCampo.getText(),
+                    cedulaCampo.getText(),
+                    correoCampo.getText(),
+                    telefonoCampo.getText(),
+                    contraseñaCampo.getText()
+            );
+        } else {
+            personaEditada = new Usuario(
+                    nombreCampo.getText(),
+                    cedulaCampo.getText(),
+                    correoCampo.getText(),
+                    telefonoCampo.getText(),
+                    contraseñaCampo.getText()
+            );
+        }
+
+        // Editar usando el metodo generico
+        String resultado = billetera.editarObjeto(personaSeleccionada, personaEditada, billetera.getListaPersonas());
+
+        if (resultado.equals("Exitoso")) {
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Éxito");
+            alerta.setHeaderText(null);
+            alerta.setContentText("La persona fue editada correctamente.");
+            alerta.showAndWait();
+            cargarTabla(); // refresca la tabla
+        } else {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Ocurrió un error al editar la persona.");
+            alerta.showAndWait();
+        }
     }
 
     @FXML
     void eliminarAccion(ActionEvent event) {
+        Persona persona = usuariosAdminTabla.getSelectionModel().getSelectedItem();
 
+        if (persona == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("No hay una persona seleccionada");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Debes seleccionar una persona en la tabla.");
+            alerta.showAndWait();
+            return;
+        }
+
+        String resultado = billetera.eliminarObjeto(persona, billetera.getListaPersonas());
+
+        if (resultado.equals("Exitoso")) {
+            Alert confirmacion = new Alert(Alert.AlertType.INFORMATION);
+            confirmacion.setTitle("Eliminación exitosa");
+            confirmacion.setHeaderText(null);
+            confirmacion.setContentText("La persona fue eliminada correctamente.");
+            confirmacion.showAndWait();
+            cargarTabla(); // Refresca la tabla
+        } else {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error al eliminar");
+            error.setHeaderText(null);
+            error.setContentText("No se pudo eliminar la persona.");
+            error.showAndWait();
+        }
     }
 
     @FXML
     void recargarAccion(ActionEvent event) {
         cargarTabla();
     }
-
 
     @FXML
     void seleccionarAccion(ActionEvent event) {
@@ -157,7 +292,7 @@ public class GestionarUsuarioAdminController {
     void volverAccion(ActionEvent event) {
         try {
             // Carga el archivo FXML de la pantalla anterior
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionUsuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/InicioSesion.fxml"));
 
             // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
