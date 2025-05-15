@@ -206,8 +206,8 @@ public class RealizarTransaccionController {
 
         idColumna.setCellValueFactory(new PropertyValueFactory<>("id"));
         descripcionColumna.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        fechaColumna.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        montoColumna.setCellValueFactory(new PropertyValueFactory<>("monto"));
+        fechaColumna.setCellValueFactory(new PropertyValueFactory<>("fechaTransaccion"));
+        montoColumna.setCellValueFactory(new PropertyValueFactory<>("montoATransferir"));
 
         ObservableList<Transaccion> historial = FXCollections.observableArrayList(sesion.getCuentaDebito().getListaTransaccion());
         historialTable.setItems(historial);

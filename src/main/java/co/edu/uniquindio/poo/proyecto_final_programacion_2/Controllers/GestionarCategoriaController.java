@@ -12,10 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -55,6 +52,10 @@ public class GestionarCategoriaController {
 
     @FXML
     private TableColumn<Categoria, String> colDescripcion;
+
+    @FXML
+    private Button liberarBoton;
+
 
     Sesion sesion = Sesion.getInstancia();
     private ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList(sesion.getCuentaSeleccionada().getListaCategorias());
@@ -139,6 +140,39 @@ public class GestionarCategoriaController {
         txtDescripcionCategoria.clear();
     }
 
+    @FXML
+    void liberarAccion(ActionEvent event) {
+        Categoria categoriaSeleccionada =  tablaCategorias.getSelectionModel().getSelectedItem();
+        if (categoriaSeleccionada != null) {
+            CuentaDebito cuentaDebito = sesion.getCuentaDebito();
+            cuentaDebito.getListaCategorias().remove(categoriaSeleccionada);
+            cuentaDebito.setSaldo(cuentaDebito.getSaldo() + categoriaSeleccionada.getPresupuesto().getMontoActual());
+
+            actualizarTabla();
+            mostrarAlerta("Exitoso", "Categoria eliminada correctamente", Alert.AlertType.CONFIRMATION);
+        }
+        else {
+            mostrarAlerta("Categoria sin seleccionar", "Debe seleccionar una categoria para liberar", Alert.AlertType.ERROR);
+        }
+    }
+
+
+
+    /**
+     * Muestra una ventana emergente (popup) con un mensaje al usuario.
+     *
+     * @param titulo   El título de la ventana de alerta.
+     * @param contenido  El mensaje que se desea mostrar dentro del popup.
+     * @param tipo     El tipo de alerta (información, advertencia, error, etc.).
+     */
+    private void mostrarAlerta(String titulo, String contenido, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(contenido);
+        alerta.showAndWait();
+    }
+
 
     //Inicializa el controlador
     @FXML
@@ -165,6 +199,8 @@ public class GestionarCategoriaController {
         assert colIdCategoria != null : "fx:id=\"colIdCategoria\" was not injected: check your FXML file.";
         assert colNombre != null : "fx:id=\"colNombre\" was not injected: check your FXML file.";
         assert colDescripcion != null : "fx:id=\"colDescripcion\" was not injected: check your FXML file.";
+        assert liberarBoton != null : "fx:id=\"liberarBoton\" was not injected: check your FXML file 'GestionarCategorias.fxml'.";
+
     }
 
 
