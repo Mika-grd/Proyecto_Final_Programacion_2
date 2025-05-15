@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
 import javafx.collections.FXCollections;
@@ -15,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class RealizarTransaccionController {
@@ -35,7 +35,28 @@ public class RealizarTransaccionController {
     private Button añadirTransaccionBoton;
 
     @FXML
+    private Button clonarBoton;
+
+    @FXML
+    private TableColumn<String, Transaccion> descripcionColumna;
+
+    @FXML
+    private TableColumn<LocalDate, Transaccion> fechaColumna;
+
+    @FXML
     private DatePicker fechaTransaccion;
+
+    @FXML
+    private TableView<Transaccion> historialTable;
+
+    @FXML
+    private TableColumn<String, Transaccion> idColumna;
+
+    @FXML
+    private TableColumn<Double, Transaccion> montoColumna;
+
+    @FXML
+    private Button recargarBoton;
 
     @FXML
     private TextField txtDescripcion;
@@ -50,10 +71,12 @@ public class RealizarTransaccionController {
     private TextField txtMonto;
 
     @FXML
-    private TextField txtTitular;
-
-    @FXML
     private Button volverBoton;
+
+
+    private void cargarTabla() {
+        historialTable.getItems().setAll(sesion.getCuentaSeleccionada().getListaTransaccion());
+    }
 
     /**
      * Maneja el evento de añadir una nueva transacción desde la interfaz gráfica.
@@ -69,7 +92,7 @@ public class RealizarTransaccionController {
      * @param event Evento que se dispara al presionar el botón de "Añadir".
      */
     @FXML
-    void añadirEmpleadoAccion(ActionEvent event){
+    void añadirTransaccionAccion(ActionEvent event){
         BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
 
         String id = txtId.getText();
@@ -96,11 +119,6 @@ public class RealizarTransaccionController {
             return;
         }
 
-        Usuario usuarioObjetivo = (Usuario) billeteraVirtual.buscarObjeto(txtTitular.getText(), billeteraVirtual.getListaPersonas());
-        if (usuarioObjetivo == null) {
-            mostrarAlerta("Usuario no encontrado", "No se encontró el usuario con ID: " + txtTitular.getText(), Alert.AlertType.ERROR);
-            return;
-        }
 
         double montoDisponible = 0;
         if (categoria != null) {
@@ -115,12 +133,12 @@ public class RealizarTransaccionController {
             sesion.getUsuario().agregarObjeto(nuevaTransaccion, sesion.getCuentaDebito().getListaTransaccion());
 
             mostrarAlerta("Éxito", "Transacción agregada exitosamente:\n" +
-                    "Objetivo: " + usuarioObjetivo.getNombre() + "\n" +
                     "Saldo actual: " + sesion.getCuentaDebito().getSaldo() + "\n" +
                     "Monto transferido: " + monto, Alert.AlertType.INFORMATION);
         } else {
             mostrarAlerta("Error de transacción", "No fue posible realizar la transacción. Verifique los fondos disponibles.", Alert.AlertType.ERROR);
         }
+        cargarTabla();
     }
 
 
@@ -169,6 +187,16 @@ public class RealizarTransaccionController {
     }
 
     @FXML
+    void clonarAccion(ActionEvent event) {
+
+    }
+
+    @FXML
+    void recargarAccion(ActionEvent event) {
+        cargarTabla();
+    }
+
+    @FXML
     void initialize() {
 
         ObservableList<Categoria> categorias = FXCollections.observableArrayList(sesion.getCuentaSeleccionada().getListaCategorias());
@@ -176,14 +204,29 @@ public class RealizarTransaccionController {
         CategoriaCombo.setItems(categorias);
 
 
+        idColumna.setCellValueFactory(new PropertyValueFactory<>("id"));
+        descripcionColumna.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        fechaColumna.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        montoColumna.setCellValueFactory(new PropertyValueFactory<>("monto"));
+
+        ObservableList<Transaccion> historial = FXCollections.observableArrayList(sesion.getCuentaDebito().getListaTransaccion());
+        historialTable.setItems(historial);
+
+
         assert CategoriaCombo != null : "fx:id=\"CategoriaCombo\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert añadirTransaccionBoton != null : "fx:id=\"añadirTransaccionBoton\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
+        assert clonarBoton != null : "fx:id=\"clonarBoton\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
+        assert descripcionColumna != null : "fx:id=\"descripcionColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
+        assert fechaColumna != null : "fx:id=\"fechaColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert fechaTransaccion != null : "fx:id=\"fechaTransaccion\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
+        assert historialTable != null : "fx:id=\"historialTable\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
+        assert idColumna != null : "fx:id=\"idColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
+        assert montoColumna != null : "fx:id=\"montoColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
+        assert recargarBoton != null : "fx:id=\"recargarBoton\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert txtDescripcion != null : "fx:id=\"txtDescripcion\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert txtId != null : "fx:id=\"txtId\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert txtIdCuenta != null : "fx:id=\"txtIdCuenta\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert txtMonto != null : "fx:id=\"txtMonto\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
-        assert txtTitular != null : "fx:id=\"txtTitular\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert volverBoton != null : "fx:id=\"volverBoton\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
     }
 

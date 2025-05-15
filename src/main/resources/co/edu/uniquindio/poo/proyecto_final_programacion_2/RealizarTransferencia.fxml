@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="762.0" prefWidth="1079.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.RealizarTransaccionController">
+<AnchorPane prefHeight="805.0" prefWidth="1041.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.RealizarTransaccionController">
    <children>
       <GridPane hgap="10" layoutX="90.0" layoutY="159.0" style="-fx-padding: 10;" vgap="10">
          <children>
@@ -56,21 +56,18 @@
             <Font name="Castellar" size="41.0" />
          </font>
       </Text>
-      <Pane layoutX="80.0" layoutY="410.0" prefHeight="126.0" prefWidth="278.0">
+      <Pane layoutX="42.0" layoutY="421.0" prefHeight="146.0" prefWidth="232.0">
          <children>
-            <Button fx:id="añadirTransaccionBoton" layoutX="14.0" layoutY="24.0" onAction="#añadirTransaccionAccion" prefHeight="36.0" prefWidth="238.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px;" text="Añadir Transacción">
+            <Button fx:id="añadirTransaccionBoton" layoutX="14.0" layoutY="24.0" onAction="#añadirTransaccionAccion" prefHeight="36.0" prefWidth="204.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px;" text="Añadir Transacción" />
+            <Button fx:id="clonarBoton" layoutX="14.0" layoutY="82.0" onAction="#clonarAccion" prefHeight="36.0" prefWidth="204.0" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Transaccion a la misma cuenta">
                <font>
-                  <Font name="Arial Black" size="12.0" />
-               </font></Button>
-            <Button fx:id="clonarBoton" layoutX="12.0" layoutY="77.0" onAction="#clonarAccion" prefHeight="36.0" prefWidth="238.0" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Transferencia a la misma cuenta">
-               <font>
-                  <Font name="Arial" size="14.0" />
+                  <Font size="13.0" />
                </font>
             </Button>
          </children>
       </Pane>
-      <Button fx:id="volverBoton" layoutX="44.0" layoutY="663.0" onAction="#volverAccion" prefHeight="25.0" prefWidth="92.0" text="Volver" textFill="RED" />
-      <TableView fx:id="historialTable" layoutX="512.0" layoutY="471.0" prefHeight="230.0" prefWidth="544.0">
+      <Button fx:id="volverBoton" layoutX="52.0" layoutY="727.0" onAction="#volverAccion" prefHeight="25.0" prefWidth="92.0" text="Volver" textFill="RED" />
+      <TableView fx:id="historialTable" layoutX="424.0" layoutY="463.0" prefHeight="290.0" prefWidth="546.0">
          <columns>
             <TableColumn fx:id="idColumna" prefWidth="99.20001220703125" text="id" />
             <TableColumn fx:id="fechaColumna" prefWidth="151.20001220703125" text="Fecha" />
@@ -78,6 +75,6 @@
             <TableColumn fx:id="descripcionColumna" prefWidth="160.79998779296875" text="Descripción" />
          </columns>
       </TableView>
-      <Button fx:id="recargarBoton" layoutX="512.0" layoutY="713.0" mnemonicParsing="false" onAction="#recargarAccion" prefHeight="34.0" prefWidth="110.0" text="Recargar" />
+      <Button fx:id="recargarBoton" layoutX="424.0" layoutY="765.0" onAction="#recargarAccion" text="Recargar" />
    </children>
 </AnchorPane>
