@@ -58,6 +58,7 @@ public class Transaccion implements Cloneable  {
                 cuentaObjetivo.setSaldo(cuentaObjetivo.getSaldo() + montoATransferir);
                 cuentaObjetivo.calcularSaldoTotal();
                 cuentaObjetivo.getListaTransaccion().add(this);
+                this.setDescripcion(descripcion + " a cuenta: " + cuentaObjetivo.getId());
                 return true;
             }
         }
