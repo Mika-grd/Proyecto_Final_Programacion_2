@@ -30,6 +30,8 @@ public class HelloApplication extends Application {
 
         Usuario user = new Usuario("juan", "123", "juan@.com", "3015694075", "123");
 
+        Administrador administrador = new Administrador("raul","444","raul@.com","3015694075","444");
+
         DirectorCuentasBuilder director = new DirectorCuentasBuilder();
 
         CuentaDebitoBuilder debito = new CuentaDebitoBuilder();
@@ -53,6 +55,7 @@ public class HelloApplication extends Application {
         Cuenta cuenta2 = director.cuentaDebitoConUnaCategoria(builderCategorias, "124", 1234, user, Ahorro);
 
         billeteraVirtual.agregarObjeto(user, billeteraVirtual.getListaPersonas());
+        billeteraVirtual.agregarObjeto(administrador, billeteraVirtual.getListaPersonas());
 
         CuentaDebito cuentaDebito = (CuentaDebito) cuenta2;
 

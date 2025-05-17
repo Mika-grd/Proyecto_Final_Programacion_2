@@ -292,7 +292,7 @@ public class GestionarUsuarioAdminController {
     void volverAccion(ActionEvent event) {
         try {
             // Carga el archivo FXML de la pantalla anterior
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/InicioSesion.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/vistaAdministrador.fxml"));
 
             // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
