@@ -382,8 +382,7 @@ public class GestionCuentaAdministradorController {
         Se llama al presionar el botón "Generar Reporte"
         Se muestra un mensaje con la información de las cuentas del usuario
         @param event Evento que activa el método
-     */
-    @FXML
+            @FXML
     void generarReporteAccion(ActionEvent event) {
         Usuario usuario = Sesion.getInstancia().getUsuario();
         StringBuilder reporte = new StringBuilder("REPORTE DE CUENTAS:\n");
@@ -396,6 +395,8 @@ public class GestionCuentaAdministradorController {
 
         mostrarAlerta(reporte.toString());
     }
+     */
+
 
     /*
         Método para recargar la tabla de cuentas crédito
