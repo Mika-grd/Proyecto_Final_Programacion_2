@@ -103,7 +103,7 @@ public class inicioSesionController {
     private void cargarVistaAdministrador() {
         try {
             // Cargar el archivo FXML de la nueva pantalla
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionAdministrador.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/vistaAdministrador.fxml"));
 
             // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
