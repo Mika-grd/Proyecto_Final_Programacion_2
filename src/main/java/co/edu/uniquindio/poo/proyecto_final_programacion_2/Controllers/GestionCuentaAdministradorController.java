@@ -382,20 +382,12 @@ public class GestionCuentaAdministradorController {
         Se llama al presionar el botón "Generar Reporte"
         Se muestra un mensaje con la información de las cuentas del usuario
         @param event Evento que activa el método
-            @FXML
-    void generarReporteAccion(ActionEvent event) {
-        Usuario usuario = Sesion.getInstancia().getUsuario();
-        StringBuilder reporte = new StringBuilder("REPORTE DE CUENTAS:\n");
 
-        for (Cuenta c : usuario.getListaCuentas()) {
-            reporte.append("- ").append(c.getTipoCuenta()).append(": ")
-                    .append(c.getNumeroCuenta()).append(" (")
-                    .append(c.getBanco()).append(")\n");
-        }
-
-        mostrarAlerta(reporte.toString());
-    }
      */
+    @FXML
+    void generarReporteAccion(ActionEvent event) {
+
+    }
 
 
     /*

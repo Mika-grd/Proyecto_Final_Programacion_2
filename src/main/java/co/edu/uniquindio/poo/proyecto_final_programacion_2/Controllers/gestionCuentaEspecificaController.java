@@ -5,6 +5,7 @@ import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.CuentaDebito;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Transaccion;
 import javafx.collections.FXCollections;
@@ -17,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class gestionCuentaEspecificaController {
@@ -52,6 +52,11 @@ public class gestionCuentaEspecificaController {
     @FXML
     private Button volverBoton;
 
+    @FXML
+    private Button recargarBoton;
+
+    CuentaDebito cuentaActual = Sesion.getInstancia().getCuentaDebito();
+
     private CuentaDebito cuentaSeleccionada;
 
     public void setCuentaSeleccionada(CuentaDebito cuenta) {
@@ -67,61 +72,73 @@ public class gestionCuentaEspecificaController {
     }
 
     @FXML
+    void recargarAccion(ActionEvent event) {
+        ObservableList<Transaccion> historial = FXCollections.observableArrayList(cuentaActual.getListaTransaccion());
+        historialTabla.setItems(historial);
+    }
+
+    @FXML
     void generarReporteAccion(ActionEvent event) {
-        // Puedes exportar los datos de historialTabla a un archivo si lo deseas
+
     }
 
     @FXML
     void gestionarSusCuentasAccion(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/co/edu/uniquindio/poo/proyecto_final_programacion_2/view/GestionCuentaAdministrador.fxml"
-            ));
+            // Carga el archivo FXML de la pantalla anterior
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionCuentaAdministrador.fxml"));
 
+            // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
 
+            // Obtiene la ventana actual desde el botón
             Stage stage = (Stage) gestionarSusCuentasBoton.getScene().getWindow();
 
-            stage.setScene(new Scene(root));
-            stage.show();
+            // Crea una nueva escena con el contenido de Pantalla1
+            Scene scene = new Scene(root);
 
+            // Establece la nueva escena en la ventana actual
+            stage.setScene(scene);
         } catch (IOException e) {
+            // Muestra el error si hay un problema al cargar el FXML
             e.printStackTrace();
         }
     }
-
 
     @FXML
     void volverAccion(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/co/edu/uniquindio/poo/proyecto_final_programacion_2/view/GestionarUsuarioAdmin.fxml"
-            ));
+            // Carga el archivo FXML de la pantalla anterior
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionarUsuarioAdmin.fxml"));
 
+            // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
 
+            // Obtiene la ventana actual desde el botón
             Stage stage = (Stage) volverBoton.getScene().getWindow();
 
-            stage.setScene(new Scene(root));
-            stage.show();
+            // Crea una nueva escena con el contenido de Pantalla1
+            Scene scene = new Scene(root);
 
+            // Establece la nueva escena en la ventana actual
+            stage.setScene(scene);
         } catch (IOException e) {
+            // Muestra el error si hay un problema al cargar el FXML
             e.printStackTrace();
         }
     }
 
-
     @FXML
     void initialize() {
-        assert cuentaDestinoColumna != null : "fx:id=\"cuentaDestinoColumna\" was not injected: check your FXML file.";
-        assert cuentaOrigenColumna != null : "fx:id=\"cuentaOrigenColumna\" was not injected: check your FXML file.";
-        assert fechaColumna != null : "fx:id=\"fechaColumna\" was not injected: check your FXML file.";
-        assert generarReporteBoton != null : "fx:id=\"generarReporteBoton\" was not injected: check your FXML file.";
-        assert gestionarSusCuentasBoton != null : "fx:id=\"gestionarSusCuentasBoton\" was not injected: check your FXML file.";
-        assert historialTabla != null : "fx:id=\"historialTabla\" was not injected: check your FXML file.";
-        assert montoColumna != null : "fx:id=\"montoColumna\" was not injected: check your FXML file.";
-        assert volverBoton != null : "fx:id=\"volverBoton\" was not injected: check your FXML file.";
-
+        assert cuentaDestinoColumna != null : "fx:id=\"cuentaDestinoColumna\" was not injected: check your FXML file 'GestionCuentaEspecifica.fxml'.";
+        assert cuentaOrigenColumna != null : "fx:id=\"cuentaOrigenColumna\" was not injected: check your FXML file 'GestionCuentaEspecifica.fxml'.";
+        assert fechaColumna != null : "fx:id=\"fechaColumna\" was not injected: check your FXML file 'GestionCuentaEspecifica.fxml'.";
+        assert generarReporteBoton != null : "fx:id=\"generarReporteBoton\" was not injected: check your FXML file 'GestionCuentaEspecifica.fxml'.";
+        assert gestionarSusCuentasBoton != null : "fx:id=\"gestionarSusCuentasBoton\" was not injected: check your FXML file 'GestionCuentaEspecifica.fxml'.";
+        assert historialTabla != null : "fx:id=\"historialTabla\" was not injected: check your FXML file 'GestionCuentaEspecifica.fxml'.";
+        assert montoColumna != null : "fx:id=\"montoColumna\" was not injected: check your FXML file 'GestionCuentaEspecifica.fxml'.";
+        assert volverBoton != null : "fx:id=\"volverBoton\" was not injected: check your FXML file 'GestionCuentaEspecifica.fxml'.";
+        assert recargarBoton != null : "fx:id=\"recargarBoton\" was not injected: check your FXML file 'GestionCuentaEspecifica.fxml'.";
         // Asignación de columnas
         fechaColumna.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(
@@ -149,4 +166,10 @@ public class gestionCuentaEspecificaController {
             );
         });
     }
+
 }
+
+
+
+
+
