@@ -168,16 +168,32 @@ public class GestionCuentaAdministradorController {
     @FXML
     private TextField txtUsuario;
 
+    /*
+        * Atributos para almacenar las listas de cuentas y transacciones
+     */
     private ObservableList<Cuenta> listaCuentas = FXCollections.observableArrayList();
     private ObservableList<CuentaCredito> listaCuentasCredito = FXCollections.observableArrayList();
     private ObservableList<Transaccion> listaTransacciones = FXCollections.observableArrayList();
 
+    /*
+        * Método para actualizar la tabla de cuentas
+        * Se llama cada vez que se agrega, elimina o modifica una cuenta
+        * Se actualiza la lista de cuentas y se asigna a la tabla
+        * @param event Evento que activa el método
+     */
     @FXML
     void actualizarTablaAccion(ActionEvent event) {
         tablaCuentas.setItems(FXCollections.observableArrayList(Sesion.getInstancia().getUsuario().getListaCuentas()));
 
     }
 
+    /*
+        * Método para agregar una cuenta
+        * Se llama al presionar el botón "Agregar"
+        * Se valida que los campos no estén vacíos y se crea la cuenta según el tipo seleccionado
+        * Se agrega la cuenta a la lista del usuario y se actualiza la tabla
+        * @param event Evento que activa el método
+     */
     @FXML
     void agregarCuentaAccion(ActionEvent event) {
         String tipoCuenta = comboTipoCuenta.getValue();
@@ -214,6 +230,13 @@ public class GestionCuentaAdministradorController {
         }
     }
 
+    /*
+        * Método para buscar una cuenta crédito por ID
+        * Se llama al presionar el botón "Buscar"
+        * Se valida que el campo de búsqueda no esté vacío y se busca la cuenta en la lista del usuario
+        * Si se encuentra, se muestra en la tabla de cuentas crédito
+        * @param event Evento que activa el método
+     */
     @FXML
     void buscarCuentaCredito(ActionEvent event) {
 
@@ -237,6 +260,9 @@ public class GestionCuentaAdministradorController {
 
     }
 
+    /*
+    Método para buscar una transacción por ID
+     */
     @FXML
     void buscarTransaccionAccion(ActionEvent event) {
         String id = txtBuscarTransaccion.getText();
@@ -263,7 +289,13 @@ public class GestionCuentaAdministradorController {
         }
     }
 
-
+    /*
+        Método para cambiar el cupo de una cuenta crédito
+        Se llama al presionar el botón "Cambiar Cupo"
+        Se valida que el campo de cupo no esté vacío y se actualiza la cuenta seleccionada
+        Se actualiza la tabla de cuentas crédito
+        @param event Evento que activa el método
+     */
     @FXML
     void cambiarCupoAccion(ActionEvent event) {
         String nuevoCupo = txtCupoModificar.getText();
@@ -278,6 +310,13 @@ public class GestionCuentaAdministradorController {
         }
     }
 
+    /*
+        Método para cambiar la tasa de interés de una cuenta crédito
+        Se llama al presionar el botón "Cambiar Interés"
+        Se valida que el campo de interés no esté vacío y se actualiza la cuenta seleccionada
+        Se actualiza la tabla de cuentas crédito
+        @param event Evento que activa el método
+     */
     @FXML
     void cambiarInteresAccion(ActionEvent event) {
         String nuevoInteres = txtInteresModificar.getText();
@@ -292,6 +331,12 @@ public class GestionCuentaAdministradorController {
         }
     }
 
+    /*
+        Método para cerrar sesión
+        Se llama al presionar el botón "Cerrar Sesión"
+        Se carga la ventana de inicio de sesión y se muestra
+        @param event Evento que activa el método
+     */
     @FXML
     void cerrarSesion(ActionEvent event) {
         try {
@@ -312,6 +357,13 @@ public class GestionCuentaAdministradorController {
 
     }
 
+    /*
+        Método para eliminar una cuenta seleccionada
+        Se llama al presionar el botón "Eliminar"
+        Se valida que haya una cuenta seleccionada y se elimina de la lista del usuario
+        Se actualiza la tabla de cuentas
+        @param event Evento que activa el método
+     */
     @FXML
     void eliminarCuentaAccion(ActionEvent event) {
         Cuenta cuenta = tablaCuentas.getSelectionModel().getSelectedItem();
@@ -325,6 +377,12 @@ public class GestionCuentaAdministradorController {
         }
     }
 
+    /*
+        Método para generar un reporte de cuentas
+        Se llama al presionar el botón "Generar Reporte"
+        Se muestra un mensaje con la información de las cuentas del usuario
+        @param event Evento que activa el método
+     */
     @FXML
     void generarReporteAccion(ActionEvent event) {
         Usuario usuario = Sesion.getInstancia().getUsuario();
@@ -339,6 +397,12 @@ public class GestionCuentaAdministradorController {
         mostrarAlerta(reporte.toString());
     }
 
+    /*
+        Método para recargar la tabla de cuentas crédito
+        Se llama al presionar el botón "Recargar"
+        Se actualiza la lista de cuentas crédito y se asigna a la tabla
+        @param event Evento que activa el método
+     */
     @FXML
     void recargarTablaCredito(ActionEvent event) {
         List<CuentaCredito> cuentasCredito = Sesion.getInstancia().getUsuario()
@@ -350,6 +414,12 @@ public class GestionCuentaAdministradorController {
         tablaCuentaCredito.setItems(FXCollections.observableArrayList(cuentasCredito));
     }
 
+    /*
+        Método para recargar la tabla de transacciones
+        Se llama al presionar el botón "Recargar"
+        Se actualiza la lista de transacciones y se asigna a la tabla
+        @param event Evento que activa el método
+     */
     @FXML
     void recargarTransaccionAccion(ActionEvent event) {
         List<Transaccion> transacciones = new ArrayList<>();
@@ -362,8 +432,11 @@ public class GestionCuentaAdministradorController {
     }
 
 
-
-
+    /*
+        Método para mostrar un mensaje de alerta
+        Se utiliza para mostrar mensajes informativos al usuario
+        @param mensaje Mensaje a mostrar en la alerta
+     */
     @FXML
     private void mostrarAlerta(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
@@ -373,6 +446,9 @@ public class GestionCuentaAdministradorController {
         alerta.showAndWait();
     }
 
+    /*
+        Método para inicializar el controlador
+     */
     @FXML
     void initialize() {
         // Inicializar ComboBox con tipos de cuenta
@@ -478,6 +554,11 @@ public class GestionCuentaAdministradorController {
         assert txtUsuario != null : "fx:id=\"txtUsuario\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
     }
 
+    /*
+        Método para mostrar u ocultar campos según el tipo de cuenta seleccionado
+        Se llama al seleccionar un tipo de cuenta en el ComboBox
+        @param tipoCuenta Tipo de cuenta seleccionado
+     */
     private void mostrarCamposPorTipo(String tipoCuenta) {
         if ("Débito".equals(tipoCuenta)) {
             boxDebito.setVisible(true);
