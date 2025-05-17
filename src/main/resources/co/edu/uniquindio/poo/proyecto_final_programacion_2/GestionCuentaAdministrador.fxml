@@ -27,7 +27,7 @@
                     <Label style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-family: Algerian;" text="Gestión de Cuentas Administrador" textFill="WHITE" />
 
                     <!-- FORMULARIO -->
-                    <GridPane hgap="10" style="-fx-padding: 10;" vgap="10">
+                    <GridPane hgap="10" prefHeight="182.0" prefWidth="728.0" style="-fx-padding: 10;" vgap="10">
                         <Label style="-fx-text-fill: white;" text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                         <TextField fx:id="txtId" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
@@ -58,21 +58,21 @@
                             <Label style="-fx-text-fill: white;" text="Cupo En Uso:" />
                             <TextField fx:id="txtCupoEnUso" prefWidth="100" />
                         </HBox>
-                  <columnConstraints>
-                     <ColumnConstraints />
-                     <ColumnConstraints />
-                  </columnConstraints>
-                  <rowConstraints>
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                  </rowConstraints>
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
                     </GridPane>
 
                     <!-- BOTONES -->
@@ -80,11 +80,10 @@
                         <Button fx:id="btnAgregar" onAction="#agregarCuentaAccion" style="-fx-font-family: Algerian;" text="Agregar" />
                         <Button fx:id="btnEliminar" onAction="#eliminarCuentaAccion" style="-fx-font-family: Algerian;" text="Eliminar" textFill="#e70606" />
                         <Button fx:id="btnActualizar" onAction="#actualizarTablaAccion" style="-fx-font-family: Algerian;" text="Actualizar" textFill="#1162cc" />
-                        <Button fx:id="SeleccionarBoton" onAction="#seleccionarAccion" style="-fx-font-family: Algerian;" text="Seleccionar" textFill="#2ba160" />
                     </HBox>
 
-                    <!-- TABLA DE CUENTAS -->
-                    <TableView fx:id="tablaCuentas" prefHeight="148.0" prefWidth="721.0">
+                       <!-- TABLA DE CUENTAS -->
+                    <TableView fx:id="tablaCuentas" prefHeight="134.0" prefWidth="782.0">
                         <columns>
                             <TableColumn fx:id="colId" prefWidth="156.8" text="ID" />
                             <TableColumn fx:id="colBanco" prefWidth="145.6" text="Banco" />
@@ -94,63 +93,69 @@
                         </columns>
                     </TableView>
                 </VBox>
+            <Button fx:id="btnCerrarSesion2" layoutX="349.0" layoutY="522.0" onAction="#cerrarSesion" style="-fx-font-family: Algerian;" text="Cerrar Sesión" />
             </AnchorPane>
         </Tab>
 
-        <!-- TAB GESTIONAR CUENTAS -->
-        <Tab text="Gestionar Cuentas">
+        <!-- TAB GESTIONAR CUENTA CREDITO -->
+        <Tab text="Gestionar CuentaCredito">
             <AnchorPane style="-fx-background-color: white;">
-            <children>
-               <Label layoutX="50.0" layoutY="109.0" prefHeight="15.0" prefWidth="85.0" text="Buscador ID :" />
-               <TextField layoutX="145.0" layoutY="105.0" prefHeight="26.0" prefWidth="182.0" />
-               <Button layoutX="391.0" layoutY="105.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Buscar" />
-               <Button layoutX="391.0" layoutY="158.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Recargar" />
-               <TableView layoutX="127.0" layoutY="225.0" prefHeight="152.0" prefWidth="526.0">
-                 <columns>
-                   <TableColumn prefWidth="256.0" text="ID" />
-                   <TableColumn prefWidth="270.4000244140625" text="Interes" />
-                 </columns>
-               </TableView>
-               <TextField layoutX="145.0" layoutY="158.0" prefHeight="26.0" prefWidth="182.0" />
-               <Label layoutX="72.0" layoutY="162.0" text="Interes :" />
-               <Button layoutX="308.0" layoutY="423.0" mnemonicParsing="false" text="Cambiar Tasa Intereses " />
-            
-                <!-- BOTÓN CERRAR SESIÓN -->
-                <Button fx:id="btnCerrarSesion" layoutX="328.0" layoutY="532.0" onAction="#cerrarSesion" style="-fx-font-family: Algerian;" text="Cerrar Sesión" />
-               <Label layoutX="352.0" layoutY="34.0" />
-               <Label layoutX="198.0" layoutY="34.0" text="Gestión de Cuentas Administrador">
-                  <font>
-                     <Font size="24.0" />
-                  </font>
-               </Label>
-            </children>
+                <children>
+                    <Label layoutX="50.0" layoutY="109.0" text="Buscador ID :" />
+                    <TextField fx:id="txtBuscarId" layoutX="158.0" layoutY="104.0" />
+                    <Button fx:id="btnBuscarCredito" layoutX="391.0" layoutY="105.0" onAction="#buscarCuentaCredito" text="Buscar" />
+                    <Button fx:id="btnRecargarCredito" layoutX="391.0" layoutY="158.0" onAction="#recargarTablaCredito" text="Recargar" />
+                    <TableView fx:id="tablaCuentaCredito" layoutX="90.0" layoutY="273.0" prefHeight="152.0" prefWidth="579.0">
+                        <columns>
+                            <TableColumn fx:id="colCreditoId" prefWidth="185.6" text="ID" />
+                            <TableColumn fx:id="colCreditoInteres" prefWidth="211.2" text="Interes" />
+                            <TableColumn fx:id="colCreditoCupo" prefWidth="208.0" text="Cupo Credito Disponible" />
+                        </columns>
+                    </TableView>
+
+                    <Label layoutX="58.0" layoutY="162.0" text="Interes :" />
+                    <TextField fx:id="txtInteresModificar" layoutX="158.0" layoutY="157.0" />
+                    <Button fx:id="btnCambiarInteres" layoutX="211.0" layoutY="456.0" onAction="#cambiarInteresAccion" text="Cambiar Tasa Intereses " />
+
+                    <Label layoutX="11.0" layoutY="218.0" text="Cupo Credito Disponible :" />
+                    <TextField fx:id="txtCupoModificar" layoutX="158.0" layoutY="213.0" />
+                    <Button fx:id="btnCambiarCupo" layoutX="452.0" layoutY="456.0" onAction="#cambiarCupoAccion" text="Cambiar Cupo Credito" />
+
+                    <!-- BOTÓN CERRAR SESIÓN -->
+                    <Button fx:id="btnCerrarSesion" layoutX="328.0" layoutY="532.0" onAction="#cerrarSesion" style="-fx-font-family: Algerian;" text="Cerrar Sesión" />
+                    <Label layoutX="198.0" layoutY="34.0" text="Gestión de Cuentas Administrador">
+                        <font>
+                            <Font size="24.0" />
+                        </font>
+                    </Label>
+                </children>
             </AnchorPane>
         </Tab>
-      <Tab text="Transacciones">
-         <content>
-            <AnchorPane style="-fx-background-color: white;">
-               <children>
-                  <Label layoutX="50.0" layoutY="109.0" prefHeight="15.0" prefWidth="85.0" text="Buscador ID :" />
-                  <TextField layoutX="145.0" layoutY="105.0" prefHeight="26.0" prefWidth="182.0" />
-                  <Button layoutX="391.0" layoutY="105.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Buscar" />
-                  <Button layoutX="493.0" layoutY="105.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Recargar" />
-                  <TableView layoutX="89.0" layoutY="210.0" prefHeight="152.0" prefWidth="629.0">
-                     <columns>
-                        <TableColumn prefWidth="124.79998779296875" text="ID" />
-                        <TableColumn prefWidth="121.60003662109375" text="Interes" />
-                     </columns>
-                  </TableView>
-                  <Button layoutX="328.0" layoutY="423.0" mnemonicParsing="false" text="Generar Reporte" />
-                  <Button fx:id="btnCerrarSesion1" layoutX="328.0" layoutY="532.0" onAction="#cerrarSesion" style="-fx-font-family: Algerian;" text="Cerrar Sesión" />
-                  <Label layoutX="352.0" layoutY="34.0" />
-                  <Label layoutX="198.0" layoutY="34.0" text="Gestión de Cuentas Administrador">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-         </content>
-      </Tab>
+
+        <!-- TAB TRANSACCIONES -->
+        <Tab text="Transacciones">
+            <content>
+                <AnchorPane style="-fx-background-color: white;">
+                    <children>
+                        <Label layoutX="50.0" layoutY="109.0" text="Buscador ID :" />
+                        <TextField fx:id="txtBuscarTransaccion" layoutX="145.0" layoutY="105.0" />
+                        <Button fx:id="btnBuscarTransaccion" layoutX="391.0" layoutY="105.0" onAction="#buscarTransaccionAccion" text="Buscar" />
+                        <Button fx:id="btnRecargarTransaccion" layoutX="493.0" layoutY="105.0" onAction="#recargarTransaccionAccion" text="Recargar" />
+                        <TableView fx:id="tablaTransacciones" layoutX="37.0" layoutY="176.0" prefHeight="221.0" prefWidth="730.0">
+                            <columns>
+                                <TableColumn fx:id="colTransId" prefWidth="110.4" text="ID" />
+                                <TableColumn fx:id="colTransFecha" prefWidth="124.0" text="Fecha Transaccion" />
+                                <TableColumn fx:id="colTransMonto" prefWidth="129.6" text="Monto Transferido" />
+                                <TableColumn fx:id="colTransDescripcion" prefWidth="132.0" text="Descripcion" />
+                                <TableColumn fx:id="colTransOrigen" prefWidth="112.0" text="Cuenta Origen" />
+                                <TableColumn fx:id="colTransDestino" prefWidth="123.2" text="Cuenta Destino" />
+                            </columns>
+                        </TableView>
+                        <Button fx:id="btnGenerarReporte" layoutX="328.0" layoutY="423.0" onAction="#generarReporteAccion" text="Generar Reporte" />
+                  <Button fx:id="btnCerrarSesion1" layoutX="327.0" layoutY="506.0" onAction="#cerrarSesion" style="-fx-font-family: Algerian;" text="Cerrar Sesión" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
     </TabPane>
 </AnchorPane>
