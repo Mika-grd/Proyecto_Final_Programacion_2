@@ -46,9 +46,6 @@ public class RealizarTransaccionController {
     private TableColumn<LocalDate, Transaccion> fechaColumna;
 
     @FXML
-    private DatePicker fechaTransaccion;
-
-    @FXML
     private TableView<Transaccion> historialTable;
 
     @FXML
@@ -98,7 +95,7 @@ public class RealizarTransaccionController {
         BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
 
         String id = txtId.getText();
-        LocalDate fecha = fechaTransaccion.getValue();
+        LocalDate fecha = LocalDate.now();
         String descripcion = txtDescripcion.getText();
         Categoria categoria = CategoriaCombo.getValue();
 
@@ -215,8 +212,12 @@ public class RealizarTransaccionController {
             // Clonar la transacción
             Transaccion clon = transaccionSeleccionada.clone();
 
-            // Actualizar solo la fecha (si lo deseas), o dejarla igual
-            clon.setFechaTransaccion(fechaTransaccion.getValue());
+            // Establecer fecha actual
+            clon.setFechaTransaccion(LocalDate.now());
+
+            // Clonar monto y descripción explícitamente
+            clon.setDescripcion(transaccionSeleccionada.getDescripcion());
+            clon.setMontoATransferir(transaccionSeleccionada.getMontoATransferir());
 
             // Realizar la transacción clonada
             if (clon.realizarTransaccion()) {
@@ -272,7 +273,6 @@ public class RealizarTransaccionController {
         assert clonarBoton != null : "fx:id=\"clonarBoton\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert descripcionColumna != null : "fx:id=\"descripcionColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert fechaColumna != null : "fx:id=\"fechaColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
-        assert fechaTransaccion != null : "fx:id=\"fechaTransaccion\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert historialTable != null : "fx:id=\"historialTable\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert idColumna != null : "fx:id=\"idColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert montoColumna != null : "fx:id=\"montoColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
