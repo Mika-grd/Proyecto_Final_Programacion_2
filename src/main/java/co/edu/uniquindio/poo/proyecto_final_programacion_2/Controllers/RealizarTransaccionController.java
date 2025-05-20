@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 public class RealizarTransaccionController {
 
     private Sesion sesion = Sesion.getInstancia();
+    CuentaDebito cuentaActual = Sesion.getInstancia().getCuentaDebito();
 
 
     @FXML
@@ -42,9 +44,6 @@ public class RealizarTransaccionController {
 
     @FXML
     private TableColumn<LocalDate, Transaccion> fechaColumna;
-
-    @FXML
-    private DatePicker fechaTransaccion;
 
     @FXML
     private TableView<Transaccion> historialTable;
@@ -96,7 +95,7 @@ public class RealizarTransaccionController {
         BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
 
         String id = txtId.getText();
-        LocalDate fecha = fechaTransaccion.getValue();
+        LocalDate fecha = LocalDate.now();
         String descripcion = txtDescripcion.getText();
         Categoria categoria = CategoriaCombo.getValue();
 
@@ -188,7 +187,59 @@ public class RealizarTransaccionController {
 
     @FXML
     void clonarAccion(ActionEvent event) {
+        // Obtener la transacción seleccionada de la tabla
+        Transaccion transaccionSeleccionada = historialTable.getSelectionModel().getSelectedItem();
 
+        // Validar que se haya seleccionado una transacción
+        if (transaccionSeleccionada == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Selección requerida");
+            alerta.setContentText("Por favor, selecciona una transacción antes de clonar.");
+            alerta.showAndWait();
+            return;
+        }
+
+        // Confirmación antes de clonar
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmación");
+        confirmacion.setHeaderText("Clonar Transacción");
+        confirmacion.setContentText("¿Estás seguro de que deseas clonar esta transacción?");
+
+        Optional<ButtonType> resultado = confirmacion.showAndWait();
+
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+            // Clonar la transacción
+            Transaccion clon = transaccionSeleccionada.clone();
+
+            // Establecer fecha actual
+            clon.setFechaTransaccion(LocalDate.now());
+
+            // Clonar monto y descripción explícitamente
+            clon.setDescripcion(transaccionSeleccionada.getDescripcion());
+            clon.setMontoATransferir(transaccionSeleccionada.getMontoATransferir());
+
+            // Realizar la transacción clonada
+            if (clon.realizarTransaccion()) {
+
+                // Mostrar éxito
+                Alert exito = new Alert(Alert.AlertType.INFORMATION);
+                exito.setTitle("Éxito");
+                exito.setHeaderText("Transacción Clonada");
+                exito.setContentText("La transacción ha sido clonada exitosamente.");
+                exito.showAndWait();
+
+                // Recargar tabla
+                cargarTabla();
+            } else {
+                // Error al intentar realizar la transacción
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Error");
+                error.setHeaderText("Transacción Fallida");
+                error.setContentText("No fue posible realizar la transacción clonada. Verifique los fondos.");
+                error.showAndWait();
+            }
+        }
     }
 
     
@@ -210,6 +261,10 @@ public class RealizarTransaccionController {
         fechaColumna.setCellValueFactory(new PropertyValueFactory<>("fechaTransaccion"));
         montoColumna.setCellValueFactory(new PropertyValueFactory<>("montoATransferir"));
 
+        historialTable.setItems(FXCollections.observableArrayList(cuentaActual.getListaTransaccion()));
+
+        ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList(cuentaActual.getListaCategorias());
+
         ObservableList<Transaccion> historial = FXCollections.observableArrayList(sesion.getCuentaDebito().getListaTransaccion());
         historialTable.setItems(historial);
 
@@ -219,7 +274,6 @@ public class RealizarTransaccionController {
         assert clonarBoton != null : "fx:id=\"clonarBoton\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert descripcionColumna != null : "fx:id=\"descripcionColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert fechaColumna != null : "fx:id=\"fechaColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
-        assert fechaTransaccion != null : "fx:id=\"fechaTransaccion\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert historialTable != null : "fx:id=\"historialTable\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert idColumna != null : "fx:id=\"idColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert montoColumna != null : "fx:id=\"montoColumna\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
