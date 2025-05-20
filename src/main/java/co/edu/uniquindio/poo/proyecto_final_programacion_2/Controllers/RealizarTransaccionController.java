@@ -191,6 +191,7 @@ public class RealizarTransaccionController {
 
     }
 
+    
     @FXML
     void recargarAccion(ActionEvent event) {
         cargarTabla();

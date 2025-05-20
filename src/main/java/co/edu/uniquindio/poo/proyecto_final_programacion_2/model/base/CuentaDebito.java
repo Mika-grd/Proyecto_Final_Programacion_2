@@ -18,6 +18,7 @@ public class CuentaDebito extends Cuenta {
         calcularSaldoTotal();
     }
 
+
     /**
      * Metodo para calcular el saldo total de la cuenta, pasa por todas las categorias
      */
