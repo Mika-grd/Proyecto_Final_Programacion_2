@@ -153,14 +153,14 @@ public class gestionCuentaEspecificaController {
         );
 
         cuentaOrigenColumna.setCellValueFactory(cellData -> {
-            var cuentaPropia = cellData.getValue().getCuentaPropia();
+            var cuentaPropia = cellData.getValue().getCuentaPropiaDebito();
             return new javafx.beans.property.SimpleStringProperty(
                     cuentaPropia != null ? cuentaPropia.getId() : "N/A"
             );
         });
 
         cuentaDestinoColumna.setCellValueFactory(cellData -> {
-            var cuentaObjetivo = cellData.getValue().getCuentaObjetivo();
+            var cuentaObjetivo = cellData.getValue().getCuentaObjetivoDebito();
             return new javafx.beans.property.SimpleStringProperty(
                     cuentaObjetivo != null ? cuentaObjetivo.getId() : "N/A"
             );

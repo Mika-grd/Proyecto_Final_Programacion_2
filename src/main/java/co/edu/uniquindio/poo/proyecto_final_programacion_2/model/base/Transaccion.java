@@ -1,8 +1,9 @@
 package co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Transaccion {
+public class Transaccion implements Cloneable{
 
     private String id;
     private LocalDate fechaTransaccion;
@@ -122,6 +123,37 @@ public class Transaccion {
                 System.err.println("Tipo de transacción de crédito desconocido: " + tipoTransaccionCredito);
                 break;
         }
+    }
+
+    /**
+     * Realiza una transacción de transferencia entre dos cuentas.
+     *
+     * Verifica que todos los datos necesarios estén definidos correctamente:
+     * - La cuenta objetivo no debe ser nula.
+     * - La fecha de transacción debe estar definida.
+     * - El monto a transferir debe ser mayor a 0.
+     * - El monto disponible debe ser mayor a 0.
+     *
+     * Si todos los valores son válidos y el monto a transferir es menor o igual al monto disponible,
+     * se realiza la transferencia: se descuenta el monto de la cuenta propia y se suma a la cuenta objetivo.
+     *
+     * @return true si la transacción se realizó exitosamente, false en caso contrario.
+     */
+    public boolean realizarTransaccion() {
+        double montoDisponible = cuentaPropiaDebito.getSaldo();
+        if (cuentaObjetivoDebito != null && fechaTransaccion != null && montoATransferir > 0 && montoDisponible > 0) {
+            if (montoATransferir <= montoDisponible) {
+                cuentaPropiaDebito.setSaldo(cuentaPropiaDebito.getSaldo() - montoATransferir);
+                cuentaPropiaDebito.calcularSaldoTotal();
+                cuentaPropiaDebito.getListaTransaccion().add(this);
+                cuentaObjetivoDebito.setSaldo(cuentaObjetivoDebito.getSaldo() + montoATransferir);
+                cuentaObjetivoDebito.calcularSaldoTotal();
+                cuentaObjetivoDebito.getListaTransaccion().add(this);
+                this.setDescripcion(descripcion + " a cuenta: " + cuentaObjetivoDebito.getId());
+                return true;
+            }
+        }
+        return false;
     }
 
 
