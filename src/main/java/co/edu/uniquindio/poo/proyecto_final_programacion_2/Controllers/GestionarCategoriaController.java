@@ -35,8 +35,6 @@ public class GestionarCategoriaController {
     @FXML
     private Button btnAgregarCategoria;
 
-    @FXML
-    private Button btnEliminarCategoria;
 
     @FXML
     private Button btnActualizarTabla;
@@ -104,22 +102,6 @@ public class GestionarCategoriaController {
         } catch (IOException e) {
             // Muestra el error si hay un problema al cargar el FXML
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * metodo que elimina una categoria
-     * @param event
-     */
-    @FXML
-    private void eliminarCategoria(ActionEvent event) {
-        Categoria seleccionada = tablaCategorias.getSelectionModel().getSelectedItem();
-        if (seleccionada != null) {
-
-            sesion.getCuentaSeleccionada().getListaCategorias().remove(seleccionada);
-            actualizarTabla();
-        } else {
-            System.out.println("Selecciona una categoría para eliminar.");
         }
     }
 
@@ -193,7 +175,6 @@ public class GestionarCategoriaController {
         assert txtNombreCategoria != null : "fx:id=\"txtNombreCategoria\" was not injected: check your FXML file.";
         assert txtDescripcionCategoria != null : "fx:id=\"txtDescripcionCategoria\" was not injected: check your FXML file.";
         assert btnAgregarCategoria != null : "fx:id=\"btnAgregarCategoria\" was not injected: check your FXML file.";
-        assert btnEliminarCategoria != null : "fx:id=\"btnEliminarCategoria\" was not injected: check your FXML file.";
         assert btnActualizarTabla != null : "fx:id=\"btnActualizarTabla\" was not injected: check your FXML file.";
         assert tablaCategorias != null : "fx:id=\"tablaCategorias\" was not injected: check your FXML file.";
         assert colIdCategoria != null : "fx:id=\"colIdCategoria\" was not injected: check your FXML file.";

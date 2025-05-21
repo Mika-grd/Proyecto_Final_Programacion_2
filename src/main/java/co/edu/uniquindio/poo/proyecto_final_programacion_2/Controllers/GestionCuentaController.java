@@ -175,6 +175,7 @@ public class GestionCuentaController {
             usuario.getListaCuentas().add(cuenta);
             actualizarLista();
             limpiarCampos();
+            System.out.println(usuario.getListaCuentas());
         } else {
             mostrarAlerta("Debe seleccionar un tipo de cuenta.");
         }
@@ -202,12 +203,12 @@ public class GestionCuentaController {
      */
     @FXML
     private void actualizarTablaAccion(ActionEvent event) {
-        tablaCuentas.refresh();
+        actualizarLista();
     }
 
     //Actualiza la lista de cuentas en la tabla
     private void actualizarLista() {
-        listaCuentas.setAll(billeteraVirtual.getListaCuentas());
+        listaCuentas.setAll(Sesion.getInstancia().getUsuario().getListaCuentas());
         tablaCuentas.setItems(listaCuentas);
         tablaCuentas.refresh();
     }
