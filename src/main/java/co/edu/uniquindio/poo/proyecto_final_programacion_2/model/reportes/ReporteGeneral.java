@@ -14,8 +14,8 @@ public abstract class ReporteGeneral {
     }
 
     /**
-     * Método plantilla que define el algoritmo general para generar un reporte.
-     * Este método es final para asegurar que el orden de los pasos no se altere.
+     * Metodo plantilla que define el algoritmo general para generar un reporte.
+     * Este metodo es final para asegurar que el orden de los pasos no se altere.
      * @param todasLasTransacciones Una lista global de todas las transacciones para filtrar.
      * @return Una cadena de texto que representa el reporte formateado.
      */
@@ -41,7 +41,7 @@ public abstract class ReporteGeneral {
     }
 
     /**
-     * Método Abstracto: Debe ser implementado por las subclases para definir
+     * Metodo Abstracto: Debe ser implementado por las subclases para definir
      * cómo se presenta la información del reporte.
      * @param transacciones Las transacciones ya filtradas y ordenadas.
      * @return La cadena de texto del reporte formateado.
