@@ -7,6 +7,7 @@ public class Usuario extends Persona implements IUsuario{
 
 
     private LinkedList<Cuenta> listaCuentas;
+    private LinkedList<Transaccion> listaTransacciones;
 
     ///////Constructor de la clase Usuario
     public Usuario(String nombre, String id, String correo, String telefono, String contraseña) {
@@ -77,5 +78,9 @@ public class Usuario extends Persona implements IUsuario{
 
     public void setListaCuentas(LinkedList<Cuenta> listaCuentas) {
         this.listaCuentas = listaCuentas;
+    }
+
+    public LinkedList<Transaccion> getListaTransacciones() {
+        return  listaTransacciones;
     }
 }
