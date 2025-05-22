@@ -19,6 +19,7 @@ public class UsuarioDTO {
         this.correoUsuario = usuario.getCorreo();
         this.nombreUsuario = usuario.getNombre();
         this.idUsuario = usuario.getId();
+        this.usuarioReal = usuario;
     }
 
     /// SETTERS & GETTERS
