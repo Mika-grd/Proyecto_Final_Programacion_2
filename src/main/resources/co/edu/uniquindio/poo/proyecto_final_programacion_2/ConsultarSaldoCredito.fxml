@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="666.0" prefWidth="1210.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.ConsultarSaldoController">
+    <children>
+        <ImageView fitHeight="672.0" fitWidth="1210.0" layoutY="-9.0" pickOnBounds="true">
+            <image>
+                <Image url="@../fondo.jpg" />
+            </image>
+        </ImageView>
+
+        <!-- Panel Cupo -->
+        <AnchorPane fx:id="idCupo" layoutX="28.0" layoutY="91.0" prefHeight="182.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9); border-radius: 10px;">
+            <children>
+                <Text layoutX="32.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cupo Disponible" wrappingWidth="194.9367218017578">
+                    <font>
+                        <Font name="Cambria" size="23.0" />
+                    </font>
+                </Text>
+                <Text layoutX="253.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cupo en Uso" wrappingWidth="194.9367218017578">
+                    <font>
+                        <Font name="Cambria" size="23.0" />
+                    </font>
+                </Text>
+                <Label fx:id="cupoDisponible" layoutX="41.0" layoutY="86.0" prefHeight="20.0" prefWidth="131.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #4CAF50, #81C784); -fx-alignment: center; -fx-background-radius: 10; -fx-padding: 10;" />
+                <Label fx:id="cupoEnUso" layoutX="253.0" layoutY="86.0" prefHeight="20.0" prefWidth="131.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #FF7043, #FFAB91); -fx-alignment: center; -fx-background-radius: 10; -fx-padding: 10;" />
+            </children>
+        </AnchorPane>
+
+        <!-- Panel Historial -->
+        <Pane layoutX="634.0" layoutY="93.0" prefHeight="546.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
+            <children>
+                <Button fx:id="recargarBoton" layoutX="43.0" layoutY="401.0" mnemonicParsing="false" onAction="#recargarAccion" prefHeight="34.0" prefWidth="110.0" text="Recargar" />
+      
+              <!-- Tabla de cuentas de crédito -->
+              <TableView fx:id="tablaCuentasCredito" layoutX="10.0" layoutY="19.0" prefHeight="382.0" prefWidth="552.0">
+                  <columns>
+                      <TableColumn fx:id="idCuentaColumna" prefWidth="80.0" text="ID" />
+                      <TableColumn fx:id="bancoColumna" prefWidth="120.0" text="Banco" />
+                      <TableColumn fx:id="numeroCuentaColumna" prefWidth="100.0" text="N° Cuenta" />
+                      <TableColumn fx:id="tasaColumna" prefWidth="80.0" text="Tasa (%)" />
+                      <TableColumn fx:id="cupoDisponibleColumna" prefWidth="90.0" text="Disponible" />
+                      <TableColumn fx:id="cupoEnUsoColumna" prefWidth="90.0" text="En Uso" />
+                  </columns>
+              </TableView>
+            </children>
+        </Pane>
+
+        <!-- Botón Volver -->
+        <Button fx:id="volverBoton1" layoutX="45.0" layoutY="46.0" onAction="#volverAccion" prefHeight="27.0" prefWidth="123.0" style="-fx-background-color: green;" text="Volver" textFill="WHITE" />
+
+        <!-- Panel de Pago -->
+        <Pane layoutX="28.0" layoutY="309.0" prefHeight="334.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
+            <children>
+                <Label fx:id="labelPagarCuota" layoutX="37.0" layoutY="99.0" prefHeight="20.0" prefWidth="195.0" text="Monto a Pagar :">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="montoPagar" layoutX="254.0" layoutY="96.0" />
+                <Button fx:id="bttnPagarCuota" layoutX="37.0" layoutY="200.0" onAction="#pagarCuotaAccion" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: green;" text="Pagar Cuota" textFill="WHITE" />
+            </children>
+        </Pane>
+      <AnchorPane fx:id="idCupo1" layoutX="361.0" layoutY="23.0" prefHeight="46.0" prefWidth="207.0" style="-fx-background-color: rgba(208, 208, 208, 0.9); border-radius: 10px;">
+         <children>
+            <Text layoutX="-1.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo Credito" textAlignment="CENTER" wrappingWidth="194.9367218017578">
+               <font>
+                  <Font name="Cambria" size="23.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+
+    </children>
+</AnchorPane>
