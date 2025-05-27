@@ -382,7 +382,7 @@ public class GestionCuentaAdministradorController {
     @FXML
     void cambiarCupoAccion(ActionEvent event) {
         String nuevoCupo = txtCupoModificar.getText();
-        Cuenta seleccionada = tablaCuentaCredito.getSelectionModel().getSelectedItem();
+        CuentaCredito seleccionada = tablaCuentaCredito.getSelectionModel().getSelectedItem();
 
         if (seleccionada instanceof CuentaCredito cuenta) {
             cuenta.setCupoDisponible(Double.parseDouble(nuevoCupo));
@@ -403,7 +403,7 @@ public class GestionCuentaAdministradorController {
     @FXML
     void cambiarInteresAccion(ActionEvent event) {
         String nuevoInteres = txtInteresModificar.getText();
-        Cuenta seleccionada = tablaCuentaCredito.getSelectionModel().getSelectedItem();
+        CuentaCredito seleccionada = tablaCuentaCredito.getSelectionModel().getSelectedItem();
 
         if (seleccionada instanceof CuentaCredito cuenta) {
             cuenta.setTasaInteres(Double.parseDouble(nuevoInteres));

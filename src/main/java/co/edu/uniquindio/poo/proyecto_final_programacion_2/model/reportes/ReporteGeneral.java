@@ -26,7 +26,7 @@ public abstract class ReporteGeneral {
         // Paso 2: Ordenar transacciones (es un "hook" method, puede ser sobrescrito)
         ordenarTransacciones(transaccionesFiltradas);
 
-        // Paso 3: Formatear el reporte (método abstracto, debe ser implementado por las subclases)
+        // Paso 3: Formatear el reporte (metodo abstracto, debe ser implementado por las subclases)
         return formatearReporte(transaccionesFiltradas);
     }
 

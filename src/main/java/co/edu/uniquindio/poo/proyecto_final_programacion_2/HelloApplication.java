@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2;
 
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaCategoriasBuilder;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaCreditoBuilder;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaDebitoBuilder;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.DirectorCuentasBuilder;
 import javafx.application.Application;
@@ -38,6 +39,19 @@ public class HelloApplication extends Application {
 
         CuentaCategoriasBuilder builderCategorias = new CuentaCategoriasBuilder();
 
+        CuentaCreditoBuilder creditoBuilder = new CuentaCreditoBuilder();
+
+        CuentaCredito credito1 = (CuentaCredito) director.cuentaCreditoSimple(creditoBuilder, "1", 1344, user);
+
+        credito1.setCupoTotalInicial(600000);
+        credito1.setCupoDisponible(600000);
+        credito1.setTasaInteres(0.5);
+        credito1.setCupoEnUso(0);
+
+        System.out.println(credito1.getTasaInteres());
+
+
+        user.agregarObjeto(credito1, user.getListaCuentas());
 
         Cuenta cuenta1 = director.cuentaDebitoSimple(debito, "123", 107890654, user);
 
