@@ -495,9 +495,29 @@ public class GestionCuentaAdministradorController {
                     .append("\n");
         }
 
-        mostrarAlerta(reporte.toString());
+        mostrarAlertaGrande("Reporte de Transacciones",reporte.toString());
     }
 
+    public void mostrarAlertaGrande(String titulo, String contenido) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+
+        // Crear un TextArea para que el contenido sea desplazable y editable si se desea
+        TextArea areaTexto = new TextArea(contenido);
+        areaTexto.setEditable(false);
+        areaTexto.setWrapText(true);
+
+        // Establecer un tamaño preferido (ajústalo a tus necesidades)
+        areaTexto.setPrefSize(600, 400);
+
+        // Añadir el TextArea al DialogPane
+        DialogPane pane = alerta.getDialogPane();
+        pane.setContent(areaTexto);
+        pane.setPrefSize(620, 450); // También puedes modificar el tamaño del panel
+
+        alerta.showAndWait();
+    }
 
     /*
         Método para recargar la tabla de cuentas crédito
