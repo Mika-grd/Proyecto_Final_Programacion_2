@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.ReporteUsuarioDebitoController">
+
+    <!-- Título -->
+    <Label layoutX="290.0" layoutY="20.0" text="Reporte de Cuenta de Débito">
+        <font><Font size="26.0" /></font>
+    </Label>
+
+    <!-- ComboBox para seleccionar rango de fechas -->
+    <ComboBox fx:id="comboRangoFechasDebito" layoutX="50.0" layoutY="70.0" prefWidth="250.0" promptText="Seleccione rango de fechas" />
+
+    <!-- Botón para generar el reporte -->
+    <Button fx:id="btnGenerarReporteDebito" layoutX="320.0" layoutY="70.0" style="-fx-background-color: #007acc; -fx-text-fill: white;" text="Generar Reporte" />
+
+    <!-- PieChart para distribución de transacciones -->
+    <PieChart fx:id="pieChartDebito" layoutX="70.0" layoutY="130.0" prefHeight="380.0" prefWidth="760.0" style="-fx-background-color: #f0f0f0;" title="Distribución Entradas / Salidas" />
+
+    <!-- Estadísticas -->
+    <Label fx:id="labelPromedioEntrada" layoutX="70.0" layoutY="530.0" text="Promedio de transacciones de entrada: " />
+    <Label fx:id="labelPromedioSalida" layoutX="450.0" layoutY="530.0" text="Promedio de transacciones de salida: " />
+   <Button fx:id="btnGenerarPdf" layoutX="458.0" layoutY="69.0" onAction="#GenerarPdf" prefHeight="26.0" prefWidth="123.0" style="-fx-background-color: red; -fx-text-fill: white;" text="Generar Pdf" />
+
+</AnchorPane>
