@@ -9,6 +9,7 @@ public class Cuenta {
     private Usuario usuario;
     private LinkedList<Transaccion> listaTransaccion;
     private LinkedList<Categoria> listaCategorias;
+    protected CuentaDTO cuentaDTO;
 
     /////Constructor de la clase Cuenta
     public Cuenta(String id, String nombreBanco, int numCuenta, Usuario usuario) {
@@ -18,6 +19,7 @@ public class Cuenta {
         this.listaTransaccion = new LinkedList<Transaccion>();
         this.listaCategorias = new LinkedList<>();
         this.usuario = usuario;
+        this.cuentaDTO = new CuentaDTO(this);
     }
 
 
@@ -62,6 +64,14 @@ public class Cuenta {
 
     public void setListaTransaccion(LinkedList<Transaccion> listaTransaccion) {
         this.listaTransaccion = listaTransaccion;
+    }
+
+    public Cuenta(CuentaDTO cuentaDto) {
+        this.cuentaDTO = cuentaDto;
+    }
+
+    public CuentaDTO getCuentaDto() {
+        return cuentaDTO;
     }
 
     public LinkedList<Categoria> getListaCategorias() {

@@ -12,33 +12,45 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.ReporteUsuarioController">
 
-    <!-- ComboBox para elegir tipo de cuenta -->
-    <ComboBox fx:id="comboTipoCuenta" layoutX="30" layoutY="30" prefWidth="200" style="-fx-background-color: gray; -fx-text-fill: white;" />
+    <!-- Título principal -->
+    <Label layoutX="230.0" layoutY="10.0" prefWidth="500.0" text="Reporte de las cuentas de usuarios" style="-fx-text-fill: black;">
+        <font>
+            <Font name="Arial" size="28.0" />
+        </font>
+    </Label>
+
+    <!-- ComboBox para seleccionar usuario -->
+    <ComboBox fx:id="comboTipoCuenta" layoutX="30" layoutY="70" prefWidth="200" promptText="Escoja el usuario"
+              style="-fx-background-color: gray; -fx-text-fill: white;" />
 
     <!-- Botón para generar el reporte -->
-    <Button fx:id="btnGenerarReporte" layoutX="250" layoutY="30" style="-fx-font-family: Algerian; -fx-background-color: #007acc; -fx-text-fill: white;" text="Generar Reporte" />
+    <Button fx:id="btnGenerarReporte" layoutX="250" layoutY="70"
+            style="-fx-font-family: Algerian; -fx-background-color: #007acc; -fx-text-fill: white;" text="Generar Reporte" />
 
-    <!-- BarChart con ejes definidos y fondo -->
-    <BarChart fx:id="barChart" layoutX="19.0" layoutY="175.0" prefHeight="270.0" prefWidth="411.0" style="-fx-background-color: gray;" title="Estadísticas">
+    <!-- BarChart: Cuentas creadas por mes -->
+    <BarChart fx:id="barChart" layoutX="19.0" layoutY="175.0" prefHeight="270.0" prefWidth="411.0" style="-fx-background-color: gray;" title="Cuentas creadas por mes">
         <xAxis>
-            <CategoryAxis label="Categoría" fx:id="xAxis" />
+            <CategoryAxis label="Mes" fx:id="xAxis" />
         </xAxis>
         <yAxis>
-            <NumberAxis fx:id="yAxis" label="Valor" />
+            <NumberAxis fx:id="yAxis" label="Cantidad de cuentas" />
         </yAxis>
     </BarChart>
 
-    <!-- PieChart con un dato de muestra para visibilidad en Scene Builder -->
-    <PieChart fx:id="pieChart" layoutX="440.0" layoutY="175.0" prefHeight="270.0" prefWidth="442.0" style="-fx-background-color: gray;" title="Distribución" />
-   <Label layoutX="207.0" layoutY="120.0" text="BarChart :">
-      <font>
-         <Font size="20.0" />
-      </font>
-   </Label>
-   <Label layoutX="606.0" layoutY="120.0" prefHeight="30.0" prefWidth="126.0" text="PieChart :">
-      <font>
-         <Font size="20.0" />
-      </font>
-   </Label>
+    <!-- PieChart: Distribución de tipos de cuenta -->
+    <PieChart fx:id="pieChart" layoutX="440.0" layoutY="175.0" prefHeight="270.0" prefWidth="442.0"
+              style="-fx-background-color: gray;" title="Porcentaje de cuentas por tipo" />
+
+    <!-- Etiquetas -->
+    <Label layoutX="130.0" layoutY="460.0" text="Cuentas creadas por mes (BarChart)">
+        <font>
+            <Font size="16.0" />
+        </font>
+    </Label>
+    <Label layoutX="550.0" layoutY="460.0" text="Distribución de cuentas (PieChart)">
+        <font>
+            <Font size="16.0" />
+        </font>
+    </Label>
 
 </AnchorPane>

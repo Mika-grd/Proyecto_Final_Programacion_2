@@ -33,6 +33,9 @@ public class GestionCuentaController {
     private Button btnActualizar;
 
     @FXML
+    private Button botonReporte;
+
+    @FXML
     private Button btnAgregar;
 
     @FXML
@@ -68,9 +71,57 @@ public class GestionCuentaController {
     @FXML
     private Button SeleccionarBoton;
 
+    //Metodo para cambiar a la vista de reporte dependiendo del tipo de cuenta que sea
+    @FXML
+    private void ReporteAccion(ActionEvent event) {
+        Cuenta cuentaSeleccionada = tablaCuentas.getSelectionModel().getSelectedItem();
+
+        if (cuentaSeleccionada == null) {
+            mostrarAlerta("Por favor seleccione una cuenta.");
+            return;
+        }
+
+        CuentaDTO cuentaDto = cuentaSeleccionada.getCuentaDto();
+
+        if (cuentaDto == null) {
+            mostrarAlerta("La cuenta seleccionada no tiene datos asociados (CuentaDto es null).");
+            return;
+        }
+
+        String tipoCuenta = cuentaDto.getTipoCuenta();
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            Parent root;
+            Stage stage = new Stage();
+            Scene scene;
+
+            if (tipoCuenta.equalsIgnoreCase("credito")) {
+                loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/ReporteUsuarioCredito.fxml"));
+                root = loader.load();
+                stage.setTitle("Reporte Cuenta Crédito");
+            } else if (tipoCuenta.equalsIgnoreCase("debito")) {
+                loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/ReporteUsuarioDebito.fxml"));
+                root = loader.load();
+                stage.setTitle("Reporte Cuenta Débito");
+            } else {
+                mostrarAlerta("Tipo de cuenta no reconocido.");
+                return;
+            }
+
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error al cargar la vista del reporte.");
+        }
+    }
+
     //Metodo para seleccionar una cuenta de la tabla y cargar la vista de gestión de usuario
     @FXML
-    void seleccionarAccion(ActionEvent event) {
+    private void seleccionarAccion(ActionEvent event) {
         Sesion sesion = Sesion.getInstancia();
         Cuenta cuentaSeleccionada = tablaCuentas.getSelectionModel().getSelectedItem();
 
@@ -85,7 +136,7 @@ public class GestionCuentaController {
 
         sesion.setCuentaSeleccionada(cuentaSeleccionada);
 
-        CuentaDTO dto = new CuentaDTO(cuentaSeleccionada);
+        CuentaDTO dto = cuentaSeleccionada.getCuentaDto();
         String mensaje = "Cuenta seleccionada: " + dto.getNombreUsuario() + " " + dto.getTipoCuenta() + " " + dto.getNumeroCuenta() + " " + dto.getBanco();
 
         mostrarAlerta(mensaje);
