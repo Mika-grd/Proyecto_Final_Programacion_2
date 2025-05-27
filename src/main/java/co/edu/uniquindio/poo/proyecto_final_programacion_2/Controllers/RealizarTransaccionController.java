@@ -3,8 +3,11 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
 import javafx.collections.FXCollections;
@@ -74,8 +77,13 @@ public class RealizarTransaccionController {
 
 
     private void cargarTabla() {
-        historialTable.getItems().setAll(sesion.getCuentaSeleccionada().getListaTransaccion());
+        List<Transaccion> transaccionesFiltradas = sesion.getCuentaDebito().getListaTransaccion().stream()
+                .filter(t -> t.getCuentaObjetivoDebito() != null)
+                .collect(Collectors.toList());
+
+        historialTable.getItems().setAll(transaccionesFiltradas);
     }
+
 
     /**
      * Maneja el evento de añadir una nueva transacción desde la interfaz gráfica.
@@ -94,10 +102,23 @@ public class RealizarTransaccionController {
     void añadirTransaccionAccion(ActionEvent event){
         BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
 
+
         String id = txtId.getText();
+        String idCuenta = txtIdCuenta.getText();
         LocalDate fecha = LocalDate.now();
         String descripcion = txtDescripcion.getText();
         Categoria categoria = CategoriaCombo.getValue();
+
+        if (billeteraVirtual.buscarObjeto(idCuenta, sesion.getUsuario().getListaCuentas()) == sesion.getCuentaDebito()) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Error");
+            alerta.setContentText("No se puede enviar dinero a la misma cuenta.");
+            alerta.showAndWait();
+            return;
+        }
+
+
 
         double monto;
         try {
@@ -129,7 +150,6 @@ public class RealizarTransaccionController {
         Transaccion nuevaTransaccion = new Transaccion(id, fecha, monto, montoDisponible, descripcion, sesion.getCuentaDebito(), cuentaObjetivo);
 
         if (nuevaTransaccion.realizarTransaccion()) {
-            sesion.getUsuario().agregarObjeto(nuevaTransaccion, sesion.getCuentaDebito().getListaTransaccion());
 
             mostrarAlerta("Éxito", "Transacción agregada exitosamente:\n" +
                     "Saldo actual: " + sesion.getCuentaDebito().getSaldo() + "\n" +
@@ -190,6 +210,15 @@ public class RealizarTransaccionController {
         // Obtener la transacción seleccionada de la tabla
         Transaccion transaccionSeleccionada = historialTable.getSelectionModel().getSelectedItem();
 
+        if (transaccionSeleccionada.getCuentaObjetivoDebito() == sesion.getCuentaDebito()) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Error");
+            alerta.setContentText("No se puede enviar dinero a la misma cuenta.");
+            alerta.showAndWait();
+            return;
+        }
+
         // Validar que se haya seleccionado una transacción
         if (transaccionSeleccionada == null) {
             Alert alerta = new Alert(Alert.AlertType.WARNING);
@@ -215,9 +244,22 @@ public class RealizarTransaccionController {
             // Establecer fecha actual
             clon.setFechaTransaccion(LocalDate.now());
 
-            // Clonar monto y descripción explícitamente
-            clon.setDescripcion(transaccionSeleccionada.getDescripcion());
-            clon.setMontoATransferir(transaccionSeleccionada.getMontoATransferir());
+            double monto;
+            try {
+                monto = Double.parseDouble(txtMonto.getText());
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Error de formato", "El monto debe ser un número válido.", Alert.AlertType.ERROR);
+                return;
+            }
+
+            clon.setMontoATransferir(monto);
+
+
+            if (txtDescripcion.getText().isEmpty()) {
+                clon.setDescripcion("Sin descripcion");
+            } else {
+                clon.setDescripcion(txtDescripcion.getText());
+            }
 
             // Realizar la transacción clonada
             if (clon.realizarTransaccion()) {
@@ -242,6 +284,7 @@ public class RealizarTransaccionController {
         }
     }
 
+    
     @FXML
     void recargarAccion(ActionEvent event) {
         cargarTabla();
@@ -250,23 +293,24 @@ public class RealizarTransaccionController {
     @FXML
     void initialize() {
 
-        ObservableList<Categoria> categorias = FXCollections.observableArrayList(sesion.getCuentaSeleccionada().getListaCategorias());
+            ObservableList<Categoria> categorias = FXCollections.observableArrayList(
+                    sesion.getCuentaSeleccionada().getListaCategorias()
+            );
+            CategoriaCombo.setItems(categorias);
 
-        CategoriaCombo.setItems(categorias);
+    // Configurar columnas
+            idColumna.setCellValueFactory(new PropertyValueFactory<>("id"));
+            descripcionColumna.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+            fechaColumna.setCellValueFactory(new PropertyValueFactory<>("fechaTransaccion"));
+            montoColumna.setCellValueFactory(new PropertyValueFactory<>("montoATransferir"));
 
+    // Filtrar transacciones: solo mostrar las que tienen cuentaObjetivoDebito != null
+            List<Transaccion> transaccionesFiltradas = sesion.getCuentaDebito().getListaTransaccion().stream()
+                    .filter(t -> t.getCuentaObjetivoDebito() != null)
+                    .collect(Collectors.toList());
 
-        idColumna.setCellValueFactory(new PropertyValueFactory<>("id"));
-        descripcionColumna.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        fechaColumna.setCellValueFactory(new PropertyValueFactory<>("fechaTransaccion"));
-        montoColumna.setCellValueFactory(new PropertyValueFactory<>("montoATransferir"));
-
-        historialTable.setItems(FXCollections.observableArrayList(cuentaActual.getListaTransaccion()));
-
-        ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList(cuentaActual.getListaCategorias());
-
-        ObservableList<Transaccion> historial = FXCollections.observableArrayList(sesion.getCuentaDebito().getListaTransaccion());
-        historialTable.setItems(historial);
-
+            ObservableList<Transaccion> historial = FXCollections.observableArrayList(transaccionesFiltradas);
+            historialTable.setItems(historial);
 
         assert CategoriaCombo != null : "fx:id=\"CategoriaCombo\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";
         assert añadirTransaccionBoton != null : "fx:id=\"añadirTransaccionBoton\" was not injected: check your FXML file 'RealizarTransferencia.fxml'.";

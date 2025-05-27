@@ -37,20 +37,19 @@
                         <Label style="-fx-text-fill: white;" text="Número Cuenta:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                         <TextField fx:id="txtNumCuenta" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                        <Label style="-fx-text-fill: white;" text="Usuario:" GridPane.rowIndex="4" />
-                        <TextField fx:id="txtUsuario" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label style="-fx-text-fill: white;" text="Usuario:" GridPane.rowIndex="5" />
 
-                        <Label style="-fx-text-fill: white;" text="Tipo de Cuenta:" GridPane.rowIndex="5" />
-                        <ComboBox fx:id="comboTipoCuenta" prefHeight="26.0" prefWidth="205.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label style="-fx-text-fill: white;" text="Tipo de Cuenta:" GridPane.rowIndex="7" />
+                        <ComboBox fx:id="comboTipoCuenta" prefHeight="26.0" prefWidth="205.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
                         <!-- CAMPOS DÉBITO -->
-                        <HBox fx:id="boxDebito" spacing="10" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <HBox fx:id="boxDebito" spacing="10" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="9">
                             <Label style="-fx-text-fill: white;" text="Saldo:" />
                             <TextField fx:id="txtSaldo" prefWidth="100" />
                         </HBox>
 
                         <!-- CAMPOS CRÉDITO -->
-                        <HBox fx:id="boxCredito" spacing="10" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                        <HBox fx:id="boxCredito" spacing="10" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="10">
                             <Label style="-fx-text-fill: white;" text="Tasa de Interés:" />
                             <TextField fx:id="txtTasaInteres" prefWidth="100" />
                             <Label style="-fx-text-fill: white;" text="Cupo Disponible:" />
@@ -58,6 +57,7 @@
                             <Label style="-fx-text-fill: white;" text="Cupo En Uso:" />
                             <TextField fx:id="txtCupoEnUso" prefWidth="100" />
                         </HBox>
+                  <ComboBox fx:id="comboUsuarios" prefHeight="26.0" prefWidth="208.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <columnConstraints>
                             <ColumnConstraints />
                             <ColumnConstraints />
@@ -72,6 +72,8 @@
                             <RowConstraints />
                             <RowConstraints />
                             <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
                         </rowConstraints>
                     </GridPane>
 
@@ -153,6 +155,11 @@
                         </TableView>
                         <Button fx:id="btnGenerarReporte" layoutX="328.0" layoutY="423.0" onAction="#generarReporteAccion" text="Generar Reporte" />
                   <Button fx:id="btnCerrarSesion1" layoutX="327.0" layoutY="506.0" onAction="#cerrarSesion" style="-fx-font-family: Algerian;" text="Cerrar Sesión" />
+                  <Label layoutX="220.0" layoutY="29.0" text="Gestión de Cuentas Administrador">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                     </children>
                 </AnchorPane>
             </content>

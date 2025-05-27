@@ -2,10 +2,8 @@ package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
 import javafx.collections.FXCollections;
@@ -77,12 +75,11 @@ public class GestionCuentaAdministradorController {
     private Button btnRecargarTransaccion;
 
 
+    @FXML
+    private TableColumn<Cuenta, String> colBanco;
 
     @FXML
-    private TableColumn<Cuenta,String> colBanco;
-
-    @FXML
-    private TableColumn<CuentaCredito,String> colCreditoCupo;
+    private TableColumn<CuentaCredito, String> colCreditoCupo;
 
     @FXML
     private TableColumn<CuentaCredito, String> colCreditoId;
@@ -91,7 +88,7 @@ public class GestionCuentaAdministradorController {
     private TableColumn<CuentaCredito, String> colCreditoInteres;
 
     @FXML
-    private TableColumn<Cuenta,String > colId;
+    private TableColumn<Cuenta, String> colId;
 
     @FXML
     private TableColumn<Cuenta, String> colNumero;
@@ -168,12 +165,50 @@ public class GestionCuentaAdministradorController {
     @FXML
     private TextField txtUsuario;
 
+    @FXML
+    private ComboBox<UsuarioDTO> comboUsuarios;
+
+
     /*
-        * Atributos para almacenar las listas de cuentas y transacciones
+     * Atributos para almacenar las listas de cuentas y transacciones
      */
     private ObservableList<Cuenta> listaCuentas = FXCollections.observableArrayList();
     private ObservableList<CuentaCredito> listaCuentasCredito = FXCollections.observableArrayList();
     private ObservableList<Transaccion> listaTransacciones = FXCollections.observableArrayList();
+    private UsuarioDTO usuarioService;
+
+
+
+    private void inicializarComboBoxUsuarios() {
+        // Obtener lista de usuarios reales
+        List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios(); // Ajusta esto según tu servicio
+
+        // Convertir a UsuarioDTO
+        List<UsuarioDTO> usuariosDTO = usuarios.stream()
+                .map(UsuarioDTO::new)
+                .collect(Collectors.toList());
+
+        // Cargar en el ComboBox
+        comboUsuarios.setItems(FXCollections.observableArrayList(usuariosDTO));
+
+        // Manejar selección
+        comboUsuarios.setOnAction(event -> {
+            UsuarioDTO seleccionado = comboUsuarios.getValue();
+            if (seleccionado != null) {
+                mostrarCuentasUsuario(seleccionado);
+            }
+        });
+    }
+
+
+    private void mostrarCuentasUsuario(UsuarioDTO usuarioDTO) {
+        if (usuarioDTO != null && usuarioDTO.getListaCuentas() != null) {
+            tablaCuentas.setItems(FXCollections.observableArrayList(usuarioDTO.getListaCuentas()));
+        } else {
+            tablaCuentas.setItems(FXCollections.observableArrayList()); // Limpia la tabla si no hay cuentas
+        }
+    }
+
 
     /*
         * Método para actualizar la tabla de cuentas
@@ -181,11 +216,18 @@ public class GestionCuentaAdministradorController {
         * Se actualiza la lista de cuentas y se asigna a la tabla
         * @param event Evento que activa el método
      */
-    @FXML
-    void actualizarTablaAccion(ActionEvent event) {
-        tablaCuentas.setItems(FXCollections.observableArrayList(Sesion.getInstancia().getUsuario().getListaCuentas()));
+    public void actualizarTablaAccion(ActionEvent actionEvent) {
+        UsuarioDTO usuarioDTO = comboUsuarios.getValue();
+        if (usuarioDTO == null) {
+            System.out.println("No hay usuario seleccionado.");
+            return;
+        }
 
+        List<Cuenta> cuentas = usuarioDTO.getListaCuentas();
+        tablaCuentas.setItems(FXCollections.observableArrayList(cuentas));
     }
+
+
 
     /*
         * Método para agregar una cuenta
@@ -195,14 +237,14 @@ public class GestionCuentaAdministradorController {
         * @param event Evento que activa el método
      */
     @FXML
-    void agregarCuentaAccion(ActionEvent event) {
+    public void agregarCuentaAccion(ActionEvent event) {
         String tipoCuenta = comboTipoCuenta.getValue();
         String id = txtId.getText();
         String banco = txtNombreBanco.getText();
         String numeroStr = txtNumCuenta.getText();
-        Usuario usuario = Sesion.getInstancia().getUsuario();
+        UsuarioDTO usuarioDTO = comboUsuarios.getValue();
 
-        if (tipoCuenta == null || id.isEmpty() || banco.isEmpty() || numeroStr.isEmpty()) {
+        if (usuarioDTO == null || tipoCuenta == null || id.isEmpty() || banco.isEmpty() || numeroStr.isEmpty()) {
             mostrarAlerta("Por favor complete todos los campos obligatorios.");
             return;
         }
@@ -212,14 +254,14 @@ public class GestionCuentaAdministradorController {
 
             if ("Débito".equals(tipoCuenta)) {
                 double saldo = Double.parseDouble(txtSaldo.getText());
-                CuentaDebito cuentaDebito = new CuentaDebito(id, banco, numeroCuenta, usuario, saldo);
-                usuario.getListaCuentas().add(cuentaDebito);
+                CuentaDebito cuentaDebito = new CuentaDebito(id, banco, numeroCuenta, usuarioDTO.getUsuarioReal() , saldo);
+                usuarioDTO.getListaCuentas().add(cuentaDebito);
             } else {
                 double tasa = Double.parseDouble(txtTasaInteres.getText());
                 double cupoDisponible = Double.parseDouble(txtCupoDisponible.getText());
                 double cupoEnUso = Double.parseDouble(txtCupoEnUso.getText());
-                CuentaCredito cuentaCredito = new CuentaCredito(id, banco, numeroCuenta, usuario, tasa, cupoDisponible, cupoEnUso);
-                usuario.getListaCuentas().add(cuentaCredito);
+                CuentaCredito cuentaCredito = new CuentaCredito(id, banco, numeroCuenta, usuarioDTO.getUsuarioReal(), tasa, cupoDisponible, cupoEnUso);
+                usuarioDTO.getListaCuentas().add(cuentaCredito);
             }
 
             actualizarTablaAccion(event);
@@ -230,6 +272,7 @@ public class GestionCuentaAdministradorController {
         }
     }
 
+
     /*
         * Método para buscar una cuenta crédito por ID
         * Se llama al presionar el botón "Buscar"
@@ -238,16 +281,21 @@ public class GestionCuentaAdministradorController {
         * @param event Evento que activa el método
      */
     @FXML
-    void buscarCuentaCredito(ActionEvent event) {
-
+    public void buscarCuentaCredito(ActionEvent event) {
         String id = txtBuscarId.getText();
+        UsuarioDTO usuarioDTO = comboUsuarios.getValue();
+
         if (id.isEmpty()) {
             mostrarAlerta("Debe ingresar un ID.");
             return;
         }
 
-        Optional<CuentaCredito> cuenta = Sesion.getInstancia().getUsuario()
-                .getListaCuentas().stream()
+        if (usuarioDTO == null) {
+            mostrarAlerta("Seleccione un usuario primero.");
+            return;
+        }
+
+        Optional<CuentaCredito> cuenta = usuarioDTO.getListaCuentas().stream()
                 .filter(c -> c instanceof CuentaCredito && c.getId().equals(id))
                 .map(c -> (CuentaCredito) c)
                 .findFirst();
@@ -257,22 +305,29 @@ public class GestionCuentaAdministradorController {
         } else {
             mostrarAlerta("No se encontró cuenta crédito con ese ID.");
         }
-
     }
+
 
     /*
     Método para buscar una transacción por ID
      */
     @FXML
-    void buscarTransaccionAccion(ActionEvent event) {
+    public void buscarTransaccionAccion(ActionEvent event) {
         String id = txtBuscarTransaccion.getText();
+        UsuarioDTO usuarioDTO = comboUsuarios.getValue();
+
         if (id.isEmpty()) {
             mostrarAlerta("Ingrese el ID de la transacción.");
             return;
         }
 
+        if (usuarioDTO == null) {
+            mostrarAlerta("Seleccione un usuario primero.");
+            return;
+        }
+
         List<Transaccion> transacciones = new ArrayList<>();
-        for (Cuenta cuenta : Sesion.getInstancia().getUsuario().getListaCuentas()) {
+        for (Cuenta cuenta : usuarioDTO.getListaCuentas()) {
             if (cuenta instanceof CuentaDebito debito) {
                 transacciones.addAll(debito.getListaTransaccion());
             }
@@ -289,6 +344,8 @@ public class GestionCuentaAdministradorController {
         }
     }
 
+
+
     /*
         Método para cambiar el cupo de una cuenta crédito
         Se llama al presionar el botón "Cambiar Cupo"
@@ -303,7 +360,7 @@ public class GestionCuentaAdministradorController {
 
         if (seleccionada instanceof CuentaCredito cuenta) {
             cuenta.setCupoDisponible(Double.parseDouble(nuevoCupo));
-            actualizarTablaAccion(event);
+            tablaCuentaCredito.refresh();  // Forzar refresco
             mostrarAlerta("Cupo actualizado.");
         } else {
             mostrarAlerta("Seleccione una cuenta crédito válida.");
@@ -324,7 +381,7 @@ public class GestionCuentaAdministradorController {
 
         if (seleccionada instanceof CuentaCredito cuenta) {
             cuenta.setTasaInteres(Double.parseDouble(nuevoInteres));
-            actualizarTablaAccion(event);
+            tablaCuentaCredito.refresh();  // Forzar refresco
             mostrarAlerta("Interés actualizado.");
         } else {
             mostrarAlerta("Seleccione una cuenta crédito válida.");
@@ -366,16 +423,23 @@ public class GestionCuentaAdministradorController {
      */
     @FXML
     void eliminarCuentaAccion(ActionEvent event) {
+        UsuarioDTO usuarioDTO = comboUsuarios.getValue();
         Cuenta cuenta = tablaCuentas.getSelectionModel().getSelectedItem();
 
+        if (usuarioDTO == null) {
+            mostrarAlerta("Seleccione un usuario primero.");
+            return;
+        }
+
         if (cuenta != null) {
-            Sesion.getInstancia().getUsuario().getListaCuentas().remove(cuenta);
+            usuarioDTO.getListaCuentas().remove(cuenta);
             actualizarTablaAccion(event);
             mostrarAlerta("Cuenta eliminada.");
         } else {
             mostrarAlerta("Seleccione una cuenta para eliminar.");
         }
     }
+
 
     /*
         Método para generar un reporte de cuentas
@@ -398,14 +462,21 @@ public class GestionCuentaAdministradorController {
      */
     @FXML
     void recargarTablaCredito(ActionEvent event) {
-        List<CuentaCredito> cuentasCredito = Sesion.getInstancia().getUsuario()
-                .getListaCuentas().stream()
+        UsuarioDTO usuarioDTO = comboUsuarios.getValue();
+
+        if (usuarioDTO == null) {
+            mostrarAlerta("Seleccione un usuario primero.");
+            return;
+        }
+
+        List<CuentaCredito> cuentasCredito = usuarioDTO.getListaCuentas().stream()
                 .filter(c -> c instanceof CuentaCredito)
                 .map(c -> (CuentaCredito) c)
                 .toList();
 
         tablaCuentaCredito.setItems(FXCollections.observableArrayList(cuentasCredito));
     }
+
 
     /*
         Método para recargar la tabla de transacciones
@@ -415,14 +486,22 @@ public class GestionCuentaAdministradorController {
      */
     @FXML
     void recargarTransaccionAccion(ActionEvent event) {
+        UsuarioDTO usuarioDTO = comboUsuarios.getValue();
+
+        if (usuarioDTO == null) {
+            mostrarAlerta("Seleccione un usuario primero.");
+            return;
+        }
+
         List<Transaccion> transacciones = new ArrayList<>();
-        for (Cuenta cuenta : Sesion.getInstancia().getUsuario().getListaCuentas()) {
+        for (Cuenta cuenta : usuarioDTO.getListaCuentas()) {
             if (cuenta instanceof CuentaDebito debito) {
                 transacciones.addAll(debito.getListaTransaccion());
             }
         }
         tablaTransacciones.setItems(FXCollections.observableArrayList(transacciones));
     }
+
 
 
     /*
@@ -447,12 +526,20 @@ public class GestionCuentaAdministradorController {
         // Inicializar ComboBox con tipos de cuenta
         comboTipoCuenta.setItems(FXCollections.observableArrayList("Débito", "Crédito"));
 
-        // Configurar columnas de la tabla principal de cuentas (tablaCuentas)
+        // Inicializar ComboBox de usuarios
+        cargarUsuariosEnComboBox();
+
+        // Seleccionar automáticamente el primer usuario y cargar sus datos
+        if (!comboUsuarios.getItems().isEmpty()) {
+            comboUsuarios.getSelectionModel().selectFirst();
+            UsuarioDTO seleccionado = comboUsuarios.getSelectionModel().getSelectedItem();
+            cargarCuentasDeUsuario(seleccionado);
+        }
+
+        // Configurar columnas tabla de cuentas
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colBanco.setCellValueFactory(new PropertyValueFactory<>("nombreBanco"));
         colNumero.setCellValueFactory(new PropertyValueFactory<>("numCuenta"));
-
-        // Columna para mostrar tipo de cuenta (Débito o Crédito) según instancia
         colTipo.setCellFactory(column -> new TableCell<Cuenta, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -461,23 +548,18 @@ public class GestionCuentaAdministradorController {
                     setText(null);
                 } else {
                     Cuenta cuenta = (Cuenta) getTableRow().getItem();
-                    if (cuenta instanceof CuentaDebito) {
-                        setText("Débito");
-                    } else if (cuenta instanceof CuentaCredito) {
-                        setText("Crédito");
-                    } else {
-                        setText("Desconocido");
-                    }
+                    setText((cuenta instanceof CuentaDebito) ? "Débito" :
+                            (cuenta instanceof CuentaCredito) ? "Crédito" : "Desconocido");
                 }
             }
         });
 
-        // Configurar columnas de la tabla de cuentas crédito (tablaCuentaCredito)
+        // Tabla cuentas crédito
         colCreditoId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colCreditoInteres.setCellValueFactory(new PropertyValueFactory<>("tasaInteres"));
         colCreditoCupo.setCellValueFactory(new PropertyValueFactory<>("cupoDisponible"));
 
-        // Configurar columnas de la tabla de transacciones (tablaTransacciones)
+        // Tabla transacciones
         colTransId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTransDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         colTransFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
@@ -485,21 +567,25 @@ public class GestionCuentaAdministradorController {
         colTransOrigen.setCellValueFactory(new PropertyValueFactory<>("origen"));
         colTransDestino.setCellValueFactory(new PropertyValueFactory<>("destino"));
 
-        // Asignar las listas observables ya inicializadas a cada tabla
-        tablaCuentas.setItems(listaCuentas);
-        tablaCuentaCredito.setItems(listaCuentasCredito);
-        tablaTransacciones.setItems(listaTransacciones);
-
-        // Evento para mostrar/ocultar campos según el tipo de cuenta seleccionado
+        // Mostrar campos según tipo de cuenta
         comboTipoCuenta.setOnAction(event -> mostrarCamposPorTipo(comboTipoCuenta.getValue()));
 
-        // Seleccionar el primer ítem del ComboBox e inicializar los campos visibles
+        // Mostrar por defecto los campos del primer tipo de cuenta
         if (!comboTipoCuenta.getItems().isEmpty()) {
             comboTipoCuenta.getSelectionModel().selectFirst();
             mostrarCamposPorTipo(comboTipoCuenta.getValue());
         }
 
-        // Validaciones para asegurar que las referencias FXML fueron inyectadas correctamente
+        // Manejar selección de usuario para actualizar tablas
+        comboUsuarios.setOnAction(event -> {
+            UsuarioDTO seleccionado = comboUsuarios.getValue();
+            if (seleccionado != null) {
+                cargarCuentasDeUsuario(seleccionado);
+            }
+        });
+
+
+
         assert boxCredito != null : "fx:id=\"boxCredito\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert boxDebito != null : "fx:id=\"boxDebito\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert btnActualizar != null : "fx:id=\"btnActualizar\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
@@ -530,6 +616,7 @@ public class GestionCuentaAdministradorController {
         assert colTransOrigen != null : "fx:id=\"colTransOrigen\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert colUsuario != null : "fx:id=\"colUsuario\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert comboTipoCuenta != null : "fx:id=\"comboTipoCuenta\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
+        assert comboUsuarios != null : "fx:id=\"comboUsuarios\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert tablaCuentaCredito != null : "fx:id=\"tablaCuentaCredito\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert tablaCuentas != null : "fx:id=\"tablaCuentas\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert tablaTransacciones != null : "fx:id=\"tablaTransacciones\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
@@ -544,7 +631,44 @@ public class GestionCuentaAdministradorController {
         assert txtNumCuenta != null : "fx:id=\"txtNumCuenta\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert txtSaldo != null : "fx:id=\"txtSaldo\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert txtTasaInteres != null : "fx:id=\"txtTasaInteres\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
-        assert txtUsuario != null : "fx:id=\"txtUsuario\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
+    }
+
+    private void cargarUsuariosEnComboBox() {
+        // Obtenemos todas las personas registradas
+        LinkedList<Persona> personas = BilleteraVirtual.getInstance().getListaPersonas();
+
+        // Filtramos las que son instancias de Usuario
+        List<UsuarioDTO> usuariosDTO = personas.stream()
+                .filter(p -> p instanceof Usuario) // dejamos solo los Usuario
+                .map(p -> new UsuarioDTO((Usuario) p)) // convertimos a UsuarioDTO
+                .collect(Collectors.toList());
+
+        // Cargamos los UsuarioDTO al ComboBox
+        comboUsuarios.setItems(FXCollections.observableArrayList(usuariosDTO));
+    }
+
+    private void cargarCuentasDeUsuario(UsuarioDTO usuarioDTO) {
+        Usuario usuario = usuarioDTO.getUsuarioReal();
+
+        if (usuario.getListaCuentas() != null) {
+            listaCuentas.setAll(usuario.getListaCuentas());
+
+            listaCuentasCredito.setAll(
+                    usuario.getListaCuentas().stream()
+                            .filter(c -> c instanceof CuentaCredito)
+                            .map(c -> (CuentaCredito) c)
+                            .collect(Collectors.toList())
+            );
+        } else {
+            listaCuentas.clear();
+            listaCuentasCredito.clear();
+        }
+
+        if (usuario.getListaTransacciones() != null) {
+            listaTransacciones.setAll(usuario.getListaTransacciones());
+        } else {
+            listaTransacciones.clear();
+        }
     }
 
     /*
