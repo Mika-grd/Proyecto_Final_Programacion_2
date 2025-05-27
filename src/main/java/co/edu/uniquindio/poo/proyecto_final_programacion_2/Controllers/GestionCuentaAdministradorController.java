@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -74,6 +75,8 @@ public class GestionCuentaAdministradorController {
     @FXML
     private Button btnRecargarTransaccion;
 
+    @FXML
+    private Button btnVolverCrear;
 
     @FXML
     private TableColumn<Cuenta, String> colBanco;
@@ -100,7 +103,7 @@ public class GestionCuentaAdministradorController {
     private TableColumn<Cuenta, String> colTransDescripcion;
 
     @FXML
-    private TableColumn<Cuenta, String> colTransDestino;
+    private TableColumn<Transaccion, String> colTransDestino;
 
     @FXML
     private TableColumn<Cuenta, String> colTransFecha;
@@ -112,7 +115,7 @@ public class GestionCuentaAdministradorController {
     private TableColumn<Cuenta, String> colTransMonto;
 
     @FXML
-    private TableColumn<Cuenta, String> colTransOrigen;
+    private TableColumn<Transaccion, String> colTransOrigen;
 
     @FXML
     private TableColumn<Usuario, String> colUsuario;
@@ -167,6 +170,8 @@ public class GestionCuentaAdministradorController {
 
     @FXML
     private ComboBox<UsuarioDTO> comboUsuarios;
+
+
 
 
     /*
@@ -227,7 +232,28 @@ public class GestionCuentaAdministradorController {
         tablaCuentas.setItems(FXCollections.observableArrayList(cuentas));
     }
 
+    @FXML
+    void volverAccion(ActionEvent event) {
+        try {
+            // Carga el archivo FXML de la pantalla anterior
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/VistaAdministrador.fxml"));
 
+            // Crea el árbol de nodos desde el archivo FXML
+            Parent root = loader.load();
+
+            // Obtiene la ventana actual desde el botón
+            Stage stage = (Stage) btnVolverCrear.getScene().getWindow();
+
+            // Crea una nueva escena con el contenido de Pantalla1
+            Scene scene = new Scene(root);
+
+            // Establece la nueva escena en la ventana actual
+            stage.setScene(scene);
+        } catch (IOException e) {
+            // Muestra el error si hay un problema al cargar el FXML
+            e.printStackTrace();
+        }
+    }
 
     /*
         * Método para agregar una cuenta
@@ -450,9 +476,48 @@ public class GestionCuentaAdministradorController {
      */
     @FXML
     void generarReporteAccion(ActionEvent event) {
+        UsuarioDTO usuarioDTO = comboUsuarios.getValue();
 
+        if (usuarioDTO == null) {
+            mostrarAlerta("Seleccione un usuario primero.");
+            return;
+        }
+
+        StringBuilder reporte = new StringBuilder();
+        reporte.append("Reporte de Cuentas para el Usuario: ").append(usuarioDTO.getUsuarioReal().getNombre()).append("\n");
+        reporte.append("---------------------------------------------------\n");
+
+        for (Cuenta cuenta : usuarioDTO.getListaCuentas()) {
+            reporte.append("ID: ").append(cuenta.getId())
+                    .append(", Banco: ").append(cuenta.getNombreBanco())
+                    .append(", Número de Cuenta: ").append(cuenta.getNumCuenta())
+                    .append(", Tipo: ").append(cuenta instanceof CuentaDebito ? "Débito" : "Crédito")
+                    .append("\n");
+        }
+
+        mostrarAlertaGrande("Reporte de Transacciones",reporte.toString());
     }
 
+    public void mostrarAlertaGrande(String titulo, String contenido) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+
+        // Crear un TextArea para que el contenido sea desplazable y editable si se desea
+        TextArea areaTexto = new TextArea(contenido);
+        areaTexto.setEditable(false);
+        areaTexto.setWrapText(true);
+
+        // Establecer un tamaño preferido (ajústalo a tus necesidades)
+        areaTexto.setPrefSize(600, 400);
+
+        // Añadir el TextArea al DialogPane
+        DialogPane pane = alerta.getDialogPane();
+        pane.setContent(areaTexto);
+        pane.setPrefSize(620, 450); // También puedes modificar el tamaño del panel
+
+        alerta.showAndWait();
+    }
 
     /*
         Método para recargar la tabla de cuentas crédito
@@ -528,6 +593,29 @@ public class GestionCuentaAdministradorController {
 
         // Inicializar ComboBox de usuarios
         cargarUsuariosEnComboBox();
+        comboUsuarios.setCellFactory(param -> new ListCell<UsuarioDTO>() {
+            @Override
+            protected void updateItem(UsuarioDTO usuarioDTO, boolean empty) {
+                super.updateItem(usuarioDTO, empty);
+                if (empty || usuarioDTO == null) {
+                    setText(null);
+                } else {
+                    setText(usuarioDTO.getNombreUsuario()); // Mostramos solo el nombre
+                }
+            }
+        });
+
+        comboUsuarios.setButtonCell(new ListCell<UsuarioDTO>() {
+            @Override
+            protected void updateItem(UsuarioDTO usuarioDTO, boolean empty) {
+                super.updateItem(usuarioDTO, empty);
+                if (empty || usuarioDTO == null) {
+                    setText(null);
+                } else {
+                    setText(usuarioDTO.getNombreUsuario());
+                }
+            }
+        });
 
         // Seleccionar automáticamente el primer usuario y cargar sus datos
         if (!comboUsuarios.getItems().isEmpty()) {
@@ -562,10 +650,23 @@ public class GestionCuentaAdministradorController {
         // Tabla transacciones
         colTransId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTransDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        colTransFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        colTransMonto.setCellValueFactory(new PropertyValueFactory<>("monto"));
-        colTransOrigen.setCellValueFactory(new PropertyValueFactory<>("origen"));
-        colTransDestino.setCellValueFactory(new PropertyValueFactory<>("destino"));
+        colTransFecha.setCellValueFactory(new PropertyValueFactory<>("fechaTransaccion"));
+        colTransMonto.setCellValueFactory(new PropertyValueFactory<>("montoATransferir"));
+        colTransOrigen.setCellValueFactory(cellData ->
+                new SimpleStringProperty(
+                        cellData.getValue().getCuentaPropiaDebito() != null
+                                ? cellData.getValue().getCuentaPropiaDebito().getId()
+                                : "—"
+                )
+        );
+
+        colTransDestino.setCellValueFactory(cellData ->
+                new SimpleStringProperty(
+                        cellData.getValue().getCuentaObjetivoDebito() != null
+                                ? cellData.getValue().getCuentaObjetivoDebito().getId()
+                                : "—"
+                )
+        );
 
         // Mostrar campos según tipo de cuenta
         comboTipoCuenta.setOnAction(event -> mostrarCamposPorTipo(comboTipoCuenta.getValue()));
@@ -592,6 +693,7 @@ public class GestionCuentaAdministradorController {
         assert btnAgregar != null : "fx:id=\"btnAgregar\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert btnBuscarCredito != null : "fx:id=\"btnBuscarCredito\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert btnBuscarTransaccion != null : "fx:id=\"btnBuscarTransaccion\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
+        assert btnVolverCrear != null : "fx:id=\"btnVolverCrear\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert btnCambiarCupo != null : "fx:id=\"btnCambiarCupo\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert btnCambiarInteres != null : "fx:id=\"btnCambiarInteres\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert btnCerrarSesion != null : "fx:id=\"btnCerrarSesion\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
