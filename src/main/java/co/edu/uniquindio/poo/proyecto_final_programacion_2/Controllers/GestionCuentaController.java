@@ -76,6 +76,8 @@ public class GestionCuentaController {
     private void ReporteAccion(ActionEvent event) {
         Cuenta cuentaSeleccionada = tablaCuentas.getSelectionModel().getSelectedItem();
 
+        Sesion.getInstancia().setCuentaSeleccionada(cuentaSeleccionada);
+
         if (cuentaSeleccionada == null) {
             mostrarAlerta("Por favor seleccione una cuenta.");
             return;
