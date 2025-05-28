@@ -136,7 +136,7 @@ public class consultarSaldoTransaccionesController {
         }
     }
 
-
+    //Metodo para agregar saldo a la cuenta
     @FXML
     void agregarSaldoAccion(ActionEvent event) {
         if (RetirarDepositar.getText() != null) {
@@ -289,7 +289,7 @@ public class consultarSaldoTransaccionesController {
 
     }
 
-
+    //Metodo para recargar el historial de transacciones
     //Recarga la lista
     @FXML
     void recargarAccion(ActionEvent event) {
@@ -340,6 +340,7 @@ public class consultarSaldoTransaccionesController {
         }
     }
 
+    // Método que se ejecuta al inicializar el controlador
     @FXML
     void initialize() {
 

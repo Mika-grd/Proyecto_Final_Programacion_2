@@ -93,7 +93,7 @@ public class GestionarCategoriaController {
 
 
 
-
+    // Método para agregar una nueva categoría a la cuenta seleccionada
     @FXML
     private void agregarCategoria(ActionEvent event) {
         String id = txtIdCategoria.getText().trim();
@@ -111,6 +111,7 @@ public class GestionarCategoriaController {
         }
     }
 
+    // Método para manejar la acción del botón "Atras"
     @FXML
     private void atrasAccion(ActionEvent event) {
         try {
@@ -134,11 +135,13 @@ public class GestionarCategoriaController {
         }
     }
 
+    // Método para actualizar la tabla de categorías al presionar el botón "Actualizar Tabla"
     @FXML
     private void actualizarAccion(ActionEvent event) {
         actualizarTabla();
     }
 
+    // Método para actualizar la lista de categorías en la tabla
     @FXML
     private void actualizarTabla() {
         listaCategorias.setAll(sesion.getCuentaSeleccionada().getListaCategorias());
@@ -151,6 +154,7 @@ public class GestionarCategoriaController {
         txtDescripcionCategoria.clear();
     }
 
+    // Método para liberar una categoría seleccionada de la tabla
     @FXML
     void liberarAccion(ActionEvent event) {
         Categoria categoriaSeleccionada =  tablaCategorias.getSelectionModel().getSelectedItem();

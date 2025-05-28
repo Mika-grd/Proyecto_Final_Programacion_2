@@ -506,6 +506,7 @@ public class GestionCuentaAdministradorController {
         mostrarAlertaGrande("Reporte de Transacciones",reporte.toString());
     }
 
+    // Método para mostrar una alerta con contenido grande
     public void mostrarAlertaGrande(String titulo, String contenido) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle(titulo);
