@@ -257,6 +257,7 @@ public class ConsultarSaldoCreditoController {
         }
     }
 
+    //metodo para inicializar la vista
     @FXML
     void initialize() {
 

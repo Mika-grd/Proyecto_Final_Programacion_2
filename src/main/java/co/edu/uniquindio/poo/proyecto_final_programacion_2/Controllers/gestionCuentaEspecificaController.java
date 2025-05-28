@@ -64,6 +64,7 @@ public class gestionCuentaEspecificaController {
         cargarTransacciones();
     }
 
+    // Método para cargar las transacciones de la cuenta seleccionada
     private void cargarTransacciones() {
         if (cuentaSeleccionada != null) {
             ObservableList<Transaccion> transacciones = FXCollections.observableArrayList(cuentaSeleccionada.getListaTransaccion());
@@ -71,17 +72,20 @@ public class gestionCuentaEspecificaController {
         }
     }
 
+    // Método para inicializar el controlador y cargar las transacciones al inicio
     @FXML
     void recargarAccion(ActionEvent event) {
         ObservableList<Transaccion> historial = FXCollections.observableArrayList(cuentaActual.getListaTransaccion());
         historialTabla.setItems(historial);
     }
 
+    // Método para generar un reporte de las transacciones
     @FXML
     void generarReporteAccion(ActionEvent event) {
 
     }
 
+    // Método para gestionar las cuentas del administrador
     @FXML
     void gestionarSusCuentasAccion(ActionEvent event) {
         try {
@@ -105,6 +109,7 @@ public class gestionCuentaEspecificaController {
         }
     }
 
+    // Método para volver a la pantalla anterior
     @FXML
     void volverAccion(ActionEvent event) {
         try {
@@ -128,6 +133,7 @@ public class gestionCuentaEspecificaController {
         }
     }
 
+   // Método que se llama al inicializar el controlador
     @FXML
     void initialize() {
         assert cuentaDestinoColumna != null : "fx:id=\"cuentaDestinoColumna\" was not injected: check your FXML file 'GestionCuentaEspecifica.fxml'.";

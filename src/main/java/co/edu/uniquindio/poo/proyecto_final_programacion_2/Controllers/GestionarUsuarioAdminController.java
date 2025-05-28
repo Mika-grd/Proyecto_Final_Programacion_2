@@ -85,13 +85,13 @@ public class GestionarUsuarioAdminController {
     @FXML
     private Button volverBoton;
 
-
+    // Método para cargar la tabla con los usuarios y administradores
     private void cargarTabla() {
         usuariosAdminTabla.getItems().setAll(billetera.getListaPersonas());
     }
 
 
-
+    // Método para agregar un administrador
     @FXML
     void agregarAdministradorAccion(ActionEvent event) {
         if (nombreCampo.getText().isEmpty() ||
@@ -124,6 +124,7 @@ public class GestionarUsuarioAdminController {
         cargarTabla();
     }
 
+    // Método para agregar un usuario
     @FXML
     void agregarUsuarioAccion(ActionEvent event) {
         if (nombreCampo.getText().isEmpty() ||
@@ -156,6 +157,7 @@ public class GestionarUsuarioAdminController {
         cargarTabla();
     }
 
+    // Método para buscar un usuario o administrador por ID
     @FXML
     void buscarAccion(ActionEvent event) {
         String id = busquedaCampo.getText();
@@ -184,6 +186,7 @@ public class GestionarUsuarioAdminController {
         }
     }
 
+    // Método que se ejecuta al iniciar la vista
     @FXML
     void editarAccion(ActionEvent event) {
         Persona personaSeleccionada = usuariosAdminTabla.getSelectionModel().getSelectedItem();
@@ -247,6 +250,7 @@ public class GestionarUsuarioAdminController {
         }
     }
 
+    // Método para eliminar un usuario o administrador seleccionado
     @FXML
     void eliminarAccion(ActionEvent event) {
         Persona persona = usuariosAdminTabla.getSelectionModel().getSelectedItem();
@@ -278,12 +282,13 @@ public class GestionarUsuarioAdminController {
         }
     }
 
+    // Método para recargar la tabla de usuarios y administradores
     @FXML
     void recargarAccion(ActionEvent event) {
         cargarTabla();
     }
 
-
+    // Método para volver a la pantalla anterior
     @FXML
     void volverAccion(ActionEvent event) {
         try {
@@ -307,6 +312,7 @@ public class GestionarUsuarioAdminController {
         }
     }
 
+    // Método que se ejecuta al iniciar la vista
     @FXML
     void initialize() {
 

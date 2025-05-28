@@ -242,9 +242,9 @@ public class GestionCuentaController {
         Usuario usuario = Sesion.getInstancia().getUsuario();
 
         if ("Débito".equals(tipoCuentaSeleccionada)) {
-            cuenta = new CuentaDebito(id, banco, numCuenta,usuario ,0); // Puedes agregar el saldo de la cuenta si es necesario
+            cuenta = new CuentaDebito(id, banco, numCuenta, usuario, 0); // Puedes agregar el saldo de la cuenta si es necesario
         } else if ("Crédito".equals(tipoCuentaSeleccionada)) {
-            cuenta = new CuentaCredito(id, banco, numCuenta, usuario, 0,0,0); // Añade tasas y otros atributos si es necesario
+            cuenta = new CuentaCredito(id, banco, numCuenta, usuario, 0, 0, 0); // Añade tasas y otros atributos si es necesario
         }
 
         if (cuenta != null) {
@@ -366,6 +366,7 @@ public class GestionCuentaController {
         assert txtNumCuenta != null : "fx:id=\"txtNumCuenta\" was not injected: check your FXML file 'GestionCuenta.fxml'.";
     }
 
+    // Metodo para cerrar sesión y volver a la pantalla de inicio de sesión
     @FXML
     private void cerrarSesion(ActionEvent event) {
         try {
