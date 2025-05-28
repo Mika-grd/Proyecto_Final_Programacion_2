@@ -355,7 +355,11 @@ public class GestionCuentaAdministradorController {
         List<Transaccion> transacciones = new ArrayList<>();
         for (Cuenta cuenta : usuarioDTO.getListaCuentas()) {
             if (cuenta instanceof CuentaDebito debito) {
-                transacciones.addAll(debito.getListaTransaccion());
+                for (Transaccion transaccion : cuenta.getListaTransaccion()) {
+                    if (!transacciones.contains(transaccion)){
+                        transacciones.add(transaccion);
+                    }
+                }
             }
         }
 
@@ -385,6 +389,7 @@ public class GestionCuentaAdministradorController {
         CuentaCredito seleccionada = tablaCuentaCredito.getSelectionModel().getSelectedItem();
 
         if (seleccionada instanceof CuentaCredito cuenta) {
+            cuenta.setCupoTotalInicial(Double.parseDouble(nuevoCupo));
             cuenta.setCupoDisponible(Double.parseDouble(nuevoCupo));
             tablaCuentaCredito.refresh();  // Forzar refresco
             mostrarAlerta("Cupo actualizado.");
@@ -561,7 +566,11 @@ public class GestionCuentaAdministradorController {
         List<Transaccion> transacciones = new ArrayList<>();
         for (Cuenta cuenta : usuarioDTO.getListaCuentas()) {
             if (cuenta instanceof CuentaDebito debito) {
-                transacciones.addAll(debito.getListaTransaccion());
+                for (Transaccion transaccion : cuenta.getListaTransaccion()) {
+                    if (!transacciones.contains(transaccion)){
+                        transacciones.add(transaccion);
+                    }
+                }
             }
         }
         tablaTransacciones.setItems(FXCollections.observableArrayList(transacciones));

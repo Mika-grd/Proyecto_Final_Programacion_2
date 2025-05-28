@@ -145,11 +145,7 @@ public class CuentaCredito extends Cuenta {
         if (cupoDisponible < 0) this.cupoDisponible = 0;
         else this.cupoDisponible = cupoDisponible;
 
-        // Ajusta cupoEnUso para mantener la consistencia
-        this.cupoEnUso = getCupoTotal() - this.cupoDisponible;
-        if (cupoEnUso <0) {
-            cupoEnUso = 0;
-        }
+
     }
 
     public double getCupoEnUso() {

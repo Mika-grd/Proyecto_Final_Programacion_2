@@ -89,6 +89,7 @@ public class Transaccion implements Cloneable{
                 if (montoATransferir <= cuentaCreditoAfectada.getCupoDisponible()) {
                     System.out.println(cuentaCreditoAfectada.getCupoDisponible() + "   "  + cuentaCreditoAfectada.getCupoEnUso());
                     cuentaCreditoAfectada.setCupoDisponible(cuentaCreditoAfectada.getCupoDisponible() - montoATransferir);
+                    cuentaCreditoAfectada.setCupoEnUso(cuentaCreditoAfectada.getCupoEnUso() + montoATransferir);
                     System.out.println(cuentaCreditoAfectada.getCupoDisponible() + "   "  + cuentaCreditoAfectada.getCupoEnUso());
                 } else {
                     System.err.println("Error: No hay suficiente cupo disponible para la transacción de " + montoATransferir);

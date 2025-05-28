@@ -112,7 +112,9 @@ public class ConsultarSaldoCreditoController {
                 if (monto < deudaPendiente) {
                     double faltante = deudaPendiente - monto;
                     mostrarAlerta("El monto no cubre la deuda. Faltan $" + faltante, Alert.AlertType.WARNING);
+                    cuentaActual.setDeudaTotal(deudaPendiente - monto);
                     cargarSaldos();
+
                     return; // No continuar si no se cubre la deuda
                 }
 
