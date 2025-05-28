@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.ReporteUsuarioCreditoController">
+<AnchorPane fx:id="rootReportePane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.ReporteUsuarioCreditoController">
 
     <!-- Título -->
     <Label layoutX="290.0" layoutY="20.0" text="Reporte de Cuenta de Crédito">
