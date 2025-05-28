@@ -105,11 +105,14 @@ public class GestionarCategoriaController {
         }
     }
 
+    //accion que se ayuda con actualizar tabla para pues actualizar la tabla
     @FXML
     private void actualizarAccion(ActionEvent event) {
         actualizarTabla();
     }
 
+
+    //metodo que actualiza la tabla
     @FXML
     private void actualizarTabla() {
         listaCategorias.setAll(sesion.getCuentaSeleccionada().getListaCategorias());
@@ -122,6 +125,14 @@ public class GestionarCategoriaController {
         txtDescripcionCategoria.clear();
     }
 
+    /**
+     * Libera una categoría seleccionada de una cuenta de débito.
+     *
+     * Este metodo elimina la categoría seleccionada de la tabla
+     * y de la lista de categorías de la cuenta de débito actual del usuario.
+     * El saldo restante en la categoría se transfiere al saldo general de la cuenta.
+     * Si no se selecciona ninguna categoría, se muestra una alerta de error.
+     */
     @FXML
     void liberarAccion(ActionEvent event) {
         Categoria categoriaSeleccionada =  tablaCategorias.getSelectionModel().getSelectedItem();

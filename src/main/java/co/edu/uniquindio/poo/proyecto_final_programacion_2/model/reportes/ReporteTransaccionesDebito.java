@@ -15,6 +15,14 @@ public class ReporteTransaccionesDebito extends ReporteGeneral {
         this.cuentaDebito = cuentaDebito;
     }
 
+
+    /**
+     * Formatea un reporte detallado de las transacciones de débito para la cuenta de débito actual.
+     *
+     * @param transacciones Lista de transacciones de débito a incluir en el reporte.
+     * @return Una cadena formateada que contiene el saldo actual de la cuenta y
+     *         el detalle de cada transacción (ID, fecha, monto, cuentas involucradas y descripción).
+     */
     @Override
     protected String formatearReporte(List<Transaccion> transacciones) {
         StringBuilder sb = new StringBuilder();

@@ -12,6 +12,14 @@ public class FiltroPorCuentaCredito implements FiltroTransaccionesStrategy {
         this.cuentaCredito = cuentaCredito;
     }
 
+
+    /**
+     * Filtra la lista de transacciones para devolver solo aquellas que afectan
+     * a la cuenta de crédito específica asociada a este filtro.
+     *
+     * @param transacciones Lista original de transacciones a filtrar.
+     * @return Lista de transacciones que afectan a la cuenta de crédito.
+     */
     @Override
     public List<Transaccion> filtrar(List<Transaccion> transacciones) {
         return transacciones.stream()

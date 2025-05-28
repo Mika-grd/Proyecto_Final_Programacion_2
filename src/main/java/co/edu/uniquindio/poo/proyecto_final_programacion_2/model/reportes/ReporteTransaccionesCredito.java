@@ -15,6 +15,13 @@ public class ReporteTransaccionesCredito extends ReporteGeneral {
         this.cuentaCredito = cuentaCredito;
     }
 
+    /**
+     * Formatea un reporte detallado de las transacciones de crédito para la cuenta de crédito actual.
+     *
+     * @param transacciones Lista de transacciones de crédito a incluir en el reporte.
+     * @return Una cadena formateada que contiene el resumen del cupo de la cuenta y
+     *         el detalle de cada transacción (ID, fecha, tipo, monto y descripción).
+     */
     @Override
     protected String formatearReporte(List<Transaccion> transacciones) {
         StringBuilder sb = new StringBuilder();

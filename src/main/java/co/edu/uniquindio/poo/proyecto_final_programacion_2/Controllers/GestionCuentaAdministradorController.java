@@ -216,7 +216,7 @@ public class GestionCuentaAdministradorController {
 
 
     /*
-        * Método para actualizar la tabla de cuentas
+        * Metodo para actualizar la tabla de cuentas
         * Se llama cada vez que se agrega, elimina o modifica una cuenta
         * Se actualiza la lista de cuentas y se asigna a la tabla
         * @param event Evento que activa el método
@@ -232,6 +232,7 @@ public class GestionCuentaAdministradorController {
         tablaCuentas.setItems(FXCollections.observableArrayList(cuentas));
     }
 
+    //metodo que vuelve a la ventana anterior
     @FXML
     void volverAccion(ActionEvent event) {
         try {
@@ -256,11 +257,10 @@ public class GestionCuentaAdministradorController {
     }
 
     /*
-        * Método para agregar una cuenta
+        * Metodo para agregar una cuenta
         * Se llama al presionar el botón "Agregar"
         * Se valida que los campos no estén vacíos y se crea la cuenta según el tipo seleccionado
         * Se agrega la cuenta a la lista del usuario y se actualiza la tabla
-        * @param event Evento que activa el método
      */
     @FXML
     public void agregarCuentaAccion(ActionEvent event) {
@@ -300,11 +300,10 @@ public class GestionCuentaAdministradorController {
 
 
     /*
-        * Método para buscar una cuenta crédito por ID
+        * Metodo para buscar una cuenta crédito por ID
         * Se llama al presionar el botón "Buscar"
         * Se valida que el campo de búsqueda no esté vacío y se busca la cuenta en la lista del usuario
         * Si se encuentra, se muestra en la tabla de cuentas crédito
-        * @param event Evento que activa el método
      */
     @FXML
     public void buscarCuentaCredito(ActionEvent event) {
@@ -335,7 +334,7 @@ public class GestionCuentaAdministradorController {
 
 
     /*
-    Método para buscar una transacción por ID
+    Metodo para buscar una transacción por ID
      */
     @FXML
     public void buscarTransaccionAccion(ActionEvent event) {
@@ -377,11 +376,10 @@ public class GestionCuentaAdministradorController {
 
 
     /*
-        Método para cambiar el cupo de una cuenta crédito
+        Metodo para cambiar el cupo de una cuenta crédito
         Se llama al presionar el botón "Cambiar Cupo"
         Se valida que el campo de cupo no esté vacío y se actualiza la cuenta seleccionada
         Se actualiza la tabla de cuentas crédito
-        @param event Evento que activa el método
      */
     @FXML
     void cambiarCupoAccion(ActionEvent event) {
@@ -399,11 +397,10 @@ public class GestionCuentaAdministradorController {
     }
 
     /*
-        Método para cambiar la tasa de interés de una cuenta crédito
+        Metodo para cambiar la tasa de interés de una cuenta crédito
         Se llama al presionar el botón "Cambiar Interés"
         Se valida que el campo de interés no esté vacío y se actualiza la cuenta seleccionada
         Se actualiza la tabla de cuentas crédito
-        @param event Evento que activa el método
      */
     @FXML
     void cambiarInteresAccion(ActionEvent event) {
@@ -420,10 +417,9 @@ public class GestionCuentaAdministradorController {
     }
 
     /*
-        Método para cerrar sesión
+        Metodo para cerrar sesión
         Se llama al presionar el botón "Cerrar Sesión"
         Se carga la ventana de inicio de sesión y se muestra
-        @param event Evento que activa el método
      */
     @FXML
     void cerrarSesion(ActionEvent event) {
@@ -446,7 +442,7 @@ public class GestionCuentaAdministradorController {
     }
 
     /*
-        Método para eliminar una cuenta seleccionada
+        Metodo para eliminar una cuenta seleccionada
         Se llama al presionar el botón "Eliminar"
         Se valida que haya una cuenta seleccionada y se elimina de la lista del usuario
         Se actualiza la tabla de cuentas
@@ -473,10 +469,10 @@ public class GestionCuentaAdministradorController {
 
 
     /*
-        Método para generar un reporte de cuentas
+        Metodo para generar un reporte de cuentas
         Se llama al presionar el botón "Generar Reporte"
         Se muestra un mensaje con la información de las cuentas del usuario
-        @param event Evento que activa el método
+        @param event Evento que activa el metodo
 
      */
     @FXML

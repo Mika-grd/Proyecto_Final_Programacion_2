@@ -40,6 +40,14 @@ public class ReporteUsuarioController {
         btnGenerarReporte.setOnAction(event -> generarReporte());
     }
 
+<<<<<<< Updated upstream
+=======
+
+    /**
+     * Genera un reporte visual en un gráfico de pastel (PieChart) que muestra
+     * el porcentaje de cuentas de un usuario divididas entre cuentas de crédito y débito.
+     */
+>>>>>>> Stashed changes
     private void generarReporte() {
         String tipoCuenta = comboTipoCuenta.getValue();
         if (tipoCuenta == null) {
@@ -74,7 +82,49 @@ public class ReporteUsuarioController {
             ));
         }
 
+<<<<<<< Updated upstream
         barChart.getData().add(series);
+=======
+
+    /**
+     * Obtiene una lista de objetos de tipo Usuario que están almacenados en la lista general de personas
+     * dentro de la instancia singleton de BilleteraVirtual.
+     * Este metodo filtra la lista de personas para incluir solo aquellos que son instancias de Usuario,
+     * y luego los convierte a tipo Usuario.
+     *
+     */
+    private List<Usuario> obtenerListaUsuarios() {
+        return BilleteraVirtual.getInstance()
+                .getListaPersonas()
+                .stream()
+                .filter(p -> p instanceof Usuario)
+                .map(p -> (Usuario) p)
+                .toList();
+    }
+
+    //vuelve a la ventana anterior
+    @FXML
+    void VolverAccion(ActionEvent event) {
+        try {
+            // Carga el archivo FXML de la pantalla anterior
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionCuentaAdministrador.fxml"));
+
+            // Crea el árbol de nodos desde el archivo FXML
+            Parent root = loader.load();
+
+            // Obtiene la ventana actual desde el botón
+            Stage stage = (Stage) btnVolver.getScene().getWindow();
+
+            // Crea una nueva escena con el contenido de Pantalla1
+            Scene scene = new Scene(root);
+
+            // Establece la nueva escena en la ventana actual
+            stage.setScene(scene);
+        } catch (IOException e) {
+            // Muestra el error si hay un problema al cargar el FXML
+            e.printStackTrace();
+        }
+>>>>>>> Stashed changes
     }
 }
 

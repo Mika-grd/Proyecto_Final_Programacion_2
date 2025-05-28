@@ -29,6 +29,7 @@ public class VistaAdministradorController {
     @FXML
     private Button gestionarUsuariosBoton;
 
+    //metodo que cierra la sesion actual
     @FXML
     void cerrarSesionAccion(ActionEvent event) {
         try {
@@ -48,6 +49,7 @@ public class VistaAdministradorController {
         }
     }
 
+    //va a gestionCuentaAdministrador
     @FXML
     void gestionarCuentasAccion(ActionEvent event) {
         try {
@@ -71,6 +73,7 @@ public class VistaAdministradorController {
         }
     }
 
+    //va a gestionar UsuariosAdmin
     @FXML
     void gestionarUsuariosAccion(ActionEvent event) {
         try {

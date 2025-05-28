@@ -8,6 +8,7 @@ public class ComandoUsarCupo implements ComandoOperacionCuenta {
     private double monto;
     private String descripcion;
 
+    //Constructo
     public ComandoUsarCupo(CuentaCredito cuenta, double monto, String descripcion) {
         this.cuenta = cuenta;
         this.monto = monto;

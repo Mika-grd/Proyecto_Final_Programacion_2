@@ -169,7 +169,7 @@ public class inicioSesionController {
         alerta.showAndWait();
     }
 
-
+    //?
     @FXML
     void olvidoContraseniaAccion(ActionEvent event) {
 

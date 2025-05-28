@@ -92,6 +92,10 @@ public class GestionarUsuarioAdminController {
 
 
 
+    /**
+     * Maneja la acción de agregar un nuevo administrador al sistema.
+     *
+     */
     @FXML
     void agregarAdministradorAccion(ActionEvent event) {
         if (nombreCampo.getText().isEmpty() ||
@@ -124,6 +128,10 @@ public class GestionarUsuarioAdminController {
         cargarTabla();
     }
 
+    /**
+     * Maneja la acción de agregar un nuevo Usuario al sistema.
+     *
+     */
     @FXML
     void agregarUsuarioAccion(ActionEvent event) {
         if (nombreCampo.getText().isEmpty() ||
@@ -156,6 +164,10 @@ public class GestionarUsuarioAdminController {
         cargarTabla();
     }
 
+    /**
+     * Maneja la acción de buscar por el id.
+     *
+     */
     @FXML
     void buscarAccion(ActionEvent event) {
         String id = busquedaCampo.getText();
@@ -184,6 +196,10 @@ public class GestionarUsuarioAdminController {
         }
     }
 
+    /**
+     * Maneja la acción de editar una Persona(admin/usuario).
+     *
+     */
     @FXML
     void editarAccion(ActionEvent event) {
         Persona personaSeleccionada = usuariosAdminTabla.getSelectionModel().getSelectedItem();
@@ -247,6 +263,10 @@ public class GestionarUsuarioAdminController {
         }
     }
 
+    /**
+     * Maneja la acción de eliminar una persona de la lista y tabla.
+     *
+     */
     @FXML
     void eliminarAccion(ActionEvent event) {
         Persona persona = usuariosAdminTabla.getSelectionModel().getSelectedItem();
@@ -278,12 +298,14 @@ public class GestionarUsuarioAdminController {
         }
     }
 
+    //recarga la tabla
     @FXML
     void recargarAccion(ActionEvent event) {
         cargarTabla();
     }
 
 
+    //metodo para volver a la ventana anterior
     @FXML
     void volverAccion(ActionEvent event) {
         try {

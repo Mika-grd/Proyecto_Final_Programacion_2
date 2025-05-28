@@ -64,6 +64,7 @@ public class gestionCuentaEspecificaController {
         cargarTransacciones();
     }
 
+    //muestra las transacciones en la tabla
     private void cargarTransacciones() {
         if (cuentaSeleccionada != null) {
             ObservableList<Transaccion> transacciones = FXCollections.observableArrayList(cuentaSeleccionada.getListaTransaccion());
@@ -71,6 +72,7 @@ public class gestionCuentaEspecificaController {
         }
     }
 
+    //recarrga la tabla
     @FXML
     void recargarAccion(ActionEvent event) {
         ObservableList<Transaccion> historial = FXCollections.observableArrayList(cuentaActual.getListaTransaccion());
@@ -82,6 +84,7 @@ public class gestionCuentaEspecificaController {
 
     }
 
+    //va a gestion cuenta administrador
     @FXML
     void gestionarSusCuentasAccion(ActionEvent event) {
         try {
@@ -105,6 +108,7 @@ public class gestionCuentaEspecificaController {
         }
     }
 
+    //Vuelve gestionar usuario admin
     @FXML
     void volverAccion(ActionEvent event) {
         try {

@@ -12,6 +12,14 @@ public class FiltroPorCuentaDebito implements FiltroTransaccionesStrategy {
         this.cuentaDebito = cuentaDebito;
     }
 
+    /**
+     * Filtra la lista de transacciones para incluir solo aquellas que estén
+     * asociadas a la cuenta de débito específica, ya sea como cuenta origen
+     * (propia) o cuenta destino (objetivo).
+     *
+     * @param transacciones Lista original de transacciones a filtrar.
+     * @return Lista de transacciones relacionadas con la cuenta de débito.
+     */
     @Override
     public List<Transaccion> filtrar(List<Transaccion> transacciones) {
         return transacciones.stream()

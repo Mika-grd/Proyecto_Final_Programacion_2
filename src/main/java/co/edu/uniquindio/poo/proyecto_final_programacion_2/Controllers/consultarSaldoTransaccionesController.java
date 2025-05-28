@@ -103,12 +103,41 @@ public class consultarSaldoTransaccionesController {
         alert.showAndWait();
     }
 
+
+    /**
+     * Convierte un monto ingresado en pesos colombianos a dólares estadounidenses.
+     *
+     */
+    @FXML
+<<<<<<< Updated upstream
+=======
+    void ConvertirADolares(ActionEvent event) {
+        try {
+            String texto = RetirarDepositar.getText();
+            if (texto == null || texto.isBlank()) {
+                labelMontoDolares.setText("USD: Ingrese un monto");
+                return;
+            }
+
+            double montoPesos = Double.parseDouble(texto);
+
+            ConversorMoneda conversor = new ConversorMoneda();
+            double montoDolares = conversor.convertirPesos(montoPesos);
+
+            labelMontoDolares.setText(String.format("USD: $%.2f", montoDolares));
+        } catch (NumberFormatException e) {
+            labelMontoDolares.setText("USD: Monto inválido");
+        }
+    }
+
+
     /**
      * Maneja la acción de agregar saldo a una cuenta de débito.
      * Este metodo valida el monto ingresado, actualiza el saldo de la cuenta,
      * registra la transacción y actualiza la interfaz de usuario.
      */
     @FXML
+>>>>>>> Stashed changes
     void agregarSaldoAccion(ActionEvent event) {
         if (RetirarDepositar.getText() != null) {
 
