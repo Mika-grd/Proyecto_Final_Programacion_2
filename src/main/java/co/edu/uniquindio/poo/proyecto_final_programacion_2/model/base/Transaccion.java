@@ -17,6 +17,8 @@ public class Transaccion implements Cloneable{
     // Para transacciones de crédito (usos de cupo, pagos a la tarjeta)
     private CuentaCredito cuentaCreditoAfectada; // La cuenta de crédito que se modifica
     private TipoTransaccionCredito tipoTransaccionCredito; // Nuevo: Para diferenciar usos de cupo y pagos
+    private double monto;
+
 
     // Constructor existente (asumimos para transferencias/débitos)
     public Transaccion(String id, LocalDate fechaTransaccion, double montoATransferir, double saldoResultante, String descripcion, CuentaDebito cuentaPropia, CuentaDebito cuentaObjetivo) {
@@ -34,6 +36,7 @@ public class Transaccion implements Cloneable{
     public Transaccion(String id, double monto, String descripcion, CuentaCredito cuentaCreditoAfectada, TipoTransaccionCredito tipoTransaccionCredito) {
         this.id = id;
         this.fechaTransaccion = LocalDate.now();
+        this.monto = monto;
         this.montoATransferir = monto;
         this.descripcion = descripcion;
         this.cuentaCreditoAfectada = cuentaCreditoAfectada;
@@ -42,6 +45,7 @@ public class Transaccion implements Cloneable{
         // ¡Aquí es donde la magia sucede!
         // La transacción misma modifica el estado de la cuenta de crédito al ser creada.
         aplicarEfectoEnCuentaCredito();
+        this.fechaTransaccion = LocalDate.now();
     }
 
 
@@ -62,6 +66,9 @@ public class Transaccion implements Cloneable{
         }
     }
 
+    public double getMonto() {
+        return monto;
+    }
 
     // --- Enum para Tipos de Transacción de Crédito (Nuevo) ---
     public enum TipoTransaccionCredito {

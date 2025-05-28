@@ -6,8 +6,14 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.BilleteraVirtual;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.CuentaCredito;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Transaccion;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Usuario;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -146,19 +152,111 @@ public class ReporteUsuarioCreditoController {
         btnGenerarReporteCredito.setOnAction(e -> generarReporteCredito());
     }
 
+    /*
+        * Método para generar el reporte de crédito basado en el rango de fechas seleccionado.
+     */
     private void generarReporteCredito() {
-        // Simulación de datos
-        barChartCredito.getData().clear();
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Uso de Cupo");
+        Usuario usuario = obtenerUsuarioActivo();
+        if (usuario == null) {
+            System.out.println("No se encontró un usuario activo");
+            return;
+        }
 
-        series.getData().add(new XYChart.Data<>("Uso 1", 200));
-        series.getData().add(new XYChart.Data<>("Uso 2", 150));
-        series.getData().add(new XYChart.Data<>("Pago", 100));
+        String rangoSeleccionado = comboRangoFechasCredito.getValue();
+        if (rangoSeleccionado == null) {
+            System.out.println("No se seleccionó un rango de fechas");
+            return;
+        }
 
-        barChartCredito.getData().add(series);
+        LocalDate hoy = LocalDate.now();
+        LocalDate inicio;
 
-        labelPromedioUso.setText("Promedio: $150");
-        labelTotalUso.setText("Total usado: $450");
+        switch (rangoSeleccionado) {
+            case "Última semana" -> inicio = hoy.minusWeeks(1);
+            case "Último mes" -> inicio = hoy.minusMonths(1);
+            case "Últimos 3 meses" -> inicio = hoy.minusMonths(3);
+            default -> {
+                System.out.println("Rango no reconocido");
+                return;
+            }
+        }
+
+        LocalDate fin = hoy;
+
+        Platform.runLater(() -> {
+            barChartCredito.getData().clear();
+
+            double totalUso = 0;
+            double totalPago = 0;
+            int cantidadUsos = 0;
+
+            for (CuentaCredito cuenta : usuario.getListaCuentasCredito()) {
+                for (Transaccion movimiento : cuenta.getListaTransaccion()) {
+                    LocalDate fecha = movimiento.getFechaTransaccion();
+
+                    System.out.println("Evaluando transacción:");
+                    System.out.println(" - Fecha: " + movimiento.getFechaTransaccion());
+                    System.out.println(" - Monto: " + movimiento.getMonto());
+                    System.out.println(" - Tipo: " + movimiento.getTipoTransaccionCredito());
+                    System.out.println(" - En rango: " + (!movimiento.getFechaTransaccion().isBefore(inicio) && !movimiento.getFechaTransaccion().isAfter(fin)));
+
+                    if (fecha == null || fecha.isBefore(inicio) || fecha.isAfter(fin)) {
+                        continue;
+                    }
+
+                    System.out.println("Fecha: " + movimiento.getFechaTransaccion()
+                            + ", Tipo: " + movimiento.getTipoTransaccionCredito()
+                            + ", Monto: " + movimiento.getMontoATransferir());
+
+                    double monto = movimiento.getMontoATransferir();
+                    Transaccion.TipoTransaccionCredito tipo = movimiento.getTipoTransaccionCredito();
+
+                    if (tipo == Transaccion.TipoTransaccionCredito.USO_CUPO) {
+                        totalUso += monto;
+                        cantidadUsos++;
+                    } else if (tipo == Transaccion.TipoTransaccionCredito.PAGO_CREDITO) {
+                        totalPago += monto;
+                    }
+                }
+            }
+
+            // Crear serie
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Total por tipo de transacción");
+
+            series.getData().add(new XYChart.Data<>("Uso", totalUso));
+            series.getData().add(new XYChart.Data<>("Pago", totalPago));
+
+            barChartCredito.getData().add(series);
+
+            xAxisCredito.setLabel("Tipo de Movimiento");
+            yAxisCredito.setLabel("Monto Total ($)");
+
+            labelTotalUso.setText("Total usado: $" + totalUso);
+            if (cantidadUsos > 0) {
+                double promedio = totalUso / cantidadUsos;
+                labelPromedioUso.setText("Promedio uso: $" + String.format("%.2f", promedio));
+            } else {
+                labelPromedioUso.setText("Promedio uso: $0");
+            }
+
+            System.out.println("Transacciones uso: " + cantidadUsos);
+            System.out.println("Total uso: " + totalUso);
+            System.out.println("Total pago: " + totalPago);
+        });
     }
+
+
+
+
+
+    private Usuario obtenerUsuarioActivo() {
+        var usuarios = BilleteraVirtual.getInstance().getListaPersonas().stream()
+                .filter(p -> p instanceof Usuario)
+                .map(p -> (Usuario) p)
+                .toList();
+
+        return usuarios.isEmpty() ? null : usuarios.get(0);
+    }
+
 }
