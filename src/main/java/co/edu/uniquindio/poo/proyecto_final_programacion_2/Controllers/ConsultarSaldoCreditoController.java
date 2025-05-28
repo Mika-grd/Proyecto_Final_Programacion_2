@@ -89,10 +89,8 @@ public class ConsultarSaldoCreditoController {
 
 
     /**
-     * Muestra una alerta de tipo WARNING con el mensaje especificado.
-     * Se usa para notificar al usuario sobre errores o validaciones fallidas.
+     * Muestra una alerta al usuario con un mensaje personalizado.
      *
-     * @param mensaje Texto que se mostrará en la alerta.
      */
     private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
@@ -101,7 +99,11 @@ public class ConsultarSaldoCreditoController {
         alert.showAndWait();
     }
 
-
+    /**
+     * Acción ejecutada al presionar el botón de pagar cuota.
+     * Si el monto es menor que la deuda, actualiza la deuda restante.
+     * Si el monto es mayor, paga la deuda y usa el excedente para ampliar el cupo disponible.
+     */
     @FXML
     void pagarCuotaAccion(ActionEvent event) {
         if (cuentaActual != null && !montoPagar.getText().isBlank()) {
@@ -114,33 +116,28 @@ public class ConsultarSaldoCreditoController {
                     mostrarAlerta("El monto no cubre la deuda. Faltan $" + faltante, Alert.AlertType.WARNING);
                     cuentaActual.setDeudaTotal(deudaPendiente - monto);
                     cargarSaldos();
-
-                    return; // No continuar si no se cubre la deuda
+                    return;
                 }
 
-                // Pagar la deuda
+                // Pago completo de la deuda
                 cuentaActual.setDeudaTotal(0);
-
-                // Calcular excedente
                 double excedente = monto - deudaPendiente;
 
                 if (excedente > 0) {
-
+                    // Usa el excedente como nuevo cupo con patrón Command
                     ComandoRealizarPago comando = new ComandoRealizarPago(cuentaActual, excedente);
                     OperacionCuentaInvoker invoker = new OperacionCuentaInvoker();
                     invoker.setComando(comando);
 
                     double ampliarCupo = excedente - cuentaActual.getCupoEnUso();
 
-                    // Ejecutar el comando
                     boolean exito = invoker.ejecutarComando();
                     if (exito) {
                         actualizarVistaCuentaSeleccionada(cuentaActual);
                         historialTable.refresh();
                         montoPagar.clear();
                         mostrarAlerta("Pago exitoso. Deuda saldada" +
-                                        (excedente > 0 ? " y cupo parcialmente liberado." : "."),
-                                Alert.AlertType.INFORMATION);
+                                (excedente > 0 ? " y cupo parcialmente liberado." : "."), Alert.AlertType.INFORMATION);
                         cargarSaldos();
 
                         if (ampliarCupo > 0) {
@@ -153,9 +150,6 @@ public class ConsultarSaldoCreditoController {
                         mostrarAlerta("Error en el pago", Alert.AlertType.WARNING);
                     }
                 }
-
-
-
             } catch (NumberFormatException e) {
                 mostrarAlerta("Monto inválido", Alert.AlertType.WARNING);
             }
@@ -164,80 +158,95 @@ public class ConsultarSaldoCreditoController {
         }
     }
 
-
+    /**
+     * Acción que permite al usuario retirar dinero usando el cupo de su cuenta de crédito.
+     * Utiliza el patrón Command para registrar la operación.
+     */
     @FXML
     void retirarDineroAccion(ActionEvent event) {
+        // Verifica que haya una cuenta seleccionada y que el campo de monto no esté vacío
         if (cuentaActual != null && !montoPagar.getText().isBlank()) {
             try {
+                // Intenta convertir el texto del campo a un valor double
                 double monto = Double.parseDouble(montoPagar.getText());
 
-                // Crear el comando
+                // Crea el comando (retiro de dinero) y lo ejecuta
                 ComandoUsarCupo comando = new ComandoUsarCupo(cuentaActual, monto, "Prestamo");
                 OperacionCuentaInvoker invoker = new OperacionCuentaInvoker();
                 invoker.setComando(comando);
-
-                // Ejecutar el comando
                 boolean exito = invoker.ejecutarComando();
+
+                // Si el comando se ejecutó correctamente
                 if (exito) {
+                    // Actualiza los campos visuales con la información de la cuenta
                     actualizarVistaCuentaSeleccionada(cuentaActual);
+
+                    // Refresca la tabla del historial de transacciones
                     historialTable.refresh();
+
+                    // Limpia el campo de texto donde se ingresó el monto
                     montoPagar.clear();
+
+                    // Muestra una alerta de éxito
                     mostrarAlerta("Exitoso", Alert.AlertType.INFORMATION);
+
+                    // Recarga los valores de saldo, cupo disponible y en uso
                     cargarSaldos();
                 } else {
+                    // Si la ejecución del comando falla, notifica al usuario
                     mostrarAlerta("Error en el retiro", Alert.AlertType.WARNING);
                 }
 
             } catch (NumberFormatException e) {
+                // Si el texto ingresado no es un número válido, muestra una alerta
                 mostrarAlerta("Monto inválido", Alert.AlertType.WARNING);
             }
         } else {
+            // Si no hay cuenta seleccionada o el campo está vacío, muestra advertencia
             mostrarAlerta("Selección requerida", Alert.AlertType.WARNING);
         }
     }
 
-
+    /**
+     * Actualiza los campos de texto que muestran la información de cupo de la cuenta seleccionada.
+     *
+     */
     private void actualizarVistaCuentaSeleccionada(CuentaCredito cuenta) {
         cupoDisponible.setText(String.format("$ %.2f", cuenta.getCupoDisponible()));
         cupoEnUso.setText(String.format("$ %.2f", cuenta.getCupoEnUso()));
     }
 
+    /**
+     * Recarga el historial de movimientos de la cuenta de crédito seleccionada en la tabla.
+     */
     @FXML
     void recargarAccion(ActionEvent event) {
         historialTable.setItems(FXCollections.observableArrayList(cuentaActual.getMovimientosCredito()));
     }
 
+    /**
+     * Navega de regreso a la vista de gestión de cuentas.
+     *
+     */
     @FXML
     void volverAccion(ActionEvent event) {
         try {
-            // Carga el archivo FXML de la pantalla anterior
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionCuenta.fxml"));
-
-            // Crea el árbol de nodos desde el archivo FXML
             Parent root = loader.load();
-
-            // Obtiene la ventana actual desde el botón
             Stage stage = (Stage) volverBoton1.getScene().getWindow();
-
-            // Crea una nueva escena con el contenido de Pantalla1
             Scene scene = new Scene(root);
-
-            // Establece la nueva escena en la ventana actual
             stage.setScene(scene);
-
             sesion.setCuentaSeleccionada(null);
         } catch (IOException e) {
-            // Muestra el error si hay un problema al cargar el FXML
             e.printStackTrace();
         }
     }
 
     /**
-     * Carga los label de cupo disponible y cupo en uso
+     * Carga los valores actuales del cupo disponible, cupo en uso y deuda total
+     *
      */
     private void cargarSaldos() {
-
-
         if (cuentaActual != null) {
             cupoDisponible.setText(String.format("$%,.2f", cuentaActual.getCupoDisponible()));
             cupoEnUso.setText(String.format("$%,.2f", cuentaActual.getCupoEnUso()));

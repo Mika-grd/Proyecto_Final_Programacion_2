@@ -72,8 +72,6 @@ public class GestionarUsuarioAdminController {
     @FXML
     private TableColumn<Persona, String> rolColumna;
 
-    @FXML
-    private Button SeleccionarBoton;
 
     @FXML
     private TextField telefonoCampo;
@@ -285,49 +283,6 @@ public class GestionarUsuarioAdminController {
         cargarTabla();
     }
 
-    @FXML
-    void SeleccionarAccion(ActionEvent event) {
-        Persona usuarioSeleccionado = usuariosAdminTabla.getSelectionModel().getSelectedItem();
-        Sesion sesion = Sesion.getInstancia();
-
-        if (usuarioSeleccionado != null) {
-            sesion.getUsuario();
-
-
-            // Mensaje opcional
-            String mensaje = "Persona seleccionada: " + usuarioSeleccionado.getNombre() + " (" + usuarioSeleccionado.getId() + ")";
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.setTitle("Selección realizada");
-            alerta.setHeaderText(null);
-            alerta.setContentText(mensaje);
-            alerta.showAndWait();
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionCuentaEspecifica.fxml"));
-                Parent root = loader.load();
-
-                Stage stage = (Stage) SeleccionarBoton.getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Alert error = new Alert(Alert.AlertType.ERROR);
-                error.setTitle("Error de navegación");
-                error.setHeaderText(null);
-                error.setContentText("No se pudo cargar la vista de 'GestionarCuentaEspecifica'.");
-                error.showAndWait();
-            }
-
-        } else {
-            Alert alerta = new Alert(Alert.AlertType.WARNING);
-            alerta.setTitle("Ninguna persona seleccionada");
-            alerta.setHeaderText(null);
-            alerta.setContentText("Debes seleccionar una persona en la tabla.");
-            alerta.showAndWait();
-        }
-    }
 
     @FXML
     void volverAccion(ActionEvent event) {
@@ -380,7 +335,6 @@ public class GestionarUsuarioAdminController {
         assert nombreColumna != null : "fx:id=\"nombreColumna\" was not injected: check your FXML file 'GestionarUsuarioAdmin.fxml'.";
         assert recargarBoton != null : "fx:id=\"recargarBoton\" was not injected: check your FXML file 'GestionarUsuarioAdmin.fxml'.";
         assert rolColumna != null : "fx:id=\"rolColumna\" was not injected: check your FXML file 'GestionarUsuarioAdmin.fxml'.";
-        assert SeleccionarBoton != null : "fx:id=\"seleccionarBoton\" was not injected: check your FXML file 'GestionarUsuarioAdmin.fxml'.";
         assert telefonoCampo != null : "fx:id=\"telefonoCampo\" was not injected: check your FXML file 'GestionarUsuarioAdmin.fxml'.";
         assert telefonoColumna != null : "fx:id=\"telefonoColumna\" was not injected: check your FXML file 'GestionarUsuarioAdmin.fxml'.";
         assert usuariosAdminTabla != null : "fx:id=\"usuariosAdminTabla\" was not injected: check your FXML file 'GestionarUsuarioAdmin.fxml'.";
