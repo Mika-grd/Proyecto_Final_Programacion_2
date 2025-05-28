@@ -171,6 +171,9 @@ public class GestionCuentaAdministradorController {
     @FXML
     private ComboBox<UsuarioDTO> comboUsuarios;
 
+    @FXML
+    private Button btnGenerarDiagrama;
+
 
 
 
@@ -695,7 +698,7 @@ public class GestionCuentaAdministradorController {
         });
 
 
-
+        assert btnGenerarDiagrama != null : "fx:id=\"btnGenerarDiagrama\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert boxCredito != null : "fx:id=\"boxCredito\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert boxDebito != null : "fx:id=\"boxDebito\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
         assert btnActualizar != null : "fx:id=\"btnActualizar\" was not injected: check your FXML file 'GestionCuentaAdministrador.fxml'.";
@@ -798,6 +801,40 @@ public class GestionCuentaAdministradorController {
             boxDebito.setVisible(false);
             boxCredito.setVisible(false);
         }
+    }
+
+    //Metodo para cambiar a la vista de los charts
+    @FXML
+    void generarDiagramaAccion(ActionEvent event) {
+
+        try {
+            // Cargar el nuevo FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/ReporteUsuario.fxml"));
+            Parent root = loader.load();
+
+            // Obtener la escena actual desde el botón
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Reemplazar la escena actual con la nueva
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // También puedes mostrar un alert en caso de error
+            mostrarError("No se pudo cargar la vista de diagramas.");
+        }
+
+
+    }
+
+    private void mostrarError(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 
 }

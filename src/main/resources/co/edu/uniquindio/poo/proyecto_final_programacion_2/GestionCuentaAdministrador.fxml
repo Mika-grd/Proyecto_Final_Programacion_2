@@ -82,6 +82,7 @@
                         <Button fx:id="btnAgregar" onAction="#agregarCuentaAccion" style="-fx-font-family: Algerian;" text="Agregar" />
                         <Button fx:id="btnEliminar" onAction="#eliminarCuentaAccion" style="-fx-font-family: Algerian;" text="Eliminar" textFill="#e70606" />
                         <Button fx:id="btnActualizar" onAction="#actualizarTablaAccion" style="-fx-font-family: Algerian;" text="Actualizar" textFill="#1162cc" />
+                  <Button fx:id="btnGenerarDiagrama" onAction="#generarDiagramaAccion" text="Generar Diagrama" />
                     </HBox>
 
                        <!-- TABLA DE CUENTAS -->
@@ -155,7 +156,7 @@
                                 <TableColumn fx:id="colTransDestino" prefWidth="123.2" text="Cuenta Destino" />
                             </columns>
                         </TableView>
-                        <Button fx:id="btnGenerarReporte" layoutX="328.0" layoutY="423.0" onAction="#generarReporteAccion" text="Generar Reporte" />
+                        <Button fx:id="btnGenerarReporte" layoutX="214.0" layoutY="426.0" onAction="#generarReporteAccion" text="Generar Reporte" />
                   <Button fx:id="btnCerrarSesion1" layoutX="327.0" layoutY="506.0" onAction="#cerrarSesion" style="-fx-font-family: Algerian;" text="Cerrar Sesión" />
                   <Label layoutX="220.0" layoutY="29.0" text="Gestión de Cuentas Administrador">
                      <font>

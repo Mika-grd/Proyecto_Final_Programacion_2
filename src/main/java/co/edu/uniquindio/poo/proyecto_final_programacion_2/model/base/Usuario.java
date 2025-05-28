@@ -1,6 +1,8 @@
 package co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Usuario extends Persona implements IUsuario{
@@ -69,6 +71,19 @@ public class Usuario extends Persona implements IUsuario{
         return BilleteraVirtual.getInstance().buscarObjeto(id, listaObjetos);
     }
 
+    public List<CuentaCredito> getListaCuentasCredito() {
+        return listaCuentas.stream()
+                .filter(c -> c instanceof CuentaCredito)
+                .map(c -> (CuentaCredito) c)
+                .collect(Collectors.toList());
+    }
+
+    public List<CuentaDebito> getListaCuentasDebito() {
+        return listaCuentas.stream()
+                .filter(c -> c instanceof CuentaDebito)
+                .map(c -> (CuentaDebito) c)
+                .collect(Collectors.toList());
+    }
 
 
     /// SETTERS & GETTERS
