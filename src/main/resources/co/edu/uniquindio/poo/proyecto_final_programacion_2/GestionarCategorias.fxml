@@ -46,6 +46,7 @@
             <Button fx:id="btnActualizarTabla" onAction="#actualizarAccion" style="-fx-font-family: Algerian;" text="Actualizar" />
          <Button fx:id="atrasBoton" layoutX="437.0" layoutY="10.0" onAction="#atrasAccion" style="-fx-font-family: Algerian;" text="Atras" textFill="RED" />
          <Button fx:id="liberarBoton" layoutX="505.0" layoutY="10.0" onAction="#liberarAccion" style="-fx-font-family: Algerian;" text="Liberar" textFill="RED" />
+         <Button fx:id="btnAgregarCategoriasPredeterminadas" layoutX="242.0" layoutY="10.0" onAction="#agregarCategoriasPredeterminadasAccion" style="-fx-font-family: Algerian;" text=" Agregar Categorias Recomendadas" textFill="#6da85e" />
         </HBox>
 
         <!-- TABLA DE CATEGORÍAS -->

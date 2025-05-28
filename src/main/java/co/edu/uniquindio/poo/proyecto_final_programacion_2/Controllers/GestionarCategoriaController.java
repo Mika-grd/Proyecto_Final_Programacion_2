@@ -1,9 +1,7 @@
 package co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers;
 
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.Sesion.Sesion;
-import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Categoria;
-import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.CuentaDebito;
-import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.Presupuesto;
+import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.base.*;
 import co.edu.uniquindio.poo.proyecto_final_programacion_2.model.builder.CuentaCategoriasBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,11 +52,42 @@ public class GestionarCategoriaController {
     @FXML
     private Button liberarBoton;
 
+    @FXML
+    private Button btnAgregarCategoriasPredeterminadas;
+
+
 
     Sesion sesion = Sesion.getInstancia();
     private ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList(sesion.getCuentaSeleccionada().getListaCategorias());
 
 
+    /**
+     * Acción que se ejecuta al presionar el botón para agregar categorías predeterminadas.
+     * Obtiene la cuenta seleccionada en la tabla y, si es una cuenta de débito,
+     * crea un decorador para añadir categorías predeterminadas dinámicamente.
+     *
+     * Muestra una alerta si no hay cuenta seleccionada o si la cuenta no es de tipo débito.
+     *
+     * @param event Evento de acción generado por el botón.
+     */
+    @FXML
+    void agregarCategoriasPredeterminadasAccion(ActionEvent event) {
+        Cuenta cuentaSeleccionada = Sesion.getInstancia().getCuentaSeleccionada();
+
+        if (cuentaSeleccionada == null) {
+            mostrarAlerta( "Error", "Por favor seleccione una cuenta para aplicar las categorías.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        if (cuentaSeleccionada instanceof CuentaDebito) {
+            CuentaDebito cuentaDebito = (CuentaDebito) cuentaSeleccionada;
+            CuentaDebitoDecorator decorador = new CuentaDebitoDecorator(cuentaDebito);
+            decorador.aplicarCategoriasPredeterminadas();
+            mostrarAlerta("Exitoso","Categorías añadidas exitosamente.", Alert.AlertType.INFORMATION);
+        } else {
+            mostrarAlerta("Error","Las categorías predeterminadas solo se pueden aplicar a cuentas débito.", Alert.AlertType.WARNING);
+        }
+    }
 
     private CuentaDebito cuentaDebito;
 
@@ -182,6 +211,9 @@ public class GestionarCategoriaController {
         assert colNombre != null : "fx:id=\"colNombre\" was not injected: check your FXML file.";
         assert colDescripcion != null : "fx:id=\"colDescripcion\" was not injected: check your FXML file.";
         assert liberarBoton != null : "fx:id=\"liberarBoton\" was not injected: check your FXML file 'GestionarCategorias.fxml'.";
+
+        assert btnAgregarCategoriasPredeterminadas != null : "fx:id=\"btnAgregarCategoriasPredeterminadas\" was not injected: check your FXML file 'GestionarCategorias.fxml'.";
+
 
     }
 

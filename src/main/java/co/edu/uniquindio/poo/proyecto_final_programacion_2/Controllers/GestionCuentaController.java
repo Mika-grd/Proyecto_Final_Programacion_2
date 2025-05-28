@@ -267,7 +267,8 @@ public class GestionCuentaController {
     private void eliminarCuentaAccion(ActionEvent event) {
         Cuenta seleccionada = tablaCuentas.getSelectionModel().getSelectedItem();
         if (seleccionada != null) {
-            billeteraVirtual.getListaCuentas().remove(seleccionada);  // Eliminar de la lista de negocio
+            billeteraVirtual.getListaCuentas().remove(seleccionada);
+            Sesion.getInstancia().getUsuario().getListaCuentas().remove(seleccionada);// Eliminar de la lista de negocio
             actualizarLista();  // Refrescar la lista observable
         } else {
             mostrarAlerta("Debe seleccionar una cuenta para eliminar.");
