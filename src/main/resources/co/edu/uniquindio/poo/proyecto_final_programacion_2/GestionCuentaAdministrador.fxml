@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.GestionCuentaAdministradorController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.GestionCuentaAdministradorController">
 
     <TabPane layoutX="0" layoutY="0" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
         <!-- TAB CREAR CUENTA -->
@@ -50,7 +50,7 @@
 
                         <!-- CAMPOS CRÉDITO -->
                         <HBox fx:id="boxCredito" spacing="10" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                            <Label style="-fx-text-fill: white;" text="Tasa de Interés:" />
+                            <Label style="-fx-text-fill: white;" text="Tasa de Interés  (%):" />
                             <TextField fx:id="txtTasaInteres" prefWidth="100" />
                             <Label style="-fx-text-fill: white;" text="Cupo Disponible:" />
                             <TextField fx:id="txtCupoDisponible" prefWidth="100" />

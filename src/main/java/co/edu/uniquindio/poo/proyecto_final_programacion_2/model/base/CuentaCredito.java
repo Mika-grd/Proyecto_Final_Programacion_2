@@ -11,6 +11,7 @@ public class CuentaCredito extends Cuenta {
     private double cupoDisponible;
     private double cupoEnUso;
     private double cupoTotalInicial; // Representa el límite de crédito general de la tarjeta
+    private double deudaTotal;
 
     private final List<Transaccion> movimientosCredito;
     private boolean cupoAmpliadoUnaVez;
@@ -18,7 +19,7 @@ public class CuentaCredito extends Cuenta {
     /// Constructor de la clase CuentaCredito (SE MANTIENE IGUAL)
     public CuentaCredito(String id, String nombreBanco, int numCuenta, Usuario usuario, double tasaInteres, double cupoDisponible, double cupoEnUso) {
         super(id, nombreBanco, numCuenta, usuario);
-        this.tasaInteres = tasaInteres;
+        this.tasaInteres = (tasaInteres/ 100);
         this.cupoDisponible = cupoDisponible;
         this.cupoEnUso = cupoEnUso;
         this.cupoTotalInicial = cupoDisponible + cupoEnUso; // Calcula el cupo total inicial
@@ -50,6 +51,7 @@ public class CuentaCredito extends Cuenta {
         // Crea la transacción, y la transacción misma modifica el estado de 'this' cuenta.
         Transaccion nuevaTransaccion = new Transaccion(generarNuevoIdTransaccion(), monto, descripcion, this, Transaccion.TipoTransaccionCredito.USO_CUPO);
         movimientosCredito.add(nuevaTransaccion);
+        setDeudaTotal(deudaTotalCalculo(monto));
 
         System.out.println("Solicitud de uso de cupo procesada. Revise los logs de la Transacción para el resultado.");
         System.out.println("Nuevo cupo disponible (después de intento): " + cupoDisponible + ", Cupo en uso: " + cupoEnUso);
@@ -85,8 +87,8 @@ public class CuentaCredito extends Cuenta {
      * Retorna el monto actual que se ha utilizado del cupo de crédito y que está pendiente de pago.
      * @return El monto pendiente de pago.
      */
-    public double getMontoPendientePago() {
-        return cupoEnUso;
+    private double deudaTotalCalculo(double monto) {
+        return (monto * tasaInteres);
     }
 
     /**
@@ -141,11 +143,9 @@ public class CuentaCredito extends Cuenta {
     public void setCupoDisponible(double cupoDisponible) {
         // Asegúrate de que cupoDisponible no exceda el cupo total actual
         if (cupoDisponible < 0) this.cupoDisponible = 0;
-        else if (cupoDisponible > getCupoTotal()) this.cupoDisponible = getCupoTotal();
         else this.cupoDisponible = cupoDisponible;
 
-        // Ajusta cupoEnUso para mantener la consistencia
-        this.cupoEnUso = getCupoTotal() - this.cupoDisponible;
+
     }
 
     public double getCupoEnUso() {
@@ -157,9 +157,6 @@ public class CuentaCredito extends Cuenta {
         if (cupoEnUso < 0) this.cupoEnUso = 0;
         else if (cupoEnUso > getCupoTotal()) this.cupoEnUso = getCupoTotal();
         else this.cupoEnUso = cupoEnUso;
-
-        // Ajusta cupoDisponible para mantener la consistencia
-        this.cupoDisponible = getCupoTotal() - this.cupoEnUso;
     }
 
     public double getCupoTotal() {
@@ -184,5 +181,18 @@ public class CuentaCredito extends Cuenta {
 
     private String generarNuevoIdTransaccion() {
         return "CRED-" + System.nanoTime(); // Usar nanoTime para mayor unicidad
+    }
+
+
+    public void setCupoTotalInicial(double cupoTotalInicial) {
+        this.cupoTotalInicial = cupoTotalInicial;
+    }
+
+    public double getDeudaTotal() {
+        return deudaTotal;
+    }
+
+    public void setDeudaTotal(double deudaTotal) {
+        this.deudaTotal = deudaTotal;
     }
 }

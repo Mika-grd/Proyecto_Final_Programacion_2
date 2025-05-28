@@ -167,6 +167,7 @@ public class GestionarCategoriaController {
         tablaCategorias.setItems(listaCategorias);
 
 
+
         actualizarTabla();
 
         assert atrasBoton != null : "fx:id=\"atrasBoton\" was not injected: check your FXML file 'GestionarCategorias.fxml'.";

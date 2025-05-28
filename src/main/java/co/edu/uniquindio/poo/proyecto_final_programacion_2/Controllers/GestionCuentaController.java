@@ -141,26 +141,50 @@ public class GestionCuentaController {
 
         mostrarAlerta(mensaje);
 
-        try {
-            // Cargar el archivo FXML de la nueva pantalla
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionUsuario.fxml"));
-            Parent root = loader.load();
+        if (cuentaSeleccionada instanceof CuentaDebito) {
+            try {
+                // Cargar el archivo FXML de la nueva pantalla
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/GestionUsuario.fxml"));
+                Parent root = loader.load();
 
-            // Obtener el stage desde cualquier nodo (como un botón)
-            Stage stage = (Stage) SeleccionarBoton.getScene().getWindow();
+                // Obtener el stage desde cualquier nodo (como un botón)
+                Stage stage = (Stage) SeleccionarBoton.getScene().getWindow();
 
-            // Crear una nueva escena con el contenido cargado
-            Scene scene = new Scene(root);
+                // Crear una nueva escena con el contenido cargado
+                Scene scene = new Scene(root);
 
-            // Establecer la nueva escena en la ventana actual
-            stage.setScene(scene);
-            stage.show();
+                // Establecer la nueva escena en la ventana actual
+                stage.setScene(scene);
+                stage.show();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            mensaje = "No se pudo cargar la vista";
-            mostrarAlerta(mensaje);
+            } catch (IOException e) {
+                e.printStackTrace();
+                mensaje = "No se pudo cargar la vista";
+                mostrarAlerta(mensaje);
+            }
+        } else if (cuentaSeleccionada instanceof CuentaCredito) {
+            try {
+                // Cargar el archivo FXML de la nueva pantalla
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_programacion_2/ConsultarSaldoCredito.fxml"));
+                Parent root = loader.load();
+
+                // Obtener el stage desde cualquier nodo (como un botón)
+                Stage stage = (Stage) SeleccionarBoton.getScene().getWindow();
+
+                // Crear una nueva escena con el contenido cargado
+                Scene scene = new Scene(root);
+
+                // Establecer la nueva escena en la ventana actual
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                mensaje = "No se pudo cargar la vista";
+                mostrarAlerta(mensaje);
+            }
         }
+
     }
 
     public BilleteraVirtual billeteraVirtual = BilleteraVirtual.getInstance();
