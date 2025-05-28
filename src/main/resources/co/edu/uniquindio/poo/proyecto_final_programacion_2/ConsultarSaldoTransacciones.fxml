@@ -13,14 +13,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="666.0" prefWidth="1210.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.consultarSaldoTransaccionesController">
+<AnchorPane prefHeight="666.0" prefWidth="1210.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_programacion_2.Controllers.consultarSaldoTransaccionesController">
    <children>
       <ImageView fitHeight="672.0" fitWidth="1210.0" layoutY="-9.0" pickOnBounds="true">
          <image>
             <Image url="@../fondo.jpg" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="idSaldo" layoutX="28.0" layoutY="91.0" prefHeight="182.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9); border-radius: 10px;">
+      <AnchorPane fx:id="idSaldo" layoutX="28.0" layoutY="91.0" prefHeight="206.0" prefWidth="582.0" style="-fx-background-color: rgba(208, 208, 208, 0.9); border-radius: 10px;">
          <children>
             <Text layoutX="32.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo Disponible" wrappingWidth="194.9367218017578">
                <font>
@@ -50,7 +50,7 @@
          </children>
       </Pane>
       <Button fx:id="volverBoton1" layoutX="45.0" layoutY="46.0" onAction="#volverAccion" prefHeight="27.0" prefWidth="123.0" style="-fx-background-color: green;" text="Volver" textFill="WHITE" />
-      <Pane layoutX="28.0" layoutY="309.0" prefHeight="334.0" prefWidth="562.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
+      <Pane layoutX="28.0" layoutY="309.0" prefHeight="334.0" prefWidth="582.0" style="-fx-background-color: rgba(208, 208, 208, 0.9);">
          <children>
             <Button fx:id="bttnAgregarSaldo1" layoutX="37.0" layoutY="200.0" onAction="#agregarSaldoAccion" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: green;" text="Agregar Saldo" textFill="WHITE" />
             <Button fx:id="bttnRetirarSaldo1" layoutX="37.0" layoutY="268.0" onAction="#retirarSaldoAccion" prefHeight="34.0" prefWidth="149.0" style="-fx-background-color: red;" text="Retirar Saldo" textFill="#f7f5f5" />
@@ -68,6 +68,8 @@
                </font>
             </Label>
             <Button fx:id="botonRetirarCategoria" layoutX="281.0" layoutY="268.0" onAction="#retirarCategoria" prefHeight="34.0" prefWidth="138.0" style="-fx-background-color: red;" text="Retirar de Categoria" textFill="#faf9f9" />
+            <Button fx:id="bttnConvertirADolares" layoutX="433.0" layoutY="51.0" onAction="#ConvertirADolares" prefHeight="34.0" prefWidth="138.0" style="-fx-background-color: green;" text="¿ Convertir a Dolares ?" textFill="#faf9f9" />
+            <Label fx:id="labelMontoDolares" layoutX="261.0" layoutY="100.0" prefHeight="20.0" prefWidth="200.0" text="USD: " style="-fx-font-size: 14;" />
          </children>
       </Pane>
    </children>

@@ -86,6 +86,14 @@ public class consultarSaldoTransaccionesController {
     @FXML
     private Button botonRetirarCategoria;
 
+    @FXML
+    private Button bttnConvertirADolares;
+
+
+
+    @FXML
+    private Label labelMontoDolares;
+
 
     CuentaDebito cuentaActual = Sesion.getInstancia().getCuentaDebito();
 
@@ -102,6 +110,27 @@ public class consultarSaldoTransaccionesController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+    @FXML
+    void ConvertirADolares(ActionEvent event) {
+        try {
+            String texto = RetirarDepositar.getText();
+            if (texto == null || texto.isBlank()) {
+                labelMontoDolares.setText("USD: Ingrese un monto");
+                return;
+            }
+
+            double montoPesos = Double.parseDouble(texto);
+
+            ConversorMoneda conversor = new ConversorMoneda();
+            double montoDolares = conversor.convertirPesos(montoPesos);
+
+            labelMontoDolares.setText(String.format("USD: $%.2f", montoDolares));
+        } catch (NumberFormatException e) {
+            labelMontoDolares.setText("USD: Monto inválido");
+        }
+    }
+
 
     @FXML
     void agregarSaldoAccion(ActionEvent event) {
@@ -301,7 +330,7 @@ public class consultarSaldoTransaccionesController {
         comboboxCategoria.setItems(listaCategorias);
         historialTable.setItems(historial);
 
-
+        assert bttnConvertirADolares != null : "fx:id=\"bttnConvertirADolares\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
         assert botonRetirarCategoria != null : "fx:id=\"botonRetirarCategoria\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
         assert RetirarDepositar != null : "fx:id=\"RetirarDepositar\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
         assert bttnAgregarSaldo1 != null : "fx:id=\"bttnAgregarSaldo1\" was not injected: check your FXML file 'ConsultarSaldoTransacciones.fxml'.";
