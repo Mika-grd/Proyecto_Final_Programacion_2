@@ -57,7 +57,7 @@ public class HelloApplication extends Application {
 
         CuentaDebito cuentaDebito2 = (CuentaDebito) cuenta1;
 
-        cuentaDebito2.agregarSaldo(100000);
+        cuentaDebito2.agregarSaldo(10000000);
 
         Presupuesto presupuesto = new Presupuesto("", "", 0);
 
@@ -112,17 +112,26 @@ public class HelloApplication extends Application {
 
         //Prototype
 
-        Transaccion transaccion = new Transaccion("1", LocalDate.now(), 50000, cuentaDebito2.getSaldo(), "Para el mercado", cuentaDebito2, cuentaDebito);
-        transaccion.realizarTransaccion();
+        Transaccion transaccion1 = new Transaccion("1", LocalDate.now(), 50000, "Para el mercado", cuentaDebito2, cuentaDebito);
+        transaccion1.realizarTransaccion();
 
-        Transaccion transaccion2 = transaccion.clone();
-        transaccion2.setMontoATransferir(25000);
+        Transaccion transaccion2 = new Transaccion("2", LocalDate.now(), 25000, "Pago de servicios", cuentaDebito2, cuentaDebito);
         transaccion2.realizarTransaccion();
 
-        System.out.println(cuentaDebito2.getSaldoTotal() + " " + cuentaDebito2.getSaldo());
-        System.out.println(cuentaDebito.getSaldoTotal() + " " + cuentaDebito.getSaldo());
+        Transaccion transaccion3 = new Transaccion("3", LocalDate.now(), 5000, "Transferencia rápida", cuentaDebito2, cuentaDebito);
+        transaccion3.realizarTransaccion();
 
-        System.out.println(cuentaDebito.getListaCategorias());
+        Transaccion transaccion4 = new Transaccion("4", LocalDate.of(2025, 3, 1), 3000000, "Inversión", cuentaDebito2, cuentaDebito);
+        System.out.println("Antes de ejecutar: " + transaccion4.getFechaTransaccion());
+        transaccion4.realizarTransaccion();
+        System.out.println("Después de ejecutar: " + transaccion4.getFechaTransaccion());
+
+        Transaccion transaccion5 = new Transaccion("5", LocalDate.now(), 80000, "Compra mensual", cuentaDebito2, cuentaDebito);
+        transaccion5.realizarTransaccion();
+
+        System.out.println(cuentaDebito2.getListaTransaccion());
+
+        System.out.println(cuentaDebito.getListaTransaccion());
 
         launch();
     }

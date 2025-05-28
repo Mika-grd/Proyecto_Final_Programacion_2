@@ -19,7 +19,7 @@ public class Transaccion implements Cloneable{
     private TipoTransaccionCredito tipoTransaccionCredito; // Nuevo: Para diferenciar usos de cupo y pagos
 
     // Constructor existente (asumimos para transferencias/débitos)
-    public Transaccion(String id, LocalDate fechaTransaccion, double montoATransferir, double saldoResultante, String descripcion, CuentaDebito cuentaPropia, CuentaDebito cuentaObjetivo) {
+    public Transaccion(String id, LocalDate fechaTransaccion, double montoATransferir, String descripcion, CuentaDebito cuentaPropia, CuentaDebito cuentaObjetivo) {
         this.id = id;
         this.fechaTransaccion = fechaTransaccion;
         this.montoATransferir = montoATransferir;
@@ -55,11 +55,15 @@ public class Transaccion implements Cloneable{
 
     @Override
     public Transaccion clone() {
-        try {
-            return (Transaccion) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
+        Transaccion copia = new Transaccion(
+                this.id,
+                this.fechaTransaccion,
+                this.montoATransferir,
+                this.descripcion,
+                this.cuentaPropiaDebito,
+                this.cuentaObjetivoDebito
+        );
+        return copia;
     }
 
 
@@ -142,18 +146,48 @@ public class Transaccion implements Cloneable{
      */
     public boolean realizarTransaccion() {
         double montoDisponible = cuentaPropiaDebito.getSaldo();
+
         if (cuentaObjetivoDebito != null && fechaTransaccion != null && montoATransferir > 0 && montoDisponible > 0) {
             if (montoATransferir <= montoDisponible) {
+
+                // Ajustar saldos
                 cuentaPropiaDebito.setSaldo(cuentaPropiaDebito.getSaldo() - montoATransferir);
                 cuentaPropiaDebito.calcularSaldoTotal();
-                cuentaPropiaDebito.getListaTransaccion().add(this);
+
                 cuentaObjetivoDebito.setSaldo(cuentaObjetivoDebito.getSaldo() + montoATransferir);
                 cuentaObjetivoDebito.calcularSaldoTotal();
-                cuentaObjetivoDebito.getListaTransaccion().add(this);
-                this.setDescripcion(descripcion + " a cuenta: " + cuentaObjetivoDebito.getId());
+
+                // Crear transacciones separadas para cada cuenta
+                Transaccion transaccionParaOrigen = new Transaccion(
+                        this.id,
+                        this.fechaTransaccion,
+                        this.montoATransferir,
+                        this.descripcion + " (Enviada a: " + cuentaObjetivoDebito.getId() + ")",
+                        this.cuentaPropiaDebito,
+                        this.cuentaObjetivoDebito
+                );
+
+                Transaccion transaccionParaDestino = new Transaccion(
+                        this.id,
+                        this.fechaTransaccion,
+                        this.montoATransferir,
+                        this.descripcion + " (Recibida de: " + cuentaPropiaDebito.getId() + ")",
+                        this.cuentaPropiaDebito,
+                        this.cuentaObjetivoDebito
+                );
+
+                // Registrar transacciones en ambas cuentas
+                cuentaPropiaDebito.getListaTransaccion().add(transaccionParaOrigen);
+                cuentaObjetivoDebito.getListaTransaccion().add(transaccionParaDestino);
+
+                System.out.println("Transacción realizada:");
+                System.out.println(" - Origen: " + transaccionParaOrigen.getFechaTransaccion());
+                System.out.println(" - Destino: " + transaccionParaDestino.getFechaTransaccion());
+
                 return true;
             }
         }
+
         return false;
     }
 

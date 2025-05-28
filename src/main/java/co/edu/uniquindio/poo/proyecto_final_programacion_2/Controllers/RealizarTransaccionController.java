@@ -147,7 +147,7 @@ public class RealizarTransaccionController {
             montoDisponible = sesion.getCuentaDebito().getSaldo();
         }
 
-        Transaccion nuevaTransaccion = new Transaccion(id, fecha, monto, montoDisponible, descripcion, sesion.getCuentaDebito(), cuentaObjetivo);
+        Transaccion nuevaTransaccion = new Transaccion(id, fecha, monto, descripcion, sesion.getCuentaDebito(), cuentaObjetivo);
 
         if (nuevaTransaccion.realizarTransaccion()) {
 
