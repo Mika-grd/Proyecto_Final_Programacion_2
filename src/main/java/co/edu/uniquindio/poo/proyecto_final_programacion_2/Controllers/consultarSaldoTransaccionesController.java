@@ -111,6 +111,11 @@ public class consultarSaldoTransaccionesController {
         alert.showAndWait();
     }
 
+    /**
+     * Maneja la acción de agregar saldo a una cuenta de débito.
+     * Este metodo valida el monto ingresado, actualiza el saldo de la cuenta,
+     * registra la transacción y actualiza la interfaz de usuario.
+     */
     @FXML
     void ConvertirADolares(ActionEvent event) {
         try {
@@ -158,6 +163,12 @@ public class consultarSaldoTransaccionesController {
 
     }
 
+
+    /**
+     * Maneja la acción de depositar un monto desde la cuenta principal hacia una categoría específica.
+     * Verifica que exista un monto válido y una categoría seleccionada antes de realizar la operación.
+     *
+     */
     @FXML
     void depositarCategoria(ActionEvent event) {
 
@@ -194,6 +205,15 @@ public class consultarSaldoTransaccionesController {
     }
 
 
+    /**
+     * Retira un monto de una categoría seleccionada y lo transfiere al saldo general de la cuenta.
+     * El metodo valida que se haya ingresado un monto válido y que se haya seleccionado una categoría.
+     * Si el presupuesto actual de la categoría es suficiente para cubrir el retiro, se descuenta
+     * el monto del presupuesto y se suma al saldo disponible de la cuenta. Se registra la transacción
+     * en el historial y se actualiza la interfaz. Si el monto no es válido o no hay suficiente saldo
+     * en la categoría, se muestra una alerta al usuario.
+     *
+     */
     @FXML
     void retirarCategoria(ActionEvent event) {
 
@@ -229,6 +249,15 @@ public class consultarSaldoTransaccionesController {
 
     }
 
+
+    /**
+     * Retira un monto del saldo disponible de la cuenta actual.
+     * El metodo permite al usuario retirar una cantidad de dinero desde el saldo general.
+     * Primero valida que se haya ingresado un valor numérico válido. Luego verifica si el saldo
+     * es suficiente para realizar el retiro. Si lo es, descuenta el monto, registra la transacción
+     * en el historial y actualiza la vista. En caso contrario, muestra una alerta indicando la
+     * causa del error (saldo insuficiente o entrada inválida).
+     */
     @FXML
     void retirarSaldoAccion(ActionEvent event) {
 
@@ -260,6 +289,8 @@ public class consultarSaldoTransaccionesController {
 
     }
 
+
+    //Recarga la lista
     @FXML
     void recargarAccion(ActionEvent event) {
 
@@ -268,6 +299,8 @@ public class consultarSaldoTransaccionesController {
 
     }
 
+
+    //Metodo de volver
     @FXML
     void volverAccion(ActionEvent event) {
         try {
